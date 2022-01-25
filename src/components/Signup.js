@@ -41,34 +41,64 @@ class Signup extends Component {
     });
   }
 
+  getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
   handleSubmit = (e) => {
     e.preventDefault(); // at the beginning of a submit function
     // make sure password and confirm password are equal
     // password length >= 8 characters
+    console.log("INSIDE SIGNUP HANDLE SUBMIT")
     if (this.state.password === this.state.confirmPassword && this.state.password.length >= 8) {
       const newUser = {
         name: this.state.name,
         email: this.state.email,
         password: this.state.password,
       };
-      axios
-        .post(`${REACT_APP_SERVER_URL}/users/signup`, newUser)
-        .then((response) => {
+      console.log("NEW USER:", newUser)
+
+      let csrftoken = this.getCookie('csrftoken');
+      fetch(`${REACT_APP_SERVER_URL}/signup/`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        },
+
+        body: JSON.stringify(newUser)
+
+      })
+        .then(response => response.json())
+        .then((data) => {
+          console.log(data)
           this.setState({
             redirect: true,
           });
+          return alert('Account Created');
         })
-        .catch((error) => console.log("===> Error in Signup", error));
+
     } else {
       if (this.state.password !== this.state.confirmPassword)
         return alert("Passwords don't match");
       alert("Password needs to be at least 8 characters. Please try again.");
     }
   };
-  
+
   render() {
     if (this.state.redirect) return <Navigate to="/login" />; // You can have them redirected to profile (your choice)
-    
+
     return (
       <>
         <section className="container">
@@ -116,7 +146,7 @@ class Signup extends Component {
                           value={this.state.email}
                           onChange={this.handleEmail.bind(this)}
                           required
-                          />
+                        />
                       </div>
                     </div>
 
@@ -190,7 +220,7 @@ class Signup extends Component {
                     className="level-item"
                     style={{ color: "var(--textLight)" }}
                   >
-                    &copy; Super Cool Website. 2022 All Rights Reserved. 
+                    &copy; Super Cool Website. 2022 All Rights Reserved.
                   </small>
                 </div>
               </nav>

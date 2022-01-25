@@ -13,6 +13,7 @@ class Login extends Component {
       email: "",
       password: "",
     };
+    this.getCookie = this.getCookie.bind(this)
   }
 
   handleEmail(e) {
@@ -26,29 +27,80 @@ class Login extends Component {
       password: e.target.value,
     });
   }
-
+  getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
   handleSubmit = (e) => {
     e.preventDefault(); // at the beginning of a submit function
-    const userData = { 
-      email: this.state.email, 
+    const loginData = {
+      username: this.state.email,
       password: this.state.password
     };
-    axios.post(`${REACT_APP_SERVER_URL}/users/login`, userData)
-        .then(response => {
-            const { token } = response.data;
-            // save token to localStorage
-            localStorage.setItem('jwtToken', token);
-            // set token to headers
-            setAuthToken(token);
-            // decode token to get the user data
-            const decoded = jwt_decode(token);
-            // set the current user
-            this.props.nowCurrentUser(decoded); // funnction passed down as props.
-        })
-        .catch(error => {
-            console.log('===> Error on login', error);
-            alert('Either email or password is incorrect. Please try again');
-        });
+
+    let csrftoken = this.getCookie('csrftoken');
+    console.log('csrftoken', csrftoken)
+    fetch(`${REACT_APP_SERVER_URL}/login/`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        'X-CSRFToken': csrftoken,
+      },
+
+      body: JSON.stringify(loginData)
+
+    })
+      .then(response => response.json())
+      .then((data) => {
+        console.log("RETURN DATA:" , data)
+        let dataObj = JSON.parse(data)
+        const { token } = dataObj;
+        console.log('token', token)
+        console.log('user data', dataObj['userData'])
+         // save token to localStorage
+         localStorage.setItem('jwtToken', token);
+         // set token to headers
+         setAuthToken(token);
+         // decode token to get the user data
+         const decoded = jwt_decode(token);
+         console.log('decoded', decoded)
+        //  set the current user
+         this.props.nowCurrentUser(decoded); // funnction passed down as props.
+        return alert('Logged In');
+      })
+      .catch(error => {
+        console.log('===> Error on login', error);
+        alert('Either email or password is incorrect. Please try again');
+      });
+    // axios.post(`${REACT_APP_SERVER_URL}/users/login`, userData)
+    //   .then(response => {
+    //     const { token } = response.data;
+    //     // save token to localStorage
+    //     localStorage.setItem('jwtToken', token);
+    //     // set token to headers
+    //     setAuthToken(token);
+    //     // decode token to get the user data
+    //     const decoded = jwt_decode(token);
+    //     // set the current user
+    //     this.props.nowCurrentUser(decoded); // funnction passed down as props.
+    //   })
+    //   .catch(error => {
+    //     console.log('===> Error on login', error);
+    //     alert('Either email or password is incorrect. Please try again');
+    //   });
+
+
   };
 
   render() {
@@ -59,13 +111,13 @@ class Login extends Component {
         <section id="login" className="hero is-fullheight">
           <div className="hero-body has-text-centered">
             <div className="login">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvZc2OTcmowp6dUbR_mwc_HPU5spYnvIwFSKyNdb1H1WrJUpEWJlDu-4q9rvgy7IrMfCc&usqp=CAU" width="325px" alt="logo"/>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvZc2OTcmowp6dUbR_mwc_HPU5spYnvIwFSKyNdb1H1WrJUpEWJlDu-4q9rvgy7IrMfCc&usqp=CAU" width="325px" alt="logo" />
               <form onSubmit={this.handleSubmit.bind(this)}>
                 <div className="field">
                   <div className="control">
                     <input
                       className="input is-medium is-rounded"
-                      type="email"
+                      type="text"
                       placeholder="hello@example.com"
                       autocomplete="username"
                       value={this.state.email}

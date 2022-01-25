@@ -37,6 +37,7 @@ function App() {
       token = jwt_decode(localStorage.getItem('jwtToken'));
       setAuthToken(localStorage.getItem('jwtToken'));
       setCurrentUser(token);
+      console.log(token);
     }
   }, []);
 

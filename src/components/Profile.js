@@ -14,6 +14,8 @@ const Profile = (props) => {
        alert('Session has ended. Please login to continue.');
    }
 
+
+
    const userData = user ?
    (<div>
        <section>
@@ -36,7 +38,7 @@ const Profile = (props) => {
                   <td>Email: {email}</td>
                 </tr>   
                 <tr>
-                  <td>Account ID: {id}</td>
+                  <td>Account ID: {user.id}</td>
                 </tr>
               </table>
             </div>

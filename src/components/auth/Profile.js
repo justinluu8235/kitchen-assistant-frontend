@@ -1,6 +1,6 @@
 import './Profile.css';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate} from 'react-router-dom';
 
 const Profile = (props) => {
    const { handleLogout, user } = props;
@@ -11,6 +11,7 @@ const Profile = (props) => {
    // make a condition that compares exp and current time
    if (currentTime >= expirationTime) {
        handleLogout();
+       
        alert('Session has ended. Please login to continue.');
    }
 
@@ -132,7 +133,7 @@ const Profile = (props) => {
       </div>
     </div>
   </section>
-   </div>) : <h2>Loading...</h2>
+   </div>) : <Navigate to="/login" />
 
     const errorDiv = () => {
         return (

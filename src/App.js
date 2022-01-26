@@ -8,10 +8,12 @@ import setAuthToken from './utils/setAuthToken';
 import './App.css';
 
 // Components
-import Signup from './components/Signup';
-import Login from './components/Login';
+import Signup from './components/auth//Signup';
+import Login from './components/auth/Login-1';
 import Navbar from './components/Navbar';
-import Profile from './components/Profile';
+import Profile from './components/auth/Profile';
+import SearchRecipesIndex from './components/searchRecipes/SearchRecipesIndex'
+import SearchRecipeShow from './components/searchRecipes/SearchRecipeShow';
 
 // const PrivateRoute = ({ component: Component, ...rest}) => {
 //   let token = localStorage.getItem('jwtToken');
@@ -68,8 +70,9 @@ function App() {
             element={<Login  nowCurrentUser={nowCurrentUser} setIsAuthenticated={setIsAuthenticated} user={currentUser}/>}
           />
           <Route path="/profile" element={<Profile user={currentUser} handleLogout={handleLogout}/>}  />
-          {/* <Route exact path="/" component={Welcome} />
-          <Route path="/about" component={About} /> */}
+          <Route path="/searchRecipes" element={<SearchRecipesIndex user={currentUser} handleLogout={handleLogout}/>} />
+          <Route path="/searchRecipe/view/:id" element={<SearchRecipeShow user={currentUser} handleLogout={handleLogout}/>}/>
+
         </Routes>
       </div>
       </BrowserRouter>

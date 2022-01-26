@@ -1,0 +1,95 @@
+:root {
+    --bg: #427AA1;
+    --card-bg: #041221;
+  }
+  
+  body {
+    background: var(--bg);
+  }
+  
+  .box {
+  
+    background: var(--card-bg);
+  }
+  
+  
+  input::placeholder {
+    color: antiquewhite;
+  }
+  
+  .navbar {
+    background: var(--card-bg);
+  }
+  
+  .navbar-item {
+    color: ghostwhite;
+  }
+  
+  /* Card start*/
+  .card {
+    overflow: hidden;
+    background: ghostwhite;
+    color: var(--bg);
+  }
+  
+  .card.large {
+    border-radius: 5px;
+  }
+  
+  .title.no-padding {
+    margin-bottom: 0 !important;
+  }
+  
+  .footer {
+    background: var(--card-bg);
+    color: ghostwhite;
+  }
+  
+  .footer p,
+  strong {
+    color: ghostwhite
+  }
+  
+  .footer a:hover {
+    color: crimson;
+  }
+  
+  .fa {
+    color: ghostwhite;
+    margin: 10px
+  }
+  
+  .card-image{
+      border: 2px solid black;
+  }
+  
+  a{
+   color:darkblue;
+  }
+  
+  #searchRecipeInput{
+     text-align: center;
+     padding-bottom:30px;
+  }
+
+  #title-block{
+      height:70px;
+  }
+
+  .search-bar{
+    width: 300px;
+    height: 50px;
+    border-radius:20px;
+  }
+  .search-submit{
+  border-radius: 10px;
+}
+
+#recipe-name{
+  color:#0d6efd;
+}
+
+.view-recipe-text{
+  font-size:20px;
+}
+  

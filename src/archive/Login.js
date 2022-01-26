@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
-import setAuthToken from '../utils/setAuthToken';
+import setAuthToken from '../../utils/setAuthToken';
 const { REACT_APP_SERVER_URL } = process.env;
 
 class Login extends Component {
@@ -67,14 +67,13 @@ class Login extends Component {
         let dataObj = JSON.parse(data)
         const { token } = dataObj;
         console.log('token', token)
-        console.log('user data', dataObj['userData'])
          // save token to localStorage
          localStorage.setItem('jwtToken', token);
          // set token to headers
          setAuthToken(token);
          // decode token to get the user data
          const decoded = jwt_decode(token);
-         console.log('decoded', decoded)
+         console.log('decoded token', decoded)
         //  set the current user
          this.props.nowCurrentUser(decoded); // funnction passed down as props.
         return alert('Logged In');
@@ -83,24 +82,6 @@ class Login extends Component {
         console.log('===> Error on login', error);
         alert('Either email or password is incorrect. Please try again');
       });
-    // axios.post(`${REACT_APP_SERVER_URL}/users/login`, userData)
-    //   .then(response => {
-    //     const { token } = response.data;
-    //     // save token to localStorage
-    //     localStorage.setItem('jwtToken', token);
-    //     // set token to headers
-    //     setAuthToken(token);
-    //     // decode token to get the user data
-    //     const decoded = jwt_decode(token);
-    //     // set the current user
-    //     this.props.nowCurrentUser(decoded); // funnction passed down as props.
-    //   })
-    //   .catch(error => {
-    //     console.log('===> Error on login', error);
-    //     alert('Either email or password is incorrect. Please try again');
-    //   });
-
-
   };
 
   render() {

@@ -11,6 +11,7 @@ const Login = (props) => {
     const {nowCurrentUser, user} = props;
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [redirect, setRedirect] = useState(false)
 
     const handleUserName = (e) => {
         setUsername(e.target.value)
@@ -61,6 +62,7 @@ const Login = (props) => {
                 let dataObj = JSON.parse(data)
                 const { token } = dataObj;
                 console.log('token', token)
+                console.log('exp', dataObj['exp'])
                 // save token to localStorage
                 localStorage.setItem('jwtToken', token);
                 // set token to headers
@@ -68,8 +70,10 @@ const Login = (props) => {
                 // decode token to get the user data
                 const decoded = jwt_decode(token);
                 console.log('decoded token', decoded)
+                
                 //  set the current user
                 nowCurrentUser(decoded); // funnction passed down as props.
+                setRedirect(true);
                 return alert('Logged In');
             })
             .catch(error => {
@@ -78,8 +82,8 @@ const Login = (props) => {
             });
     };
 
-    if (user) return (<Navigate to="/profile" />)
-    else {
+    if (redirect) return (<Navigate to="/profile" />);
+    
         return (
             <div>
                 <section class="hero is-success is-fullheight">
@@ -133,7 +137,7 @@ const Login = (props) => {
                 </section>
             </div>
         )
-    }
+   
 
 
 

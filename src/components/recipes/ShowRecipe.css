@@ -1,0 +1,119 @@
+:root {
+    --bg: #427AA1;
+    --card-bg: #041221;
+  }
+  
+  body {
+    background: var(--bg);
+  }
+  
+  .box {
+  
+    background: var(--card-bg);
+  }
+  
+  
+  input::placeholder {
+    color: antiquewhite;
+  }
+  
+  .navbar {
+    background: var(--card-bg);
+  }
+  
+  .navbar-item {
+    color: ghostwhite;
+  }
+  
+  /* Card start*/
+  .card {
+    overflow: hidden;
+    background: #EBF2FA;
+    color: var(--bg);
+  }
+  
+  .card.large {
+    border-radius: 5px;
+  }
+  
+  .title.no-padding {
+    margin-bottom: 0 !important;
+  }
+  
+  .footer {
+    background: var(--card-bg);
+    color: ghostwhite;
+  }
+  
+  .footer p,
+  strong {
+    color: ghostwhite
+  }
+  
+  .footer a:hover {
+    color: crimson;
+  }
+  
+  .fa {
+    color: ghostwhite;
+    margin: 10px
+  }
+  
+  .card-image{
+      border: 2px solid black;
+  }
+  
+  a{
+    color:darkblue;
+  }
+  
+form, .pantry-item{
+    display: inline;
+
+}
+
+.add-pantry-item{
+    height:80px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.media-content{
+    min-height:100px;
+    width: 800px;
+    flex-direction: column;
+    align-items:flex-start;
+}
+
+#column{
+    width: 700px;
+}
+
+.list-item{
+    display:block;
+    /* height: 150px;
+    width: 150px;
+    background-color: yellow; */
+    margin:10px;
+}
+
+.instructions{
+    color:black;
+}
+
+.title{
+  padding-top:25px;
+}
+
+input{
+  margin-bottom: 15px;
+  border-radius: 10px;
+  margin-right:20px;
+}
+
+#search-recipe-image{
+  height:250px;
+  width:250px;
+}

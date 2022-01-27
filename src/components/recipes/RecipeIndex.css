@@ -1,0 +1,79 @@
+:root {
+    /* --bg: #c5f1ce; */
+    --bg: #427AA1;
+    /* --card-bg: #041221; */
+    --card-bg: #041221;
+  }
+  
+  body {
+    background: var(--bg);
+  }
+  
+  .box {
+  
+    background: var(--card-bg);
+  }
+  
+  
+  input::placeholder {
+    color: antiquewhite;
+  }
+  
+  .navbar {
+    background: var(--card-bg);
+  }
+  
+  .navbar-item {
+    color: ghostwhite;
+  }
+  
+  /* Card start*/
+  .card {
+    overflow: hidden;
+    background: #EBF2FA;
+    color: var(--bg);
+  }
+  
+  .card.large {
+    border-radius: 5px;
+  }
+  
+  .title.no-padding {
+    margin-bottom: 0 !important;
+  }
+  
+  .footer {
+    background: var(--card-bg);
+    color: ghostwhite;
+  }
+  
+  .footer p,
+  strong {
+    color: ghostwhite
+  }
+  
+  .footer a:hover {
+    color: crimson;
+  }
+  
+  .fa {
+    color: ghostwhite;
+    margin: 10px
+  }
+  
+  .card-image{
+      border: 2px solid black;
+  }
+  
+  a{
+    color:#0d6efd;
+  }
+  
+  #add-recipe{
+    text-align:center;
+    font-size:20px;
+    width: 200px;
+    background-color: #EBF2FA;
+    border-radius: 10px;
+  }
+  

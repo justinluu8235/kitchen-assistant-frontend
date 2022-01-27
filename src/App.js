@@ -6,6 +6,7 @@ import setAuthToken from './utils/setAuthToken';
 
 // CSS
 import './App.css';
+import axios from 'axios'
 
 // Components
 import Signup from './components/auth//Signup';
@@ -14,6 +15,11 @@ import Navbar from './components/Navbar';
 import Profile from './components/auth/Profile';
 import SearchRecipesIndex from './components/searchRecipes/SearchRecipesIndex'
 import SearchRecipeShow from './components/searchRecipes/SearchRecipeShow';
+import NewRecipe from './components/recipes/NewRecipe';
+import ShowRecipe from './components/recipes/ShowRecipe';
+import RecipeIndex from './components/recipes/RecipeIndex';
+import EditRecipe from './components/recipes/EditRecipe';
+import Pantry from './components/pantry/Pantry';
 
 // const PrivateRoute = ({ component: Component, ...rest}) => {
 //   let token = localStorage.getItem('jwtToken');
@@ -28,6 +34,7 @@ function App() {
   // Set state values
   const [currentUser, setCurrentUser] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const { REACT_APP_SERVER_URL } = process.env;
 
   useEffect(() => {
     let token;
@@ -56,6 +63,8 @@ function App() {
         setCurrentUser(null);
         setIsAuthenticated(false);
     }
+    axios.get(`${REACT_APP_SERVER_URL}/logout`)
+
   }
 
   return (
@@ -72,7 +81,11 @@ function App() {
           <Route path="/profile" element={<Profile user={currentUser} handleLogout={handleLogout}/>}  />
           <Route path="/searchRecipes" element={<SearchRecipesIndex user={currentUser} handleLogout={handleLogout}/>} />
           <Route path="/searchRecipe/view/:id" element={<SearchRecipeShow user={currentUser} handleLogout={handleLogout}/>}/>
-
+          <Route path ="/recipes" element={<RecipeIndex user={currentUser} handleLogout={handleLogout}/>}/>
+          <Route path="/recipes/new" element={<NewRecipe user={currentUser} handleLogout={handleLogout}/>}/>
+          <Route path="/recipes/:id" element={<ShowRecipe user={currentUser} handleLogout={handleLogout}/>}/>
+          <Route path="/recipes/edit/:id" element={<EditRecipe user={currentUser} handleLogout={handleLogout}/>}/>
+          <Route path="/pantry" element={<Pantry user={currentUser} handleLogout={handleLogout}/>}/>
         </Routes>
       </div>
       </BrowserRouter>

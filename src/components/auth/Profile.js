@@ -3,11 +3,16 @@ import React from 'react';
 import { Link, Navigate} from 'react-router-dom';
 
 const Profile = (props) => {
+  
    const { handleLogout, user } = props;
-   const { id, name, email, exp } = user;
+   console.log("USER PROP", user)
+   const {  name, email, exp } = user;
    const expirationTime = new Date(exp * 1000);
+  //  const expirationTime = exp*1000
    let currentTime = Date.now();
-
+    console.log('exp time', expirationTime)
+    console.log('current time', currentTime)
+    console.log('user', user)
    // make a condition that compares exp and current time
    if (currentTime >= expirationTime) {
        handleLogout();

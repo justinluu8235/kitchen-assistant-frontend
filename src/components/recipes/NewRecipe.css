@@ -1,0 +1,129 @@
+:root {
+    --bg: #427AA1;
+    --card-bg: #041221;
+  }
+  
+  body {
+    background: var(--bg);
+  }
+  
+  .box {
+  
+    background: var(--card-bg);
+  }
+  
+  
+  input::placeholder {
+    color: antiquewhite;
+  }
+  
+  .navbar {
+    background: var(--card-bg);
+  }
+  
+  .navbar-item {
+    color: ghostwhite;
+  }
+  
+  /* Card start*/
+  .card {
+    overflow: hidden;
+    background: ghostwhite;
+    color: var(--bg);
+  }
+  
+  .card.large {
+    border-radius: 5px;
+  }
+  
+  .title.no-padding {
+    margin-bottom: 0 !important;
+  }
+  
+  .footer {
+    background: var(--card-bg);
+    color: ghostwhite;
+  }
+  
+  .footer p,
+  strong {
+    color: ghostwhite
+  }
+  
+  .footer a:hover {
+    color: crimson;
+  }
+  
+  .fa {
+    color: ghostwhite;
+    margin: 10px
+  }
+  
+  .card-image{
+      border: 2px solid black;
+  }
+  
+  a{
+    color:darkblue;
+  }
+  
+form, .pantry-item{
+    display: inline;
+
+}
+
+.add-pantry-item{
+    height:80px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.media-content{
+    min-height:550px;
+    width: 800px;
+    flex-direction: column;
+    align-items:flex-start;
+}
+
+#column{
+    width: 700px;
+}
+
+.list-item{
+    display:block;
+    /* height: 150px;
+    width: 150px;
+    background-color: yellow; */
+    margin:10px;
+    color:black;
+}
+
+.new-ingredient, .first-ingredient, .new-recipe-step, .first-recipe-step{
+    border: 1px solid black;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+textarea, label,input{
+    margin:15px;
+    margin-left:10px;
+}
+
+.instruction-input{
+    height:80px;
+    width: 300px;
+   
+}
+
+.instructions{
+  position:relative;
+  bottom:50px;
+}
+
+#addRecipeStepButton,#addIngredientButton{
+  margin-top:20px;
+  position:relative;
+  right:40px;
+}

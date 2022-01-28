@@ -12,12 +12,12 @@ const NewRecipe = (props) => {
     const [recipeCategory, setRecipeCategory] = useState('');
     const [ingredients, setIngredients] = useState([{
         ingredient_name: '',
-        ingredient_quantity: '',
-        ingredient_unit: ''
+        quantity_unit: '',
+        quantity_unit: ''
     }]);
     const [instructions, setInstructions] = useState([{
         step_number: 1,
-        instruction: ''
+        instructions: ''
     }])
     const [redirect, setRedirect] = useState(false)
     const [newRecipeID, setNewRecipeID] = useState()
@@ -38,7 +38,7 @@ const NewRecipe = (props) => {
 
         setIngredients(ingredients.concat([{
             ingredient_name: '',
-            ingredient_quantity: '',
+            quantity_unit: '',
             ingredient_unit: ''
         }]))
 
@@ -49,7 +49,7 @@ const NewRecipe = (props) => {
         let lastStep = instructions[instructions.length - 1]['step_number']
         setInstructions(instructions.concat([{
             step_number: lastStep + 1,
-            instruction: ''
+            instructions: ''
         }]))
     }
 
@@ -63,7 +63,7 @@ const NewRecipe = (props) => {
     const displayIngredients = (ingredients) => {
         // console.log('in ingredients display' , ingredients)
         let display = ingredients.map((ingredient, idx) => {
-            return <IngredientInput key={idx} index={idx} name={ingredient['ingredient_name']} quantity={ingredient['ingredient_quantity']} unit={ingredient['ingredient_unit']}
+            return <IngredientInput key={idx} index={idx} name={ingredient['ingredient_name']} quantity={ingredient['quantity_unit']} unit={ingredient['ingredient_unit']}
                 handleIngredientChange={handleChangeIngredients} />
         })
         return display
@@ -71,7 +71,7 @@ const NewRecipe = (props) => {
 
     const handleInstructionChange = (i, e) => {
         let temp = instructions.slice()
-        temp[i]['instruction'] = e.target.value
+        temp[i]['instructions'] = e.target.value
         setInstructions(temp);
     }
 

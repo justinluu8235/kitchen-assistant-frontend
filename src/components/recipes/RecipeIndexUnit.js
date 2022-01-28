@@ -1,8 +1,53 @@
-import React from 'react';
+import React, {useState} from 'react';
 import RecipeIndex from './RecipeIndex';
 
 const RecipeIndexUnit = (props) => {
-        const {recipeName, id, image} = props
+    const {recipeName, recipe_id, image, user_id,  index, handleDateChange,  date, handleMenuSubmit} = props
+    const {REACT_APP_SERVER_URL} = process.env
+    const getCookie = (name) => {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const generateShoppingList = (e,user_id, recipeId) => {
+        e.preventDefault();
+        let recipeInfo = {
+            user_id: user_id,
+            recipe_id: recipeId
+        }
+        console.log('recipe info', recipeInfo);
+
+        let csrftoken = getCookie('csrftoken');
+        fetch(`${REACT_APP_SERVER_URL}/shoppinglist/generate`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify(recipeInfo)
+        })
+            .then(response => response.json())
+            .then((data) => {
+                console.log('return data', data)
+                alert(`ingredients for ${recipeName} has been added to your shopping list`)
+            })
+            .catch(error => {
+                console.log('===> Error creating pantry item', error);
+                alert('Error creating pantry item');
+            });
+
+    }
 
     return (
 
@@ -24,21 +69,19 @@ const RecipeIndexUnit = (props) => {
                             <br />
                             <p>
                                 <span class="title is-6">
-                                    <a href={`/recipes/${id}`}>View Recipe</a> </span> </p>
+                                    <a href={`/recipes/${recipe_id}`}>View Recipe</a> </span> </p>
                             <br /><br />
                             <p>
                                 <span class="title is-6">
-                                    <form action="/recipes/<%=recipe.id%>" method="POST">
+                                    <form onSubmit={(e) =>generateShoppingList(e,user_id, recipe_id)}>
                                         <input type="submit" value="Add Ingredients to Shopping List" />
                                     </form> </span> </p>
                             <p>
                                 <br />
                                 <span class="title is-6">
-                                    <form action="/menu/<%=recipe.id%>" method="POST">
-                                        {/* <% if(recipe.imageURL != null){ %>  */}
-                                        <input type="text" name="imageURL" value="<%=recipe.imageURL %>" hidden />
-                                        {/* //   <% } %>  */}
-                                        <input type="date" name="dateSelected" />
+                                    <form onSubmit={(e) => handleMenuSubmit(e,recipe_id, index)}>
+                                        
+                                        <input type="date" name="dateSelected" value={date} onChange={(e) => handleDateChange(e, index)}/>
                                         <input type="submit" value="Request" />
                                     </form> </span> </p>
                         </div>

@@ -1,30 +1,35 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 
 const PantryItem = (props) => {
-    const {item_name, in_stock} = props;
+    const {pantryId, index, item_name, in_stock, handleDeleteSubmit, handleStockSubmit} = props;
+ 
 
 
+    
+    const handleItemSubmit =(e) => {
+        handleDeleteSubmit(e, pantryId, index)
+    }
+
+
+    
     return (
         <div class="pantry-item" class="pantry-item">
 
             {item_name}
 
             <form
-                action="/pantry/<%=pantryItem.id%>/?_method=PUT"
-                method="POST">
+                onSubmit={(e) => handleStockSubmit(e, pantryId, index)}>
 
                 <input type="submit"
-                    value="<%=inStockString%>"
+                    value={in_stock ? "in stock" : "out of stock"}
                     id="stockButton" />
             </form>
-            <form
-                action="/pantry/<%=pantryItem.id%>/?_method=DELETE"
-                method="POST">
+            <form onSubmit={handleItemSubmit}>
                 <input type="submit" value="Remove" class="remove-input" />
             </form>
 
-
+            <br/>
         </div>
     )
 

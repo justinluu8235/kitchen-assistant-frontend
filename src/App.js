@@ -20,7 +20,11 @@ import ShowRecipe from './components/recipes/ShowRecipe';
 import RecipeIndex from './components/recipes/RecipeIndex';
 import EditRecipe from './components/recipes/EditRecipe';
 import Pantry from './components/pantry/Pantry';
-
+import ShoppingList from './components/shoppinglist/ShoppingList';
+import Menu from './components/menu/Menu';
+import UserFriend from './components/userFriend/UserFriend';
+import FriendRecipeIndex from './components/userFriend/FriendRecipeIndex';
+import FriendRecipeShow from './components/userFriend/FriendRecipeShow';
 // const PrivateRoute = ({ component: Component, ...rest}) => {
 //   let token = localStorage.getItem('jwtToken');
 //   // console.log('===> Hitting a Private Route');
@@ -86,6 +90,11 @@ function App() {
           <Route path="/recipes/:id" element={<ShowRecipe user={currentUser} handleLogout={handleLogout}/>}/>
           <Route path="/recipes/edit/:id" element={<EditRecipe user={currentUser} handleLogout={handleLogout}/>}/>
           <Route path="/pantry" element={<Pantry user={currentUser} handleLogout={handleLogout}/>}/>
+          <Route path="/shoppingList" element={<ShoppingList user={currentUser} handleLogout={handleLogout}/>}/>
+          <Route path="/menu" element={<Menu user={currentUser} handleLogout={handleLogout}/>}/>
+          <Route path="/userFriends" element={<UserFriend user={currentUser} handleLogout={handleLogout}/>}/>
+          <Route path="/userFriends/recipes/:friendId" element={<FriendRecipeIndex user={currentUser} handleLogout={handleLogout}/>}/>
+          <Route path="/userFriends/recipes/show/:recipeId" element={<FriendRecipeShow user={currentUser} handleLogout={handleLogout}/>}/>
         </Routes>
       </div>
       </BrowserRouter>

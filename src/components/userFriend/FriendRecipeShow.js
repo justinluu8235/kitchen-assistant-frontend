@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom';
-import './ShowRecipe.css';
+import '../recipes/ShowRecipe.css';
 const { REACT_APP_SERVER_URL } = process.env;
 
 
-const ShowRecipe = (props) => {
+const FriendRecipeShow = (props) => {
 
     const { handleLogout, user } = props;
     const { id, name, email, exp } = user;
     const [recipeData, setRecipeData] = useState()
     const [redirect, setRedirect] = useState(false)
+
+    const [newRecipeID, setNewRecipeID] = useState()
     // make a condition that compares exp and current time
     const expirationTime = new Date(exp * 1000);
     let currentTime = Date.now();
@@ -20,7 +22,7 @@ const ShowRecipe = (props) => {
     }
 
     let temp = window.location.pathname.split('/')
-    let recipeID = temp[2];
+    let recipeID = temp[4];
     console.log('recipe id', recipeID);
 
     useEffect(() => {
@@ -84,33 +86,43 @@ const ShowRecipe = (props) => {
     }
 
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
-  
+        let newRecipeData = {
+            recipe_name: recipeData['recipe']['recipe_name'],
+            recipe_image: recipeData['recipe']['image'],
+            recipe_category: "uncategorized",
+            instructions_list: recipeData['instructions'],
+            ingredients_list: recipeData['ingredients'], 
+            user_id: id,
+        }
+        console.log('new recipe data', newRecipeData);
 
         let csrftoken = getCookie('csrftoken');
-        fetch(`${REACT_APP_SERVER_URL}/recipes/delete/${recipeID}`, {
-            method: 'DELETE',
+        fetch(`${REACT_APP_SERVER_URL}/recipes/new`, {
+            method: 'POST',
             headers: {
                 'Content-type': 'application/json',
                 'X-CSRFToken': csrftoken,
             },
-
+            body: JSON.stringify(newRecipeData)
         })
-        // .then(response => response.json())
+        .then(response => response.json())
         .then((data) => {
             console.log('return data', data)
+            setNewRecipeID(data['recipe']['id'])
             setRedirect(true);
         })
         .catch(error => {
-            console.log('===> Error deleting recipe', error);
-            alert('Error deleting recipe');
+            console.log('===> Error creating recipe', error);
+            alert('Error creating recipe');
         });
     }
 
 
 
-    if (redirect) return (<Navigate to={`/recipes`} />);
+    if (redirect) return (<Navigate to={`/recipes/${newRecipeID}`} />);
     const userData = user ?
         (
             <div class="container">
@@ -121,13 +133,10 @@ const ShowRecipe = (props) => {
                     </div>
                 </div>
 
-                <form action={`/recipes/edit/${recipeID}`} method="GET">
-                    <input type="submit" value="Edit Recipe" />
+                <form onSubmit={handleSubmit}>
+                    <input type="submit" value="Save to My Recipes" />
                 </form>
 
-                <form onSubmit={handleSubmit}>
-                    <input type="submit" value="Delete Recipe" />
-                </form>
                 <div id="app" class="row columns is-multiline">
                     <div v-for="card in cardData" key="card.id" class="column is-4" id="column" >
                         <div class="card large" id="card-large">
@@ -194,4 +203,4 @@ const ShowRecipe = (props) => {
 }
 
 
-export default ShowRecipe 
+export default FriendRecipeShow 

@@ -79,6 +79,18 @@ const Pantry = (props) => {
                 console.log('return data', data)
                 // setNewRecipeID(data['recipe']['id'])
                 // setRedirect(true);
+                let category = data['pantry_category']['category_name']
+                let temp = {...pantryData}
+                if(temp[category] == undefined) {
+                    temp[category] = [data['pantry_item']]
+                }
+                else{
+                    temp[category].push(data['pantry_item'])
+                }
+                setPantryData(temp)
+                setCurrentItem('')
+                setCurrentCategory('')
+                
             })
             .catch(error => {
                 console.log('===> Error creating pantry item', error);
@@ -92,6 +104,7 @@ const Pantry = (props) => {
             console.log('pantry data', pantryData)
             console.log('keys', keyArr)
             let display = keyArr.map((category, idx) => {
+                
                 let pantryItemList = pantryData[category]
                 console.log('pantry list' , pantryItemList)
                 return <PantryCategory key={idx} pantry_category={category} pantry_item_list={pantryItemList} />

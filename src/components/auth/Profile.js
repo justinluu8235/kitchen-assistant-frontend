@@ -6,7 +6,7 @@ const Profile = (props) => {
   
    const { handleLogout, user } = props;
    console.log("USER PROP", user)
-   const {  name, email, exp } = user;
+   const {  username, email, exp } = user;
    const expirationTime = new Date(exp * 1000);
   //  const expirationTime = exp*1000
    let currentTime = Date.now();
@@ -38,7 +38,7 @@ const Profile = (props) => {
                   <th colspan="2"></th>
                 </tr>
                 <tr>
-                  <td>Name: {name}</td>
+                  <td>Name: {username}</td>
                 </tr>
                 <tr>
                   <td>Email: {email}</td>

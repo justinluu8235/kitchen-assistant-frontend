@@ -1,6 +1,6 @@
 // Imports
 import React, { useEffect, useState, Component } from 'react';
-import { Route, Routes, BrowserRouter} from 'react-router-dom';
+import { Route, Routes, BrowserRouter, Navigate} from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 
@@ -11,6 +11,7 @@ import axios from 'axios'
 // Components
 import Signup from './components/auth//Signup';
 import Login from './components/auth/Login-1';
+import Home from './Home';
 import Navbar from './components/Navbar';
 import Profile from './components/auth/Profile';
 import SearchRecipesIndex from './components/searchRecipes/SearchRecipesIndex'
@@ -25,13 +26,8 @@ import Menu from './components/menu/Menu';
 import UserFriend from './components/userFriend/UserFriend';
 import FriendRecipeIndex from './components/userFriend/FriendRecipeIndex';
 import FriendRecipeShow from './components/userFriend/FriendRecipeShow';
-// const PrivateRoute = ({ component: Component, ...rest}) => {
-//   let token = localStorage.getItem('jwtToken');
-//   // console.log('===> Hitting a Private Route');
-//   return <Route {...rest} render={(props) => {
-//     return token ? <Component {...rest} {...props} /> : <Redirect to="/login"/>
-//   }} />
-// }
+
+
 
 
 function App() {
@@ -73,15 +69,16 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar handleLogout={handleLogout} isAuth={isAuthenticated} />
+      <Navbar user={currentUser} handleLogout={handleLogout} isAuth={isAuthenticated} />
       <BrowserRouter>
-      <div className="container mt-5">
+      <div className="container mt-5" id="body">
         <Routes>
           <Route path='/signup' element={<Signup/>} />
           <Route 
             path="/login"
             element={<Login  nowCurrentUser={nowCurrentUser} setIsAuthenticated={setIsAuthenticated} user={currentUser}/>}
           />
+          <Route path="/" element={<Home user={currentUser} handleLogout={handleLogout}/>}  />
           <Route path="/profile" element={<Profile user={currentUser} handleLogout={handleLogout}/>}  />
           <Route path="/searchRecipes" element={<SearchRecipesIndex user={currentUser} handleLogout={handleLogout}/>} />
           <Route path="/searchRecipe/view/:id" element={<SearchRecipeShow user={currentUser} handleLogout={handleLogout}/>}/>

@@ -1,8 +1,8 @@
-html,body {
+/* html,body {
     font-family: 'Questrial', sans-serif;
     font-size: 14px;
     font-weight: 300;
-  }
+  } */
   .hero.is-success {
     background: #F2F6FA;
   }
@@ -49,7 +49,7 @@ html,body {
   .fa{
     margin-left: 5px; 
   }
-  img{
+  /* img{
     height: 120px;
     width:120px;
-  }
+  } */

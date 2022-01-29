@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import RecipeIndex from './RecipeIndex';
+import './RecipeIndexUnit.css'
 
 const RecipeIndexUnit = (props) => {
     const {recipeName, recipe_id, image, user_id,  index, handleDateChange,  date, handleMenuSubmit} = props
@@ -51,7 +52,7 @@ const RecipeIndexUnit = (props) => {
 
     return (
 
-        <div v-for="card in cardData" key="card.id" class="column is-4">
+        <div v-for="card in cardData" key="card.id" class="column is-4 recipe-index-card">
             {/* <% for( let i = 0; i < allRecipes.length; i++ ) { %> 
               <% let recipe = allRecipes[i].toJSON() %> */}
             <div class="card large">
@@ -62,28 +63,31 @@ const RecipeIndexUnit = (props) => {
                     </figure>
                 </div>
  
-                <div class="card-content">
+                <div class="card-content ">
                     <div class="media">
-                        <div class="media-content">
+                        <div class="media-content recipe-index-card-content">
                             <p class="title is-4 no-padding">{recipeName} </p>
                             <br />
                             <p>
                                 <span class="title is-6">
                                     <a href={`/recipes/${recipe_id}`}>View Recipe</a> </span> </p>
                             <br /><br />
-                            <p>
+                            <div >
                                 <span class="title is-6">
                                     <form onSubmit={(e) =>generateShoppingList(e,user_id, recipe_id)}>
-                                        <input type="submit" value="Add Ingredients to Shopping List" />
-                                    </form> </span> </p>
-                            <p>
+                                        <input class="recipe-index-card-button" type="submit" value="Add Ingredients to Shopping List" />
+                                    </form> </span> 
+                            </div>
+                            <div>
                                 <br />
                                 <span class="title is-6">
                                     <form onSubmit={(e) => handleMenuSubmit(e,recipe_id, index)}>
                                         
-                                        <input type="date" name="dateSelected" value={date} onChange={(e) => handleDateChange(e, index)}/>
+                                        <input class="recipe-index-card-button" type="date" name="dateSelected" value={date} onChange={(e) => handleDateChange(e, index)}/>
                                         <input type="submit" value="Request" />
-                                    </form> </span> </p>
+                                    </form> </span> 
+                                    
+                            </div>
                         </div>
                     </div>
                     <div class="content">

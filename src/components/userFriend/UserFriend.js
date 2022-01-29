@@ -13,7 +13,7 @@ const UserFriend = (props) => {
     const [friendData, setFriendData] = useState()
     const [friendRequestsReceived, setFriendRequestsReceived] = useState()
     const [friendRequestsSent, setFriendRequestsSent] = useState()
-    const [friendList, setFriendList] = useState()
+    const [friendList, setFriendList] = useState([])
 
     // make a condition that compares exp and current time
     const expirationTime = new Date(exp * 1000);
@@ -117,9 +117,12 @@ const UserFriend = (props) => {
                 temp.splice(index, 1);
                 setFriendRequestsReceived(temp);
 
-                let temp2 = friendList.slice()
-                temp2.push(data);
-                setFriendList(temp2)
+                // let temp2 = friendList.slice()
+                // temp2.push(data);
+                // console.log('temp2', temp2)
+                // setFriendList(temp2)
+              
+                setFriendList(friendList.concat([data['friend_status']]))
 
                 
             })

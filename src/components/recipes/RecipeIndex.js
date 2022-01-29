@@ -1,6 +1,7 @@
 import  React, {useState, useEffect} from 'react';
 import './RecipeIndex.css';
 import RecipeIndexUnit from './RecipeIndexUnit';
+import { Link, Navigate } from 'react-router-dom';
 
 
 
@@ -9,6 +10,7 @@ const RecipeIndex = (props) => {
     const { id, username, email, exp } = user;
     const { REACT_APP_SERVER_URL } = process.env;
     const [recipes, setRecipes] = useState();
+    const [redirect, setRedirect] = useState(false);
 
 
     const expirationTime = new Date(exp * 1000);
@@ -17,6 +19,7 @@ const RecipeIndex = (props) => {
         handleLogout();
 
         alert('Session has ended. Please login to continue.');
+        setRedirect(true)
     }
 
     useEffect(() => {
@@ -104,10 +107,12 @@ const RecipeIndex = (props) => {
 
     }
 
-
-    return(
+    
+    
+    const userData = user ?
+    (
         <div class="container">
-      
+        {redirect ? <Navigate to="/login" /> : null}
         <div class="section">
           <div id="add-recipe">
           <a href="/recipes/new">Add a Recipe</a>
@@ -122,7 +127,21 @@ const RecipeIndex = (props) => {
           </div>
         </div>
       </div>
-    )
+    ): <Navigate to="/login" />
+
+    const errorDiv = () => {
+      return (
+          <div className="text-center pt-4">
+              <h3>Please <Link to="/login">login</Link> to view this page</h3>
+          </div>
+      );
+  };
+  
+  return (
+      <div className="text-center pt-4">
+          {user ? userData : errorDiv()}
+      </div>
+  );
 
 }
 

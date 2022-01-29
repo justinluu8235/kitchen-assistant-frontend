@@ -3,7 +3,10 @@ import './NewRecipe.css'
 import IngredientInput from './IngredientInput';
 import InstructionInput from './InstructionInput';
 import { Link, Navigate} from 'react-router-dom';
+// import cloudinary  from '../../utils/cloudinary'
+
 const { REACT_APP_SERVER_URL } = process.env;
+
 
 
 
@@ -21,6 +24,7 @@ const NewRecipe = (props) => {
     }])
     const [redirect, setRedirect] = useState(false)
     const [newRecipeID, setNewRecipeID] = useState()
+    const [imageFile, setImageFile] = useState()
     const { handleLogout, user } = props;
     const { id, name, email, exp } = user;
     // make a condition that compares exp and current time
@@ -109,12 +113,19 @@ const NewRecipe = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+
+
+
+
+
         let newRecipeData = {
             recipe_name: recipeName,
             recipe_category: recipeCategory,
             instructions_list: instructions,
             ingredients_list: ingredients, 
             user_id: id,
+            upload_image: imageFile
         }
         console.log('new recipe data', newRecipeData);
 
@@ -139,6 +150,23 @@ const NewRecipe = (props) => {
         });
     }
 
+    const hangleImageFile = (e) =>{
+        let file = e.target.files[0];
+        previewFile(file);
+       
+    }
+
+    //translates the image file to a readable URL/string and set to state
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    //converts image to URL
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+        setImageFile(reader.result);
+        console.log('image info', reader.result)
+    }
+  }
+
     if (redirect) return (<Navigate to={`/recipes/${newRecipeID}`} />);
     return (
         <div class="container">
@@ -162,34 +190,12 @@ const NewRecipe = (props) => {
                                                         <br />
                                                         <label for="categoryName"><p>Recipe Category</p></label>
                                                         <input type="text" name="categoryName" value={recipeCategory} onChange={handleCategoryChange} required />
-
+                                                        <input type="file"  onChange={hangleImageFile}></input>
 
                                                         <br />
                                                         <br />
                                                         <div class="all-ingredients" id="all-ingredients">
-                                                            {/* <div class="first-ingredient">
-                                                                <label for="ingredientName"><p>Ingredient Name</p></label>
-                                                                <input type="text" name="ingredientName" required />
-                                                                <br />
-                                                                <label for="ingredientQuantity"><p>Ingredient Quantity</p></label>
-                                                                <input type="text" name="ingredientQuantity" required />
-                                                                <br />
-                                                                <label for="quantityUnit"><p>Measurement Unit</p></label>
-                                                                <input type="text" name="quantityUnit" required />
-                                                            </div>
-
-
-                                                            <div class="new-ingredient">
-                                                                <label for="ingredientName"><p>Ingredient Name</p></label>
-                                                                <input type="text" name="ingredientName" />
-                                                                <br />
-                                                                <label for="ingredientQuantity"><p>Ingredient Quantity</p></label>
-                                                                <input type="text" name="ingredientQuantity" />
-                                                                <br />
-                                                                <label for="quantityUnit"><p>Measurement Unit</p></label>
-                                                                <input type="text" name="quantityUnit" />
-                                                                <br />
-                                                            </div> */}
+                                                            
                                                             {displayIngredients(ingredients)}
                                                         </div>
                                                         <label for="button"></label>
@@ -197,19 +203,7 @@ const NewRecipe = (props) => {
 
 
                                                         <div class="all-recipe-steps">
-                                                            {/* <div class="first-recipe-step">
-                                                                <label for="instructions" class="instructions">Instructions</label>
-                                                                <textarea name="instructions" cols="50" rows="5" required></textarea>
-
-                                                            </div>
-
-
-                                                            <div class="new-recipe-step">
-                                                                <label for="instructions" class="instructions">Instructions</label>
-                                                                <textarea name="instructions" cols="50" rows="5"></textarea>
-
-                                                                <br />
-                                                            </div> */}
+                                                         
                                                             {displayInstructions(instructions)}
                                                         </div>
                                                         <label for="button"></label>

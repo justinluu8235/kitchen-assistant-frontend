@@ -15,7 +15,7 @@ const IngredientInput = (props) => {
             <input type="text" value={quantity} name="ingredient_quantity" onChange={(e) => handleIngredientChange(index,e)}/>
             <br />
             <label for="quantityUnit"><p>Measurement Unit</p></label>
-            <input type="text" value={unit} name="ingredient_unit" onChange={(e) => handleIngredientChange(index,e)}/>
+            <input type="text" value={unit} name="quantity_unit" onChange={(e) => handleIngredientChange(index,e)}/>
             <br />
         </div>
     )

@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import EditIngredientInput from './EditIngredientInput';
 import EditInstructionInput from './EditInstructionInput'
 import { Link, Navigate} from 'react-router-dom';
-
+import axios from 'axios'
 const EditRecipe = (props) => {
     const { handleLogout, user } = props;
     const { id, name, email, exp } = user;
     const [recipeData, setRecipeData] = useState()
     const [recipeName, setRecipeName] = useState('')
+    const [imageFile, setImageFile] = useState()
     const [ingredients, setIngredients] = useState([{
         id: 0,
         ingredient_name: '',
@@ -166,14 +167,45 @@ const EditRecipe = (props) => {
         })
         .then(response => response.json())
         .then((data) => {
-            console.log('return data', data)
-            setNewRecipeId(data['recipe']['id'])
-            setRedirect(true);
+            if(imageFile != undefined){
+                console.log('in image')
+                const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+                const URL = `${REACT_APP_SERVER_URL}/recipes/edit-2`;
+                let formdata = new FormData();
+                formdata.append("image", imageFile['image'][0]);
+                formdata.append("id", recipeID);
+                axios.post(URL, formdata, config)
+            .then((res) => {
+                console.log('return data after image', data)
+
+                setNewRecipeId(data['recipe']['id'])
+                setRedirect(true);
+            });
+
+            }
+            else{
+                console.log('return data', data)
+
+                setNewRecipeId(data['recipe']['id'])
+                setRedirect(true);
+            }
+            
         })
         .catch(error => {
             console.log('===> Error editing recipe', error);
             alert('Error editing recipe');
         });
+    }
+
+    const hangleImageFile = (e) => {
+        setImageFile(
+            {
+                image: e.target.files
+            }
+        );
+        console.log(e.target.files)
+        console.log(imageFile)
+
     }
 
     if (redirect) return (<Navigate to={`/recipes/${newRecipeId}`} />);
@@ -187,7 +219,7 @@ const EditRecipe = (props) => {
                             <div class="card-content">
                                 <div class="media">
                                     <div class="media-content">
-                                        <p class="title is-4 no-padding" style={{ color: "0d6efd" }}>Add a Recipe</p>
+                                        <p class="title is-4 no-padding" style={{ color: "0d6efd" }}>Edit Recipe</p>
                                         <div class="list-item">
                                             <p class="pantry-item">
                                                 <span class="title is-6">
@@ -199,6 +231,8 @@ const EditRecipe = (props) => {
                                                         <label for="categoryName">Recipe Category</label>
                                                         <input type="text" name="categoryName" value={recipeCategory} onChange={handleCategoryChange} />
                                                         <br />
+                                                        <input type="file" name="image" id="post-image" onChange={hangleImageFile}></input>
+
                                                         <div class="all-ingredients">
                                                             {recipeData ? displayIngredients(ingredients) : null}
 

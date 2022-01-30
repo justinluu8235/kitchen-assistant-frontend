@@ -3,7 +3,6 @@ import './NewRecipe.css'
 import IngredientInput from './IngredientInput';
 import InstructionInput from './InstructionInput';
 import { Link, Navigate } from 'react-router-dom';
-import axios from 'axios';
 // import cloudinary  from '../../utils/cloudinary'
 
 const { REACT_APP_SERVER_URL } = process.env;
@@ -16,7 +15,7 @@ const NewRecipe = (props) => {
     const [recipeCategory, setRecipeCategory] = useState('');
     const [ingredients, setIngredients] = useState([{
         ingredient_name: '',
-        ingredient_quantity: '',
+        quantity_unit: '',
         quantity_unit: ''
     }]);
     const [instructions, setInstructions] = useState([{
@@ -43,8 +42,8 @@ const NewRecipe = (props) => {
 
         setIngredients(ingredients.concat([{
             ingredient_name: '',
-            ingredient_quantity: '',
-            quantity_unit: ''
+            quantity_unit: '',
+            ingredient_unit: ''
         }]))
 
     }
@@ -68,7 +67,7 @@ const NewRecipe = (props) => {
     const displayIngredients = (ingredients) => {
         // console.log('in ingredients display' , ingredients)
         let display = ingredients.map((ingredient, idx) => {
-            return <IngredientInput key={idx} index={idx} name={ingredient['ingredient_name']} quantity={ingredient['ingredient_quantity']} unit={ingredient['quantity_unit']}
+            return <IngredientInput key={idx} index={idx} name={ingredient['ingredient_name']} quantity={ingredient['quantity_unit']} unit={ingredient['ingredient_unit']}
                 handleIngredientChange={handleChangeIngredients} />
         })
         return display
@@ -114,50 +113,52 @@ const NewRecipe = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-        const URL = `${REACT_APP_SERVER_URL}/recipes/new`;
 
         let formdata = new FormData();
-        formdata.append("recipe_name", recipeName);
-        formdata.append("user", id);
-        formdata.append("recipe_category", 1);
-        if(imageFile){
-            console.log('image file', imageFile[0])
-            formdata.append("image", imageFile['image'][0]);
-        }
-        
-        formdata.append("ingredients_list", ingredients);
-        axios.post(URL, formdata, config)
-            .then((res) => {
-                console.log('response 1', res.data)
-                let newRecipeData = {
-                recipe_id: res.data['id'],
-                recipe_category: recipeCategory,
-                instructions_list: instructions,
-                ingredients_list: ingredients,
-                user_id: id,
-            }
-                console.log('new recipe data', newRecipeData)
-                let csrftoken = getCookie('csrftoken');
-                fetch(`${REACT_APP_SERVER_URL}/recipes/new-2`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json',
-                        // 'Content-type':'multipart/form-data',
-                        'X-CSRFToken': csrftoken,
-                    },
-                    body: JSON.stringify(newRecipeData)
-        
-                })
-                    .then(response => response.json())
-                    .then((data) => {
-                        console.log('return data 2', data)
-                        setNewRecipeID(data['recipe']['id'])
-                        setRedirect(true);
-                    })
-            })
+        formdata.append("recipe_name", "recipetest");
+formdata.append("user", "1");
+formdata.append("recipe_category", "1");
+formdata.append("image_upload", imageFile, "Screen Shot 2022-01-12 at 7.26.31 PM.png");
+        // formdata.append("recipe_name", recipeName);
+        // formdata.append("user", "1");
+        // formdata.append("recipe_category", "1");
+        // formdata.append("image_upload", imageFile);
+        // formdata.append("recipe_cat_name", recipeCategory);
+        // formdata.append("instructions_list", instructions);
+        // formdata.append("ingredients_list", ingredients);
+        // formdata.append("user_id", id)
 
+        
+
+
+
+        // let newRecipeData = {
+        //     recipe_name: recipeName,
+        //     recipe_category: recipeCategory,
+        //     instructions_list: instructions,
+        //     ingredients_list: ingredients,
+        //     user_id: id,
+        //     upload_image: imageFile
+        // }
+        console.log('new recipe data', formdata);
+
+        let csrftoken = getCookie('csrftoken');
+        fetch(`${REACT_APP_SERVER_URL}/recipes/new`, {
+            method: 'POST',
+            headers: {
+                // 'Content-type': 'application/json',
+                'Content-type':'multipart/form-data',
+                'X-CSRFToken': csrftoken,
+            },
+            // body: JSON.stringify(newRecipeData)
+            body: formdata
+        })
+            .then(response => response.json())
+            .then((data) => {
+                console.log('return data', data)
+                setNewRecipeID(data['recipe']['id'])
+                // setRedirect(true);
+            })
             .catch(error => {
                 console.log('===> Error creating recipe', error);
                 alert('Error creating recipe');
@@ -165,15 +166,21 @@ const NewRecipe = (props) => {
     }
 
     const hangleImageFile = (e) => {
-        setImageFile(
-            {
-                image: e.target.files
-            }
-        );
-        console.log(e.target.files)
-        console.log(imageFile)
+        let file = e.target.files[0];
+        setImageFile(file);
 
     }
+
+    //translates the image file to a readable URL/string and set to state
+    //   const previewFile = (file) => {
+    //     const reader = new FileReader();
+    //     //converts image to URL
+    //     reader.readAsDataURL(file);
+    //     reader.onloadend = () => {
+    //         setImageFile(reader.result);
+    //         console.log('image info', reader.result)
+    //     }
+    //   }
 
     if (redirect) return (<Navigate to={`/recipes/${newRecipeID}`} />);
     return (
@@ -198,7 +205,7 @@ const NewRecipe = (props) => {
                                                         <br />
                                                         <label for="categoryName"><p>Recipe Category</p></label>
                                                         <input type="text" name="categoryName" value={recipeCategory} onChange={handleCategoryChange} required />
-                                                        <input type="file" name="image" id="post-image" onChange={hangleImageFile}></input>
+                                                        <input type="file" onChange={hangleImageFile}></input>
 
                                                         <br />
                                                         <br />

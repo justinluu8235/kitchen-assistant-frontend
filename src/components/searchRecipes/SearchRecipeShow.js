@@ -107,11 +107,12 @@ const SearchRecipeShow = (props) => {
         console.log('new recipe data', newRecipeData);
 
         let csrftoken = getCookie('csrftoken');
-        fetch(`${REACT_APP_SERVER_URL}/recipes/new`, {
+        console.log(csrftoken)
+        fetch(`${REACT_APP_SERVER_URL}/recipes/searchRecipes/new`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
-                'X-CSRFToken': csrftoken,
+                // 'X-CSRFToken': csrftoken,
             },
             body: JSON.stringify(newRecipeData)
         })

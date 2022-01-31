@@ -4,6 +4,7 @@ import EditInstructionInput from './EditInstructionInput'
 import { Link, Navigate} from 'react-router-dom';
 import axios from 'axios'
 import './EditRecipe.css'
+
 const EditRecipe = (props) => {
     const { handleLogout, user } = props;
     const { id, name, email, exp } = user;
@@ -56,9 +57,11 @@ const EditRecipe = (props) => {
 
     }, [props])
 
+
     const handleNameChange = (event) => {
         setRecipeName(event.target.value)
     }
+    
     const handleCategoryChange = (event) => {
         setRecipeCategory(event.target.value)
     }
@@ -191,7 +194,6 @@ const EditRecipe = (props) => {
                 setNewRecipeId(data['recipe']['id'])
                 setRedirect(true);
             }
-            
         })
         .catch(error => {
             console.log('===> Error editing recipe', error);

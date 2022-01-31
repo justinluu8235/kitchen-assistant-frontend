@@ -44,8 +44,8 @@ const RecipeIndexUnit = (props) => {
                 alert(`ingredients for ${recipeName} has been added to your shopping list`)
             })
             .catch(error => {
-                console.log('===> Error creating pantry item', error);
-                alert('Error creating pantry item');
+                console.log('===> Error generating shopping list', error);
+                alert('Error generating shopping list');
             });
 
     }

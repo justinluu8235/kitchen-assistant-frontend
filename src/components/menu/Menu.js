@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import MenuDate from './MenuDate';
+import './Menu.css'
 
 const Menu = (props) => {
 
@@ -16,6 +17,7 @@ const Menu = (props) => {
         handleLogout();
 
         alert('Session has ended. Please login to continue.');
+        window.location.href = '/login';
     }
 
     useEffect(() => {
@@ -35,10 +37,15 @@ const Menu = (props) => {
     const displayMenu = (menuData) => {
         let keyArr = Object.keys(menuData)
             console.log('menu data', menuData)
+            keyArr.sort()
             console.log('keys', keyArr)
+
             let display = keyArr.map((date, idx) => {           
                 let menuArr = menuData[date]
-                return <MenuDate key={idx} menuArr={menuArr} date={date} user_id={id} username={username}/>
+                let dayOfWeek = new Date(date).getDay()
+                dayOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][dayOfWeek]
+           
+                return <MenuDate key={idx} dayOfWeek={dayOfWeek} menuArr={menuArr} date={date} user_id={id} username={username}/>
             })
             return display;
 
@@ -47,7 +54,7 @@ const Menu = (props) => {
     return (
         <div class="container">
             <div class="columns">
-                <div class="column has-text-centered">
+                <div class="column has-text-centered menu-column-text">
                     <h1 class="title" style={{ color: "#EBF2FA" }}>My Menu</h1><br />
                 </div>
             </div>

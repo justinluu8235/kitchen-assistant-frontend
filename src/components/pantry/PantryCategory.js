@@ -83,13 +83,13 @@ const PantryCategory = (props) => {
     }
 
     return (
-        <div v-for="card in cardData" key="card.id" class="column is-4">
+        <div v-for="card in cardData" key="card.id" class="column is-4 pantry-list">
             <div class="card large">
 
                 <div class="card-content">
                     <div class="media">
 
-                        <div class="media-content">
+                        <div class="media-content pantry-list">
 
 
                             <p class="title is-4 no-padding" id="category">

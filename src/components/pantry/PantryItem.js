@@ -14,9 +14,11 @@ const PantryItem = (props) => {
 
     
     return (
-        <div class="pantry-item" class="pantry-item">
-
-            {item_name}
+        <div class="pantry-item" class="pantry-item pantry-list">
+            <div class='pantry-item-text-container '>
+                <p>- {item_name}</p>
+            </div>
+            
 
             <form
                 onSubmit={(e) => handleStockSubmit(e, pantryId, index)}>

@@ -55,18 +55,21 @@ const RecipeIndexUnit = (props) => {
         <div v-for="card in cardData" key="card.id" class="column is-4 recipe-index-card">
             {/* <% for( let i = 0; i < allRecipes.length; i++ ) { %> 
               <% let recipe = allRecipes[i].toJSON() %> */}
-            <div class="card large">
-             
+            <div class="card large recipe-index-card">
+                {image ? 
                 <div class="card-image" class="recipe-image">
-                    <figure class="image is-16by9">
-                        <img src={image ? image : ""}  />
-                    </figure>
-                </div>
+                <figure class="image is-16by9">
+                    <img src={image ? image : ""}  />
+                </figure>
+            </div>
+                : null
+                }
+                
  
                 <div class="card-content ">
                     <div class="media">
                         <div class="media-content recipe-index-card-content">
-                            <p class="title is-4 no-padding">{recipeName} </p>
+                            <p class="title is-4 no-padding recipe-index-name">{recipeName} </p>
                             <br />
                             <p>
                                 <span class="title is-6">

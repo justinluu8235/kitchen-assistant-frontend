@@ -104,7 +104,7 @@ form, .pantry-item{
 }
 
 .title{
-  padding-top:25px;
+  padding-top:15px;
 }
 
 input{
@@ -116,4 +116,58 @@ input{
 #search-recipe-image{
   height:250px;
   width:250px;
+}
+
+.columns.search-recipe-show{
+  display:flex;
+  flex-direction: column;
+  height: auto;
+  align-items: center;
+}
+
+.ingredient-instruction-wrapper.search-recipe-show{
+  display:flex;
+  flex-direction: row;
+  gap:25px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap:wrap;
+}
+
+.columns.search-recipe-show.instruction{
+  margin-top:-12px;
+}
+
+.row.search-recipe-show,.column.search-recipe-show{
+  width: 550px;
+}
+
+.media-content.search-recipe-show{
+  min-height: 0;
+  display:flex;
+  flex-direction: column;
+  align-items:flex-start
+}
+
+.instruction-container.search-recipe-show{
+  display:flex;
+  flex-direction: column;
+  align-items:flex-start;
+  margin-top:15px;
+}
+
+.instructions.search-recipe-show{
+  position:inherit;
+}
+
+.title.search-recipe-show{
+  font-size: 50px;
+  padding-top:0;
+  color: #EBF2FA;
+}
+
+@media screen and (max-width:900px){
+  .row.search-recipe-show,.column.search-recipe-show{
+    width: 450px;
+  }
 }

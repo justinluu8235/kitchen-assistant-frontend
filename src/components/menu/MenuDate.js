@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import MenuItem from './MenuItem';
 
 const MenuDate = (props) => {
-    const {menuArr, date, username, user_id} = props
+    const {dayOfWeek, menuArr, date, username, user_id} = props
     const  [menuList, setMenuList] = useState(menuArr)
     const {REACT_APP_SERVER_URL} = process.env
 
@@ -70,8 +70,8 @@ const MenuDate = (props) => {
           <% for(let i=0; i<dateArr.length; i++){ %> 
               <% let menuItemArr = menu[dateArr[i]] %>  */}
                 <div class="columns">
-                    <div class="column has-text-centered">
-                        <h1 class="head-title" style={{ color: "darkblue" }}> {date} </h1><br />
+                    <div class="column has-text-centered menu-column-text">
+                        <h1 class="head-title menu-column-text" > {dayOfWeek}, {date} </h1><br />
                     </div>
                 </div>
                 <div id="app" class="row columns is-multiline">

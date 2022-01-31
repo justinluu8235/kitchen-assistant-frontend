@@ -93,3 +93,35 @@
   font-size:20px;
 }
   
+
+.column.is-4.search-recipe-item{
+  width: 350px;
+}
+
+.card.large.search-recipe-item{
+  border-radius:10px;
+}
+
+.media-content.search-recipe-item{
+  min-height:0;
+  height:150px;
+}
+
+.title.search-recipe{
+  margin-top:0;
+  padding-top:0;
+color: #EBF2FA;
+}
+
+.column.search-recipe{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+}
+
+.search-recipe-form-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}

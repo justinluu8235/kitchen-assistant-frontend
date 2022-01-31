@@ -62,8 +62,14 @@ function App() {
         localStorage.removeItem('jwtToken');
         setCurrentUser(null);
         setIsAuthenticated(false);
+        
     }
-    axios.get(`${REACT_APP_SERVER_URL}/logout`)
+    axios.get(`${REACT_APP_SERVER_URL}/logout/`)
+    .then((res) =>{
+      alert("you are now logged out")
+      window.location.href = '/login';
+      return <Navigate  to="/login"/>
+    })
 
   }
 

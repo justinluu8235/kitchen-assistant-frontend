@@ -17,6 +17,7 @@ const ShowRecipe = (props) => {
         handleLogout();
 
         alert('Session has ended. Please login to continue.');
+        window.location.href = '/login';
     }
 
     let temp = window.location.pathname.split('/')
@@ -57,8 +58,8 @@ const ShowRecipe = (props) => {
             return (
                 <div>
                     <br />
-                    <p class="instructions">Step Number:{instruction['step_number']} </p>
-                    <p class="instructions">{instruction['instructions']}</p>
+                    <p class="instructions recipe">Step Number:{instruction['step_number']} </p>
+                    <p class="instructions recipe">{instruction['instructions']}</p>
                     <br />
                 </div>
 
@@ -86,7 +87,7 @@ const ShowRecipe = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-  
+
 
         let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/recipes/delete/${recipeID}`, {
@@ -97,15 +98,15 @@ const ShowRecipe = (props) => {
             },
 
         })
-        // .then(response => response.json())
-        .then((data) => {
-            console.log('return data', data)
-            setRedirect(true);
-        })
-        .catch(error => {
-            console.log('===> Error deleting recipe', error);
-            alert('Error deleting recipe');
-        });
+            // .then(response => response.json())
+            .then((data) => {
+                console.log('return data', data)
+                setRedirect(true);
+            })
+            .catch(error => {
+                console.log('===> Error deleting recipe', error);
+                alert('Error deleting recipe');
+            });
     }
 
 
@@ -115,26 +116,33 @@ const ShowRecipe = (props) => {
         (
             <div class="container">
                 <div class="columns">
-                    <div class="column has-text-centered">
+                    <div class="column has-text-centered recipe-show">
+                        {recipeData && recipeData['recipe']['image'] ?
+                        
+                        <img id="search-recipe-image" src={recipeData['recipe']['image']} alt="" />
+                        : null
+                        }
                         <h1 class="title" style={{ color: "#EBF2FA" }}>{recipeData ? recipeData['recipe']['recipe_name'] : null}</h1><br />
-                        <img id="search-recipe-image" src={recipeData ? recipeData['recipe']['image'] : null} alt="" />
+                        <div>
+                        <form action={`/recipes/edit/${recipeID}`} method="GET">
+                            <input type="submit" value="Edit Recipe" />
+                        </form>
+
+                        <form onSubmit={handleSubmit}>
+                            <input type="submit" value="Delete Recipe" />
+                        </form>
+                        </div>
                     </div>
                 </div>
 
-                <form action={`/recipes/edit/${recipeID}`} method="GET">
-                    <input type="submit" value="Edit Recipe" />
-                </form>
-
-                <form onSubmit={handleSubmit}>
-                    <input type="submit" value="Delete Recipe" />
-                </form>
-                <div id="app" class="row columns is-multiline">
-                    <div v-for="card in cardData" key="card.id" class="column is-4" id="column" >
+                <div class='ingredient-instruction-wrapper recipe-show '>
+                <div id="app" class="row columns is-multiline recipe-show">
+                    <div v-for="card in cardData" key="card.id" class="column is-4 recipe-show"  >
                         <div class="card large" id="card-large">
                             <div class="card-content">
                                 <div class="media">
-                                    <div class="media-content">
-                                        <p class="title is-4 no-padding">Ingredients:</p>
+                                    <div class="media-content recipe-show">
+                                        <p class="title is-4 no-padding recipe-instruction-title">Ingredients:</p>
                                         <p>
                                             <span class="title is-6">
                                                 {recipeData ? displayIngredients() : null}
@@ -150,16 +158,21 @@ const ShowRecipe = (props) => {
                     </div>
                 </div>
 
-                <div id="app" class="row columns is-multiline">
-                    <div v-for="card in cardData" key="card.id" class="column is-4" id="column" >
+                <div id="app" class="row columns is-multiline recipe-show ">
+                    <div v-for="card in cardData" key="card.id" class="column is-4 recipe-show">
                         <div class="card large" id="card-large">
                             <div class="card-content">
                                 <div class="media">
-                                    <div class="media-content">
-                                        <p class="title is-4 no-padding">Instructions:</p>
-                                            {/* <span class="title is-6" > */}
-                                                {recipeData ? displayInstructions() : null}
-                                            {/* </span> */}
+                                    <div class="media-content recipe-show">
+                                        <div>
+                                            <p class="title is-4 no-padding recipe-instruction-title" >Instructions:</p>
+                                        </div>
+                                        
+                                       <div class='instruction-container recipe-show '>
+                                        {recipeData ? displayInstructions() : null}
+                                       </div>
+                                        
+                                      
                                     </div>
                                 </div>
                                 <div class="content">
@@ -168,6 +181,7 @@ const ShowRecipe = (props) => {
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
 
 

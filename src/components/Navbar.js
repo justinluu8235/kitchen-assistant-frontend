@@ -5,8 +5,8 @@ import './Navbar.css'
 
 const Navbar = (props) => {
     const { handleLogout, user } = props;
-    const { id, username, email, exp } = user;
-    console.log(username == null)
+    // const { id, username, email, exp } = user;
+    // console.log(username == null)
 
     return (
         <nav className="navbar navbar-expand-lg ">
@@ -32,7 +32,7 @@ const Navbar = (props) => {
                                 
                             : 
                                 <div class="nav-auth-container">
-                                    <a className="nav-link" href="/signup/" style={{ color: "white" }}>Create Account</a>
+                                    <a className="nav-link" href="/signup/" style={{ color: "white" }}>Signup</a>
                                 
                                 
                                     <a className="nav-link" href="/login/" style={{ color: "white" }}>Login</a>
@@ -43,7 +43,7 @@ const Navbar = (props) => {
                     </div>
 
                 <div class="nav-username">
-                {username != null ? <p class="nav-text">Signed in as:  {username}</p> : null}
+                {user != null ? <p class="nav-text">Signed in as:  {user['username']}</p> : null}
                 </div>
                
                 <div className="collapse navbar-collapse navbar-directory" id="navbarsExample07">

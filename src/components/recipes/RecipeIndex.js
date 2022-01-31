@@ -19,6 +19,7 @@ const RecipeIndex = (props) => {
         handleLogout();
 
         alert('Session has ended. Please login to continue.');
+        window.location.href = '/login';
         setRedirect(true)
     }
 
@@ -108,7 +109,7 @@ const RecipeIndex = (props) => {
     }
 
     
-    
+   
     const userData = user ?
     (
         <div class="container">
@@ -118,8 +119,8 @@ const RecipeIndex = (props) => {
           <a href="/recipes/new">Add a Recipe</a>
         </div>
           <div class="columns">
-            <div class="column has-text-centered">
-              <h1 class="title" style={{color: "#EBF2FA"}}>My Recipes</h1><br/>
+            <div class="column has-text-centered recipe-index">
+              <h1 class="title recipe-index" style={{color: "#EBF2FA"}}>My Recipes</h1><br/>
             </div>
           </div>
           <div id="app" class="row columns is-multiline">

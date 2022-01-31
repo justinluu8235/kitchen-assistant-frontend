@@ -17,6 +17,7 @@ const ShoppingList = (props) => {
         handleLogout();
 
         alert('Session has ended. Please login to continue.');
+        window.location.href = '/login';
     }
 
 
@@ -142,32 +143,36 @@ const ShoppingList = (props) => {
     }
 
     return (
-        <div class="container">
+        <div class="container shopping-list">
             <div class="columns">
                 <div class="column has-text-centered">
                     <h1 class="title" style={{ color: "#EBF2FA" }}>My Shopping List</h1><br />
                 </div>
             </div>
-            <div class="add-pantry-item">
-                <div><h1 class="new-item-text">Add a new item</h1></div>
-
-                <form onSubmit={handleSubmit}>
-
+            <div class="add-pantry-item shopping-list">
+                <div><h1 class="new-item-text shopping-list">Add a new item</h1></div>
+                <div class='input-container shopping-list'>
+                <form class='input-container shopping-list' onSubmit={handleSubmit}>
+                    <div>
                     <label for="shoppingListItem">Item Name:</label>
                     <input type="text" name="shoppingListItem" value={currentItem} onChange={handleNameChange}/>
-
+                    </div>
+                    <div>
                     <label for="ingredientQuantity">Quantity:</label>
-                    <input type="text" name="ingredientQuantity" value={currentQuantity} onChange={handleQuantityChange} />
-
+                    <input type="number" name="ingredientQuantity" value={currentQuantity} onChange={handleQuantityChange} />
+                    </div>
+                    <div>
                     <label for="quantityUnit">Unit:</label>
                     <input type="text" name="quantityUnit" value={currentUnit} onChange={handleUnitChange}/>
-
+                    </div>
+                    <br></br>
                     <input type="submit" />
                 </form>
+                </div>
             </div>
             <div class="section">
                 <div id="app" class="row columns is-multiline">
-                    <div v-for="card in cardData" key="card.id" class="column is-4" id="column" >
+                    <div v-for="card in cardData" key="card.id" class="column is-4" id="shopping-list-column" >
                         <div class="card large" id="card-large">
                             <div class="card-content">
                                 <div class="media">

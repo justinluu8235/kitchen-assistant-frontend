@@ -3,6 +3,7 @@ import EditIngredientInput from './EditIngredientInput';
 import EditInstructionInput from './EditInstructionInput'
 import { Link, Navigate} from 'react-router-dom';
 import axios from 'axios'
+import './EditRecipe.css'
 const EditRecipe = (props) => {
     const { handleLogout, user } = props;
     const { id, name, email, exp } = user;
@@ -33,6 +34,7 @@ const EditRecipe = (props) => {
         handleLogout();
 
         alert('Session has ended. Please login to continue.');
+        window.location.href = '/login';
     }
 
     let temp = window.location.pathname.split('/')
@@ -219,7 +221,7 @@ const EditRecipe = (props) => {
                             <div class="card-content">
                                 <div class="media">
                                     <div class="media-content">
-                                        <p class="title is-4 no-padding" style={{ color: "0d6efd" }}>Edit Recipe</p>
+                                        <p class="title is-4 no-padding edit-recipe" style={{ color: "0d6efd" }}>Edit Recipe</p>
                                         <div class="list-item">
                                             <p class="pantry-item">
                                                 <span class="title is-6">
@@ -231,22 +233,24 @@ const EditRecipe = (props) => {
                                                         <label for="categoryName">Recipe Category</label>
                                                         <input type="text" name="categoryName" value={recipeCategory} onChange={handleCategoryChange} />
                                                         <br />
+                                                        <label for="image"  >
+                                                        <p class='edit-recipe-image-label'>Recipe image</p>
                                                         <input type="file" name="image" id="post-image" onChange={hangleImageFile}></input>
-
+                                                        </label>
                                                         <div class="all-ingredients">
                                                             {recipeData ? displayIngredients(ingredients) : null}
 
                                                         </div>
 
                                                         <label for="button"></label>
-                                                        <input type="button" name="button" value="Add another Ingredient" id="addIngredientButton" onClick={handleAddIngredientClick} />
+                                                        <input class="add-button edit-recipe" type="button" name="button" value="Add another Ingredient" id="addIngredientButton" onClick={handleAddIngredientClick} />
 
 
                                                         <div class="all-recipe-steps">
                                                             {recipeData ? displayInstructions(instructions) : null}
                                                         </div>
                                                         <label for="button"></label>
-                                                        <input type="button" name="button" value="Add another Step" id="addRecipeStepButton" onClick={handleAddInstructionClick}/>
+                                                        <input  class="add-button edit-recipe"  type="button" name="button" value="Add another Step" id="addRecipeStepButton" onClick={handleAddInstructionClick}/>
 
                                                         <br /><br /><br />
                                                         <input type="submit" />

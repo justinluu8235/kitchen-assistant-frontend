@@ -49,7 +49,19 @@
   .fa{
     margin-left: 5px; 
   }
-  /* img{
+  .login-image{
     height: 120px;
     width:120px;
-  } */
+  }
+
+  .box.login-card{
+    background-color: white
+  }
+
+  .login-input{
+    right:10px;
+  }
+
+  .has-text-centered.home-login-container{
+    display:block;
+  }

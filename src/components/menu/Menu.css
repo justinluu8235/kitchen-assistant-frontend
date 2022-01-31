@@ -1,0 +1,17 @@
+.media-content.menu-item{
+    min-height:0;
+}
+
+.has-text-centered.menu-column-text {
+    justify-content: center;
+    font-size: 30px;
+    color: #EBF2FA;
+}
+
+.column.is-4.menu-item{
+    width: 350px;
+}
+
+.card.large.menu-item{
+    border-radius:10px;
+}

@@ -102,8 +102,10 @@ form, .pantry-item{
 
 .new-ingredient, .first-ingredient, .new-recipe-step, .first-recipe-step{
     border: 1px solid black;
-    margin-top:5px;
+    border-radius:5px;
+    margin-top:10px;
     margin-bottom:5px;
+    padding-left:10px;
 }
 
 textarea, label,input{
@@ -126,4 +128,15 @@ textarea, label,input{
   margin-top:20px;
   position:relative;
   right:40px;
+}
+
+.new-recipe-image-label{
+  margin-top:10px;
+}
+
+.dropdown-new-recipe{
+  width: 100px;
+  margin-left:10px;
+  margin-top:15px;
+  margin-bottom:20px;
 }

@@ -88,19 +88,19 @@ const Login = (props) => {
             <div>
                 <section class="hero is-success is-fullheight">
                     <div class="hero-body">
-                        <div class="container has-text-centered">
-                            <div class="column is-4 is-offset-4">
+                        <div class="container has-text-centered home-login-container">
+                            <div class="column is-4 is-offset-4 ">
                                 <h3 class="title has-text-black">Login</h3>
                                 <hr class="login-hr" />
                                 <p class="subtitle has-text-black">Please login to proceed.</p>
-                                <div class="box">
+                                <div class="box login-card">
                                     <figure class="avatar">
-                                        <img src="/images/login-icon.png" />
+                                        <img class="login-image" src="/img/login-icon.png" />
                                     </figure>
                                     <form onSubmit={handleSubmit.bind(this)}>
                                         <div class="field">
                                             <div class="control">
-                                                <input class="input is-large" id="auth-email"
+                                                <input class="input is-large login-input" id="auth-email"
                                                     type="text" onChange={handleUserName.bind(this)}
                                                     placeholder="Your Email" value={username}
                                                     autocomplete="username" required />
@@ -108,7 +108,7 @@ const Login = (props) => {
                                         </div>
                                         <div class="field">
                                             <div class="control">
-                                                <input class="input is-large" id="auth-password"
+                                                <input class="input is-large login-input" id="auth-password"
                                                     type="password"
                                                     placeholder="**********"
                                                     autocomplete="current-password"
@@ -117,19 +117,13 @@ const Login = (props) => {
                                                     required />
                                             </div>
                                         </div>
-                                        <div class="field">
-                                            <label class="checkbox">
-                                                <input type="checkbox" />
-                                                Remember me
-                                            </label>
-                                        </div>
+                                      
                                         <button class="button is-block is-info is-large is-fullwidth">Login <i class="fa fa-sign-in" aria-hidden="true"></i></button>
                                     </form>
                                 </div>
                                 <p class="has-text-grey">
                                     <a href="/signup/">Sign Up</a> &nbsp;·&nbsp;
-                                    {/* <a href="../">Forgot Password</a> &nbsp;·&nbsp;
-                                <a href="../">Need Help?</a> */}
+                    
                                 </p>
                             </div>
                         </div>

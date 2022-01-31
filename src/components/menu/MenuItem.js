@@ -53,8 +53,8 @@ const MenuItem = (props) => {
     }
 
     return(
-        <div v-for="card in cardData" key="card.id" class="column is-4">
-                        <div class="card large">
+        <div v-for="card in cardData" key="card.id" class="column is-4 menu-item">
+                        <div class="card large menu-item">
                             {image ? 
                             <div class="card-image" class="recipe-image">
                                 <figure class="image is-16by9">
@@ -66,7 +66,7 @@ const MenuItem = (props) => {
                             <div class="card-content">
                                 <div class="media">
 
-                                    <div class="media-content">
+                                    <div class="media-content menu-item">
 
 
                                         <p class="title is-4 no-padding" style={{ color: "#0d6efd" }}>{recipe_name} </p>

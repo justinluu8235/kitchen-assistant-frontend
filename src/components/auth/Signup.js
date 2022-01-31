@@ -102,25 +102,19 @@ class Signup extends Component {
     return (
       <>
         <section className="container">
-          <div className="columns is-multiline">
+          <div className="columns is-multiline signup-container">
             <div className="column is-8 is-offset-2 register">
-              <div className="columns">
-                <div className="column left">
-                  <h1 className="title is-1">Super Cool Website</h1>
-                  <h2 className="subtitle colored is-4">
-                    Lorem ipsum dolor sit amet.
+              <div className="columns signup">
+                <div className="column left signup">
+                  <h1 className="title is-1">Kitchen Assistant</h1>
+                  <h2 className="subtitle colored is-4 signup">
+                    Manage different tasks in your kitchen in one efficient way!
                   </h2>
-                  <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Corporis ex deleniti aliquam tempora libero excepturi vero
-                    soluta odio optio sed.
-                  </p>
+                 
                 </div>
-                <div className="column right has-text-centered">
+                <div className="column right has-text-centered signup">
                   <h1 className="title is-4">Sign up today</h1>
-                  <p className="description">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit
-                  </p>
+                 
                   <form onSubmit={this.handleSubmit.bind(this)}>
                     <div className="field">
                       <div className="control">
@@ -189,42 +183,7 @@ class Signup extends Component {
                 </div>
               </div>
             </div>
-            <div className="column is-8 is-offset-2">
-              <br />
-              <nav className="level">
-                <div className="level-left">
-                  <div className="level-item">
-                    <span className="icon">
-                      <i className="fab fa-twitter"></i>
-                    </span>{" "}
-                    &emsp;
-                    <span className="icon">
-                      <i className="fab fa-facebook"></i>
-                    </span>{" "}
-                    &emsp;
-                    <span className="icon">
-                      <i className="fab fa-instagram"></i>
-                    </span>{" "}
-                    &emsp;
-                    <span className="icon">
-                      <i className="fab fa-github"></i>
-                    </span>{" "}
-                    &emsp;
-                    <span className="icon">
-                      <i className="fas fa-envelope"></i>
-                    </span>
-                  </div>
-                </div>
-                <div className="level-right">
-                  <small
-                    className="level-item"
-                    style={{ color: "var(--textLight)" }}
-                  >
-                    &copy; Super Cool Website. 2022 All Rights Reserved.
-                  </small>
-                </div>
-              </nav>
-            </div>
+            
           </div>
         </section>
       </>

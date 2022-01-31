@@ -9,9 +9,7 @@ const SearchRecipesIndex = (props) => {
     const [searchValue, setSearchVal] = useState('')
     const [recipeResults, setRecipeResults] = useState('')
 
-    useEffect(() => {
-       
-    })
+
 
    
 
@@ -67,16 +65,18 @@ const SearchRecipesIndex = (props) => {
 
             <div class="section">
                 <div class="columns" id="title-block">
-                    <div class="column has-text-centered">
+                    <div class="column has-text-centered search-recipe">
                         {/* <h1 class="title" style="color: #EBF2FA;">Search for Recipes</h1><br/> */}
-                        <h1 class="title" >Search for Recipes</h1><br/>
+                        <h1 class="title search-recipe" >Search for Recipes</h1><br/>
                     </div>
                 </div>
-
-                <form onSubmit={handleSubmit} id="searchRecipeInput" >
-                    <input type="text" value={searchValue} onChange={handleChange} name="query" class="search-bar" />
-                    <input type="submit" class="search-submit" />
-                </form>
+                <div  class='search-recipe-form-container'>
+                    <form onSubmit={handleSubmit} id="searchRecipeInput" >
+                        <input type="text" value={searchValue} onChange={handleChange} name="query" class="search-bar" />
+                        <input type="submit" class="search-submit" />
+                    </form>
+                </div>
+                
 
                 <div id="app" class="row columns is-multiline">
 

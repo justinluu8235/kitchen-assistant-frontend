@@ -21,6 +21,7 @@ const SearchRecipeShow = (props) => {
         handleLogout();
 
         alert('Session has ended. Please login to continue.');
+        window.location.href = '/login';
     }
 
 
@@ -35,7 +36,7 @@ const SearchRecipeShow = (props) => {
             .then((data) => {
                 data = JSON.parse(data)
                 setRecipeData(data)
-                console.log(recipeData)
+                console.log('recipedata', recipeData)
             });
 
     }, [props])
@@ -47,9 +48,9 @@ const SearchRecipeShow = (props) => {
             console.log('Recipe data', recipeData)
             let ingredientsArr = recipeData['ingredient_list']
             let display = ingredientsArr.map((ingredient, idx) => {
-                let string = `${ingredient["ingredient_name"]} - ${ingredient["ingredient_quant"]} ${ingredient["ingredient_unit"]}`
+                let string = `${ingredient["ingredient_name"]} - ${ingredient["ingredient_quantity"]} ${ingredient["quantity_unit"]}`
                 return (
-                    <div key={idx}><p >{string}</p></div>
+                    <div key={idx}><p >{string}</p><br/></div>
                 )
             })
             return display;
@@ -66,9 +67,9 @@ const SearchRecipeShow = (props) => {
 
                 return (
                     <div key={idx}>
-                        <p class="instructions">Step Number: {instruction["step_number"]} </p>
+                        <p class="instructions search-recipe-show">Step Number: {instruction["step_number"]} </p>
 
-                        <p class="instructions">{instruction['instruction']} </p>
+                        <p class="instructions search-recipe-show">{instruction['instructions']} </p>
                         <br></br>
                     </div>
                 )
@@ -132,24 +133,27 @@ const SearchRecipeShow = (props) => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <div class="container">
-                    <div class="columns">
-                        <div class="column has-text-centered">
-                            {/* <h1 class="title" style="color: #EBF2FA;">recipe name </h1><br /> */}
-                            <h1 class="title" >{recipeData ? recipeData['recipe_title'] : null}</h1><br />
-                            <img id="search-recipe-image" src={ recipeData ? recipeData['recipe_image'] : null} alt="" />
-                            <input type="text" name="imageURL" value="image" hidden />
-                            <input type="text" name="recipeName" value="recipename" hidden />
-                        </div>
+                <div class="container search-recipe-show">
+                    <div class="columns search-recipe-show">
+                        
+                    {recipeData && recipeData['recipe_image'] ?
+                        <img id="search-recipe-image" src={recipeData['recipe_image']} alt="" />
+                        : null
+                        }
+                        <h1 class="title search-recipe-show" >{recipeData ? recipeData['recipe_title'] : null}</h1><br />
+                        <input type="submit" value="Save to My Recipes" />
                     </div>
 
-                    <input type="submit" value="Save to My Recipes" />
-                    <div id="app" class="row columns is-multiline">
-                        <div v-for="card in cardData" key="card.id" class="column is-4" id="column" >
+
+                    <div class='ingredient-instruction-wrapper search-recipe-show '>
+
+                    
+                    <div id="app" class="row columns is-multiline search-recipe-show">
+                        <div v-for="card in cardData" key="card.id" class="column is-4 search-recipe-show" >
                             <div class="card large" id="card-large">
                                 <div class="card-content">
                                     <div class="media">
-                                        <div class="media-content">
+                                        <div class="media-content search-recipe-show">
                                             <p class="title is-4 no-padding">Ingredients:</p>
                                             <p>
                                                 <span class="title is-6">
@@ -170,20 +174,22 @@ const SearchRecipeShow = (props) => {
                         </div>
                     </div>
 
-                    <div id="app" class="row columns is-multiline">
-                        <div v-for="card in cardData" key="card.id" class="column is-4" id="column" >
+                    <div id="app" class="row columns is-multiline search-recipe-show instruction">
+                        <div v-for="card in cardData" key="card.id" class="column is-4 search-recipe-show "  >
                             <div class="card large" id="card-large">
                                 <div class="card-content">
                                     <div class="media">
-                                        <div class="media-content">
-                                            <p class="title is-4 no-padding">Instructions:</p>
-                                            <p >
-                                                <span class="title is-6" >
-                                                    <input type="text" name="instructions" value="<%=instructions%>" hidden />
-                                                    <input type="text" name="stepNumber" value="<%=stepNumber%>" hidden />
+                                        <div class="media-content search-recipe-show">
+                                            <div>
+                                                <p class="title is-4 no-padding">Instructions:</p>
+                                            </div>
+                                            
+                                            <div class='instruction-container search-recipe-show '>
+                                                
+                                                  
                                                     {recipeData ? displayInstructions() : null}
-                                                </span>
-                                            </p>
+                                                
+                                            </div>
 
 
                                         </div>
@@ -192,6 +198,7 @@ const SearchRecipeShow = (props) => {
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
 
 

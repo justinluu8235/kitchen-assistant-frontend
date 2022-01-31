@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PantryCategory from './PantryCategory'
+import './Pantry.css'
 
 
 const Pantry = (props) => {
@@ -16,6 +17,7 @@ const Pantry = (props) => {
         handleLogout();
 
         alert('Session has ended. Please login to continue.');
+        window.location.href = '/login';
     }
 
     useEffect(() => {
@@ -80,17 +82,17 @@ const Pantry = (props) => {
                 // setNewRecipeID(data['recipe']['id'])
                 // setRedirect(true);
                 let category = data['pantry_category']['category_name']
-                let temp = {...pantryData}
-                if(temp[category] == undefined) {
+                let temp = { ...pantryData }
+                if (temp[category] == undefined) {
                     temp[category] = [data['pantry_item']]
                 }
-                else{
+                else {
                     temp[category].push(data['pantry_item'])
                 }
                 setPantryData(temp)
                 setCurrentItem('')
                 setCurrentCategory('')
-                
+
             })
             .catch(error => {
                 console.log('===> Error creating pantry item', error);
@@ -104,9 +106,9 @@ const Pantry = (props) => {
             console.log('pantry data', pantryData)
             console.log('keys', keyArr)
             let display = keyArr.map((category, idx) => {
-                
+
                 let pantryItemList = pantryData[category]
-                console.log('pantry list' , pantryItemList)
+                console.log('pantry list', pantryItemList)
                 return <PantryCategory key={idx} pantry_category={category} pantry_item_list={pantryItemList} />
             })
             return display;
@@ -116,32 +118,35 @@ const Pantry = (props) => {
 
     return (
         <div class="container">
-            <div class="columns">
-                <div class="column has-text-centered">
-                    <h1 class="title" style={{ color: "#EBF2FA" }}>My Pantry</h1><br />
+            <div class="header-wrapper pantry-list">
+                <div class="columns">
+                    <div class="column has-text-centered">
+                        <h1 class="title" style={{ color: "#EBF2FA" }}>My Pantry</h1><br />
+                    </div>
                 </div>
-            </div>
-            <div class="add-pantry-item">
-                <div>
-                    <h1 class="new-item-text">Add a new item</h1>
+                <div class="add-pantry-item pantry-list">
+                    <div>
+                        <h1 class="new-item-text pantry-list">Add a new item</h1>
+                    </div>
+                    <div class='input-container pantry-list'>
+                        <form  class='input-container pantry-list' onSubmit={handleSubmit}>
+                            <div>
+                                <label for="itemName">Item Name:</label>
+                                <input type="text" name="itemName" value={currentItem} onChange={handleNameChange} />
+                            </div>
+                            <div>
+                                <label for="categoryName">Category Name:</label>
+                                <input type="text" name="categoryName" value={currentCategory} onChange={handleCategoryChange} />
+                            </div>
+                            <input type="submit" />
+                        </form>
+                    </div>
+
                 </div>
-
-                <form onSubmit={handleSubmit}>
-
-
-                    <label for="itemName">Item Name:</label>
-                    <input type="text" name="itemName" value={currentItem} onChange={handleNameChange} />
-
-                    <label for="categoryName">Category Name:</label>
-                    <input type="text" name="categoryName" value={currentCategory} onChange={handleCategoryChange} />
-
-                    <input type="submit" />
-                </form>
-
             </div>
             <div class="section">
 
-                <div id="app" class="row columns is-multiline">
+                <div id="app" class="row columns is-multiline pantry-list">
 
                     {pantryData ? displayPantryCategories(pantryData) : null}
 

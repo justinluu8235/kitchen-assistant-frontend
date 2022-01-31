@@ -1,0 +1,49 @@
+.title-input-wrapper.userfriend{
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.add-pantry-item.userfriend{
+    width:auto;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.friend-found-container{
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+
+.search-container-userfriend{
+    margin-top:15px;
+}
+
+.media.userfriend{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.column.userfriend{
+    width: 700px;
+  }
+
+  .userfriend-receive-row{
+      display:flex;
+      flex-direction: row;
+    align-items: center;
+  }
+
+
+@media screen and (max-width:900px){
+    .column.userfriend{
+      width: 450px;
+    }
+
+  }

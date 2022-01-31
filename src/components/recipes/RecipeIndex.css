@@ -77,3 +77,26 @@
     border-radius: 10px;
   }
   
+
+  .column.is-4.recipe-index-card{
+    width: 350px;
+  
+}
+
+.card.large.recipe-index-card{
+  border-radius:10px;
+}
+
+.media-content.recipe-index-card-content{
+  min-height:0;
+}
+
+.column.recipe-index{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.title.recipe-index{
+  font-size: 50px;
+}

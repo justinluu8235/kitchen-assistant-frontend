@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom';
 import '../recipes/ShowRecipe.css';
+import './FriendRecipeShow.css'
 const { REACT_APP_SERVER_URL } = process.env;
 
 
@@ -19,6 +20,7 @@ const FriendRecipeShow = (props) => {
         handleLogout();
 
         alert('Session has ended. Please login to continue.');
+        window.location.href = '/login';
     }
 
     let temp = window.location.pathname.split('/')
@@ -59,8 +61,8 @@ const FriendRecipeShow = (props) => {
             return (
                 <div>
                     <br />
-                    <p class="instructions">Step Number:{instruction['step_number']} </p>
-                    <p class="instructions">{instruction['instructions']}</p>
+                    <p class="instructions friendrecipe">Step Number:{instruction['step_number']} </p>
+                    <p class="instructions friendrecipe">{instruction['instructions']}</p>
                     <br />
                 </div>
 
@@ -100,7 +102,7 @@ const FriendRecipeShow = (props) => {
         console.log('new recipe data', newRecipeData);
 
         let csrftoken = getCookie('csrftoken');
-        fetch(`${REACT_APP_SERVER_URL}/recipes/new`, {
+        fetch(`${REACT_APP_SERVER_URL}/recipes/searchRecipes/new`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
@@ -125,25 +127,27 @@ const FriendRecipeShow = (props) => {
     if (redirect) return (<Navigate to={`/recipes/${newRecipeID}`} />);
     const userData = user ?
         (
-            <div class="container">
+            <div class="container friendrecipe-show">
                 <div class="columns">
-                    <div class="column has-text-centered">
-                        <h1 class="title" style={{ color: "#EBF2FA" }}>{recipeData ? recipeData['recipe']['recipe_name'] : null}</h1><br />
+                    <div class="column has-text-centered friendrecipe-show">
+                        <div>
                         <img id="search-recipe-image" src={recipeData ? recipeData['recipe']['image'] : null} alt="" />
+                        </div>
+                        <h1 class="title friendrecipe-show" style={{ color: "#EBF2FA" }}>{recipeData ? recipeData['recipe']['recipe_name'] : null}</h1><br />
+                        <form onSubmit={handleSubmit}>
+                    <input type="submit" value="Save to My Recipes" />
+                </form>
                     </div>
                 </div>
 
-                <form onSubmit={handleSubmit}>
-                    <input type="submit" value="Save to My Recipes" />
-                </form>
-
-                <div id="app" class="row columns is-multiline">
-                    <div v-for="card in cardData" key="card.id" class="column is-4" id="column" >
+                <div class='ingredient-instruction-wrapper friendrecipe-show '>
+                <div id="app" class="row columns is-multiline friendrecipe-show">
+                    <div v-for="card in cardData" key="card.id" class="column is-4 friendrecipe-show" >
                         <div class="card large" id="card-large">
                             <div class="card-content">
                                 <div class="media">
-                                    <div class="media-content">
-                                        <p class="title is-4 no-padding">Ingredients:</p>
+                                    <div class="media-content friendrecipe-show">
+                                        <p class="title is-4 no-padding friendrecipe-instruction-title">Ingredients:</p>
                                         <p>
                                             <span class="title is-6">
                                                 {recipeData ? displayIngredients() : null}
@@ -159,16 +163,22 @@ const FriendRecipeShow = (props) => {
                     </div>
                 </div>
 
-                <div id="app" class="row columns is-multiline">
-                    <div v-for="card in cardData" key="card.id" class="column is-4" id="column" >
+                <div id="app" class="row columns is-multiline friendrecipe-show">
+                    <div v-for="card in cardData" key="card.id" class="column is-4 friendrecipe-show"  >
                         <div class="card large" id="card-large">
                             <div class="card-content">
                                 <div class="media">
-                                    <div class="media-content">
-                                        <p class="title is-4 no-padding">Instructions:</p>
-                                            {/* <span class="title is-6" > */}
-                                                {recipeData ? displayInstructions() : null}
-                                            {/* </span> */}
+                                    <div class="media-content friendrecipe-show">
+                                        <div class="">
+                                        <p class="title is-4 no-padding friendrecipe-instruction-title">Instructions:</p>
+                                        </div>
+                                        <div class='instruction-container friendrecipe-show '>
+                                        {recipeData ? displayInstructions() : null}
+                                        </div>
+                                        
+                                      
+                                                
+                                
                                     </div>
                                 </div>
                                 <div class="content">
@@ -177,6 +187,7 @@ const FriendRecipeShow = (props) => {
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
 
 

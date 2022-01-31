@@ -82,3 +82,32 @@
     color: var(--textLight);
     margin-right: 1rem;
   }
+
+  .columns.signup-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .subtitle.signup{
+    color:salmon
+  }
+
+  @media screen and (max-width: 1100px){ 
+    
+  .columns.signup{
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .column.signup{
+    padding-top:0;
+    width: 500px;
+    border-right:none;
+  }
+      }
+  @media screen and (min-width: 769px){ 
+.column.is-offset-2, .column.is-offset-2-tablet {
+    margin-left: 5%code;
+}
+  }

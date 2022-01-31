@@ -10,16 +10,16 @@ const SearchRecipeResult = (props) => {
     })
 
     return(
-        <div v-for="card in cardData" key="card.id" class="column is-4">
-                        <div class="card large">
-                            <div class="card-image" class="recipe-image">
+        <div v-for="card in cardData" key="card.id" class="column is-4 search-recipe-item">
+                        <div class="card large search-recipe-item">
+                            <div class="card-image" class="recipe-image ">
                                 <figure class="image is-16by9">
                                     <img src={recipe_image} alt="" />
                                 </figure>
                             </div>
                             <div class="card-content">
                                 <div class="media">
-                                    <div class="media-content">
+                                    <div class="media-content search-recipe-item">
                                         <p class="title is-4 no-padding" id="recipe-name">{recipe_name}</p>
                                         <br />
                                         <p >

@@ -1,7 +1,7 @@
 import  React, {useState, useEffect} from 'react';
 import '../recipes/RecipeIndex.css';
 import FriendRecipeIndexUnit from './FriendRecipeIndexUnit';
-
+import './FriendRecipeIndex.css'
 
 const FriendRecipeIndex = (props) => {
     const { handleLogout, user } = props;
@@ -18,6 +18,7 @@ const FriendRecipeIndex = (props) => {
         handleLogout();
 
         alert('Session has ended. Please login to continue.');
+        window.location.href = '/login';
     }
 
     let temp = window.location.pathname.split('/')
@@ -121,11 +122,11 @@ const FriendRecipeIndex = (props) => {
    
         </div>
           <div class="columns">
-            <div class="column has-text-centered">
-              <h1 class="title" style={{color: "#EBF2FA"}}>{friendName}'s' Recipes</h1><br/>
+            <div class="column has-text-centered userfriend-recipe-index">
+              <h1 class="title userfriend-recipe-index" style={{color: "#EBF2FA"}}>{friendName}'s Recipes</h1><br/>
             </div>
           </div>
-          <div id="app" class="row columns is-multiline">
+          <div id="app" class="row columns is-multiline userfriend-recipe-index">
             {recipes ? displayRecipes() : null}
           </div>
         </div>

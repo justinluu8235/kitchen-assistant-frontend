@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import FriendRow from './FriendRow';
+import './UserFriend.css'
 
 
 const UserFriend = (props) => {
@@ -22,6 +23,7 @@ const UserFriend = (props) => {
         handleLogout();
 
         alert('Session has ended. Please login to continue.');
+        window.location.href = '/login';
     }
 
     useEffect(() => {
@@ -61,8 +63,8 @@ const UserFriend = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         let searchFriend = {
-           'search_username': searchVal, 
-           'user_id': id
+            'search_username': searchVal,
+            'user_id': id
         }
         console.log('search friend', searchFriend);
 
@@ -78,26 +80,26 @@ const UserFriend = (props) => {
             .then(response => response.json())
             .then((data) => {
                 console.log('return data', data)
-                if(data['friend_status'] == 404){
+                if (data['friend_status'] == 404) {
                     alert('Username does not exist. Please try again')
                 }
-                else{
+                else {
                     setCurrentlyFriends(data['friend_status']['currently_friends'])
                     setRequestPending(data['friend_status']['request_pending'])
                     setUserQueried(searchVal)
                 }
-                
+
             })
             .catch(error => {
                 console.log('===> Error searching username', error);
                 alert('Error searching username');
             });
     }
-    const handleAcceptRequest = (e, requester_id, receiver_name, index) =>{
+    const handleAcceptRequest = (e, requester_id, receiver_name, index) => {
         e.preventDefault();
         let acceptFriend = {
-           'requester_id': requester_id, 
-           'receiver_name': receiver_name
+            'requester_id': requester_id,
+            'receiver_name': receiver_name
         }
         console.log('search friend', acceptFriend);
 
@@ -121,10 +123,10 @@ const UserFriend = (props) => {
                 // temp2.push(data);
                 // console.log('temp2', temp2)
                 // setFriendList(temp2)
-              
+
                 setFriendList(friendList.concat([data['friend_status']]))
 
-                
+
             })
             .catch(error => {
                 console.log('===> Error searching username', error);
@@ -134,14 +136,16 @@ const UserFriend = (props) => {
     }
     const displayRequestsReceived = (friendRequestsReceived) => {
         let display = friendRequestsReceived.map((requestRecieved, idx) => {
-            return(
-            <div key={idx}>
-                <form onSubmit={(e) => handleAcceptRequest(e, requestRecieved['user'], requestRecieved['friend_name'], idx)}>
-                    <p>{requestRecieved['username']}</p>
-                    <input type="submit" value="Accept Request"></input>
-                </form>
-                <br/>
-            </div>
+            return (
+                <div key={idx} >
+                    <form onSubmit={(e) => handleAcceptRequest(e, requestRecieved['user'], requestRecieved['friend_name'], idx)}>
+                        <div class='userfriend-receive-row'>
+                        <p>- {requestRecieved['username']}</p>
+                        <input type="submit" value="Accept Request"></input>
+                        </div>
+                    </form>
+                    <br />
+                </div>
             )
         })
         return display;
@@ -149,19 +153,19 @@ const UserFriend = (props) => {
 
     const displayFriends = (friendList) => {
         let display;
-            if(friendList.length != 0 ){
-             display = friendList.map((friend, idx) => {
-                return <FriendRow key={idx} index={idx} user_id={id} friend_name={friend['friend_name']} 
-                        friend_id={friend['friend_id']}
-                        handleUnfriend={handleUnfriend}
-                       
-                        />
+        if (friendList.length != 0) {
+            display = friendList.map((friend, idx) => {
+                return <FriendRow key={idx} index={idx} user_id={id} friend_name={friend['friend_name']}
+                    friend_id={friend['friend_id']}
+                    handleUnfriend={handleUnfriend}
+
+                />
             })
         }
         return display;
     }
 
-    
+
     const handleUnfriend = (e, friend_id, index) => {
         e.preventDefault();
         let userInfo = {
@@ -179,25 +183,25 @@ const UserFriend = (props) => {
             },
             body: JSON.stringify(userInfo)
         })
-        .then((data) => {
-            console.log('return data', data)
-            let temp = friendList.slice()
-            temp.splice(index, 1);
-            setFriendList(temp);
-            alert("Friend Removed")
-        })
-        .catch(error => {
-            console.log('===> Error deleting shopping item', error);
-            alert('Error deleting shopping item');
-        });
+            .then((data) => {
+                console.log('return data', data)
+                let temp = friendList.slice()
+                temp.splice(index, 1);
+                setFriendList(temp);
+                alert("Friend Removed")
+            })
+            .catch(error => {
+                console.log('===> Error deleting shopping item', error);
+                alert('Error deleting shopping item');
+            });
 
     }
 
     const handleSendFriendRequest = (e) => {
         e.preventDefault();
         let addFriend = {
-           'friend_username': userQueried, 
-           'user_id': id
+            'friend_username': userQueried,
+            'user_id': id
         }
         console.log('search friend', addFriend);
 
@@ -213,13 +217,13 @@ const UserFriend = (props) => {
             .then(response => response.json())
             .then((data) => {
                 console.log('return data', data)
-                if(data['friend_status'] == 404){
+                if (data['friend_status'] == 404) {
                     alert('Username does not exist. Please try again')
                 }
-                else{
+                else {
                     alert(`Friend request sent to ${userQueried} !`)
                 }
-                
+
             })
             .catch(error => {
                 console.log('===> Error searching username', error);
@@ -229,49 +233,61 @@ const UserFriend = (props) => {
 
     return (
         <div class="container">
-            <div class="columns">
-                <div class="column has-text-centered">
-                    <h1 class="title" style={{ color: "#EBF2FA" }}>My Friends</h1><br />
+            <div class='title-input-wrapper userfriend'>
+
+                <div class="columns">
+                    <div class="column has-text-centered">
+                        <h1 class="title" style={{ color: "#EBF2FA" }}>My Friends</h1><br />
+                    </div>
                 </div>
-            </div>
-            <div class="add-pantry-item">
-                <form onSubmit={handleSubmit}>
+                <div class="add-pantry-item userfriend">
+                    <div class='search-container-userfriend'>
+                        <form onSubmit={handleSubmit}>
 
-                    <input type="text" name="query" class="search-bar" 
-                        placeholder="search for friends by username"
-                        value={searchVal}  onChange={handleChange} />
+                            <input type="text" name="query" class="search-bar "
+                                placeholder="search for friends by username"
+                                value={searchVal} onChange={handleChange} />
 
-                    <input type="submit" class="search-submit" />
+                            <input type="submit" class="search-submit" />
 
-                </form>
-                { currentlyFriends ? `${userQueried} is already your friend` :
-                  requestPending ? `A friend request has already been sent to ${userQueried}` :
-                  userQueried ? 
-                  <div>
-                  <p>User {userQueried} Found! </p>
-                  <form onSubmit={handleSendFriendRequest}>
-                  <input type="submit" value="Add Friend"/>
-                 </form>
-                 </div>
-                 : null
-                }
+                        </form>
+                    </div>
+                    <div>
+                        {currentlyFriends ? `${userQueried} is already your friend` :
+                            requestPending ? `A friend request has already been sent to ${userQueried}` :
+                                userQueried ?
+                                    <div class='friend-found-container'>
+                                        <p>User {userQueried} Found! </p>
+                                        <form onSubmit={handleSendFriendRequest}>
+                                            <input type="submit" value="Add Friend" />
+                                        </form>
+                                    </div>
+                                    : null
+                        }
+
+                    </div>
+
+                </div>
             </div>
             <div class="section">
                 <div id="app" class="row columns is-multiline">
-                    <div v-for="card in cardData" key="card.id" class="column is-4" id="column" >
+                    <div v-for="card in cardData" key="card.id" class="column is-4 userfriend"  >
                         <div class="card large" id="card-large">
                             <div class="card-content">
-                                <div class="media">
+                                <div class="media userfriend">
                                     <div>
-                                       <h1>Friend Requests Received:</h1>
-                                       {friendRequestsReceived ? displayRequestsReceived(friendRequestsReceived) : null}
+                                        <p class="title is-4 no-padding" style={{ color: "#0d6efd" }}>
+
+                                            Friend Requests Received: </p>
+                                      
+                                        {friendRequestsReceived && friendRequestsReceived.length > 0 ? displayRequestsReceived(friendRequestsReceived) : <p>No friend requests received</p>}
                                     </div>
                                     <div class="media-content">
                                         <p class="title is-4 no-padding" style={{ color: "#0d6efd" }}>
 
                                             Friend List: </p>
                                         <ul>
-                                            {friendList ? displayFriends(friendList) : null}
+                                            {friendList && friendList.length > 0? displayFriends(friendList) : <p>Currently no friends..</p>}
                                         </ul>
                                     </div>
                                 </div>

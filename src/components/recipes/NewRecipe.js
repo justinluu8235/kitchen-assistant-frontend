@@ -35,6 +35,7 @@ const NewRecipe = (props) => {
         handleLogout();
 
         alert('Session has ended. Please login to continue.');
+        window.location.href = '/login';
     }
 
 
@@ -60,6 +61,8 @@ const NewRecipe = (props) => {
 
 
     const handleChangeIngredients = (i, e) => {
+        console.log(e.target.name)
+        console.log('ingredient', e.target.value)
         let temp = ingredients.slice()
         temp[i][e.target.name] = e.target.value
         setIngredients(temp);
@@ -198,8 +201,10 @@ const NewRecipe = (props) => {
                                                         <br />
                                                         <label for="categoryName"><p>Recipe Category</p></label>
                                                         <input type="text" name="categoryName" value={recipeCategory} onChange={handleCategoryChange} required />
+                                                        <label for="image"  >
+                                                        <p class='new-recipe-image-label'>Recipe image</p>
                                                         <input type="file" name="image" id="post-image" onChange={hangleImageFile}></input>
-
+                                                        </label>
                                                         <br />
                                                         <br />
                                                         <div class="all-ingredients" id="all-ingredients">

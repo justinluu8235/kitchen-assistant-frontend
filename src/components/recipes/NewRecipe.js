@@ -133,7 +133,6 @@ const NewRecipe = (props) => {
         formdata.append("ingredients_list", ingredients);
         axios.post(URL, formdata, config)
             .then((res) => {
-                console.log('response 1', res.data)
                 let newRecipeData = {
                 recipe_id: res.data['id'],
                 recipe_category: recipeCategory,
@@ -147,7 +146,6 @@ const NewRecipe = (props) => {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json',
-                        // 'Content-type':'multipart/form-data',
                         'X-CSRFToken': csrftoken,
                     },
                     body: JSON.stringify(newRecipeData)
@@ -155,7 +153,6 @@ const NewRecipe = (props) => {
                 })
                     .then(response => response.json())
                     .then((data) => {
-                        console.log('return data 2', data)
                         setNewRecipeID(data['recipe']['id'])
                         setRedirect(true);
                     })

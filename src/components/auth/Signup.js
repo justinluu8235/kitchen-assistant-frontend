@@ -177,7 +177,7 @@ class Signup extends Component {
                     </button>
                     <br />
                     <small>
-                      <em>Lorem ipsum dolor sit amet consectetur.</em>
+                      
                     </small>
                   </form>
                 </div>

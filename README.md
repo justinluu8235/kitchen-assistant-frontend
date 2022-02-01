@@ -4,17 +4,33 @@ The original kitchen assistant was built on the Expres/EJS stack, and was a webs
 
 
 
-[Kitchen-Assistant v2.0 via Heroku]
+[Kitchen-Assistant v2.0 via Heroku](https://kitchen-assistantv2-frontend.herokuapp.com/)
 
-[Kitchen-Assistant Github Repository (Frontend)]
+[Kitchen-Assistant Github Repository (Frontend)](https://github.com/justinluu8235/kitchen-assistant-frontend)
 
-[Kitchen-Assistant Github Repository (Backend)]
+[Kitchen-Assistant Github Repository (Backend)](https://github.com/justinluu8235/kitchen-assistant-django-api)
 
+[Oriignal v1 Kitchen-Assistant EJS-Express Github Repository](https://github.com/justinluu8235/kitchen-assistant)
 
+## Original Kitchen Assistant Key Features
+- Recipes 
+    - create, edit, view, and delete recipes
+- Search Recipes
+    - search Spoonacular's API for existing recipes
+    - add them to the user's own recipes
+- Menu 
+    - add recipes to the menu for meal scheduling 
+    - view requested menu item's from friends
+- Shopping List/Pantry 
+    - generate shopping lists based on your recipe's ingredients 
+    - filter out items that are always in stock in your pantry when generating shopping lists
+- Friends
+    - View friend's recipes, and add them to your own 
+    - Request friends to make recipes by adding them to their menu
 
 ## Added Kitchen App Key Features
 
-- Allows pending and accepting for friend requests
+- Allows pending and accepting statuses for friend requests. 
 
 - Unit conversion for common units when generating a shopping list to 'stack' items
 
@@ -26,7 +42,7 @@ The original kitchen assistant was built on the Expres/EJS stack, and was a webs
 ## Entity Relationship Diagram
 The following ERD details the associations between the user, recipes, and other data.
 
-![ERD](./ERD.png)
+![ERD](./img/ERD.png)
 
 
 Main association for recipes were made as shown:

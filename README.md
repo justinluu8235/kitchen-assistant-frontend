@@ -1,6 +1,6 @@
 # Kitchen-Assistant v2.0
 
-The original kitchen assistant was built on the Expres/EJS stack, and was a website allowing users to efficiently manage logistics in their kitchen. This updated version is built with Django for its backend, React for frontend, and provides additional functionalit.
+The original kitchen assistant was built on the Expres/EJS stack, and was a website allowing users to efficiently manage logistics in their kitchen. This updated version is built with Django for its backend, React for frontend, and provides additional functionality.
 
 
 

@@ -12,6 +12,18 @@ The original kitchen assistant was built on the Expres/EJS stack, and was a webs
 
 [Oriignal v1 Kitchen-Assistant EJS-Express Github Repository](https://github.com/justinluu8235/kitchen-assistant)
 
+
+
+## `Give it a Try`
+* <a href="https://kitchen-assistantv2-frontend.herokuapp.com/">Go to the live site here</a>
+
+* Follow these installation instructions
+    * clone the repo and run it
+    * run npm install
+    * set up a .env with a REACT_APP_SERVER_URL for backend connection (can also clone our <a href="https://github.com/justinluu8235/kitchen-assistant-django-api">backend repo</a>)
+    * run npm start
+
+
 ## Original Kitchen Assistant Key Features
 - Recipes 
     - create, edit, view, and delete recipes
@@ -28,6 +40,7 @@ The original kitchen assistant was built on the Expres/EJS stack, and was a webs
     - View friend's recipes, and add them to your own 
     - Request friends to make recipes by adding them to their menu
 
+
 ## Added Kitchen App Key Features
 
 - Allows pending and accepting statuses for friend requests. 
@@ -36,7 +49,7 @@ The original kitchen assistant was built on the Expres/EJS stack, and was a webs
 
 - Added option to upload your own photo for the recipe photo
 
-
+![Overiew](./img/kitchen-assistantv2.gif)
 
 
 ## Entity Relationship Diagram
@@ -45,7 +58,7 @@ The following ERD details the associations between the user, recipes, and other 
 ![ERD](./img/ERD.png)
 
 
-Main association for recipes were made as shown:
+Main association for recipes were made as shown in Django backend:
 
 ```python
 
@@ -87,7 +100,7 @@ class Ingredient(models.Model):
 
 
 ## Unit Conversion
-When generating shopping list items, the goal is to have the same item names to not duplicate as shopping items, even though recipe notes different units 
+One added feature is that when generating shopping list items, the goal is to have the same item names to not duplicate as shopping items, even though recipe notes different units. This logic is reviewed in the backend before generating shopping list items.
 
 
 For common units, we first try to relate them 
@@ -192,6 +205,9 @@ const handleSubmit = (e) => {
     }
 
 ```
+
+### For more information on backend routes, see the backend repository: [Kitchen-Assistant Github Repository (Backend)](https://github.com/justinluu8235/kitchen-assistant-django-api)
+
 
 
 

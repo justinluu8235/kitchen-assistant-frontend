@@ -1,0 +1,12 @@
+version: "1"
+services:
+  nginx-react:
+    image: kafrontend:latest
+    container_name: kitchenassistantfrontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:80
+    environment:
+      NODE_ENV: production

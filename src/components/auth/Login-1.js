@@ -9,12 +9,12 @@ const { REACT_APP_SERVER_URL } = process.env;
 
 const Login = (props) => {
     const {nowCurrentUser, user} = props;
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [redirect, setRedirect] = useState(false)
 
-    const handleUserName = (e) => {
-        setUsername(e.target.value)
+    const handleEmail = (e) => {
+        setEmail(e.target.value)
     }
 
     const handlePassword = (e) => {
@@ -40,7 +40,7 @@ const Login = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault(); // at the beginning of a submit function
         const loginData = {
-            username: username,
+            email: email,
             password: password
         };
 
@@ -101,9 +101,9 @@ const Login = (props) => {
                                         <div class="field">
                                             <div class="control">
                                                 <input class="input is-large login-input" id="auth-email"
-                                                    type="text" onChange={handleUserName.bind(this)}
-                                                    placeholder="Your Email" value={username}
-                                                    autocomplete="username" required />
+                                                    type="text" onChange={handleEmail.bind(this)}
+                                                    placeholder="Your Email" value={email}
+                                                    autocomplete="email" required />
                                             </div>
                                         </div>
                                         <div class="field">

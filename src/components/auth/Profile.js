@@ -40,9 +40,6 @@ const Profile = (props) => {
                   <th colspan="2"></th>
                 </tr>
                 <tr>
-                  <td>Name: {username}</td>
-                </tr>
-                <tr>
                   <td>Email: {email}</td>
                 </tr>   
                 <tr>

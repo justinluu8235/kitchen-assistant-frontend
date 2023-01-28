@@ -17,12 +17,6 @@ class Signup extends Component {
     };
   }
 
-  handleName(e) {
-    this.setState({
-      name: e.target.value,
-    });
-  }
-
   handleEmail(e) {
     this.setState({
       email: e.target.value,
@@ -63,11 +57,9 @@ class Signup extends Component {
     console.log("INSIDE SIGNUP HANDLE SUBMIT")
     if (this.state.password === this.state.confirmPassword && this.state.password.length >= 8) {
       const newUser = {
-        name: this.state.name,
         email: this.state.email,
         password: this.state.password,
       };
-      console.log("NEW USER:", newUser)
 
       let csrftoken = this.getCookie('csrftoken');
       fetch(`${REACT_APP_SERVER_URL}/signup/`, {
@@ -116,19 +108,6 @@ class Signup extends Component {
                   <h1 className="title is-4">Sign up today</h1>
                  
                   <form onSubmit={this.handleSubmit.bind(this)}>
-                    <div className="field">
-                      <div className="control">
-                        <input
-                          className="input is-medium"
-                          type="text"
-                          placeholder="Name"
-                          name="name"
-                          value={this.state.name}
-                          onChange={this.handleName.bind(this)}
-                          required
-                        />
-                      </div>
-                    </div>
 
                     <div className="field">
                       <div className="control">

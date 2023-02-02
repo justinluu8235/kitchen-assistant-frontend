@@ -5,6 +5,18 @@ import axios from "axios";
 import { Navigate } from "react-router-dom";
 const { REACT_APP_SERVER_URL } = process.env;
 
+const errorMsg = (msg) => {
+
+    const errorMsgStyle = {
+        color: 'red'
+    }
+    return (
+        <div style={errorMsgStyle}>
+            {msg}
+        </div>
+    )
+   }
+
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -14,8 +26,11 @@ class Signup extends Component {
       password: "",
       confirmPassword: "",
       redirect: false,
+      errors: "",
     };
   }
+
+
 
   handleEmail(e) {
     this.setState({
@@ -74,11 +89,20 @@ class Signup extends Component {
       })
         .then(response => response.json())
         .then((data) => {
-          console.log(data)
+        console.log(data)
+        const responseError = data?.errors
+        if(responseError){
+            this.setState({
+               errors: responseError
+            })
+        }
+        else{
           this.setState({
             redirect: true,
           });
           return alert('Account Created');
+        }
+
         })
 
     } else {
@@ -150,6 +174,8 @@ class Signup extends Component {
                         />
                       </div>
                     </div>
+
+                    {this.state.errors !== "" && errorMsg(this.state.errors)}
 
                     <button type="submit" className="button is-block is-primary is-fullwidth is-medium">
                       Submit

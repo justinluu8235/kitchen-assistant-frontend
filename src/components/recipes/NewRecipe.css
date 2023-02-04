@@ -119,10 +119,7 @@ textarea, label,input{
    
 }
 
-.instructions{
-  position:relative;
-  bottom:50px;
-}
+
 
 #addRecipeStepButton,#addIngredientButton{
   margin-top:20px;
@@ -140,3 +137,18 @@ textarea, label,input{
   margin-top:15px;
   margin-bottom:20px;
 }
+
+@media screen and (max-width:900px){
+  .column.new-recipe{
+    width: 100%;
+  }
+}
+
+@media screen and (min-width:900px){
+  .column.new-recipe{
+    width: 700px;
+  }
+}
+
+
+

@@ -9,3 +9,15 @@
 .edit-recipe-image-label{
     margin-left:15px;
 }
+
+@media screen and (max-width:900px){
+  .column.edit-recipe{
+    width: 100%;
+  }
+}
+
+@media screen and (min-width:900px){
+  .column.edit-recipe{
+    width: 700px;
+  }
+}

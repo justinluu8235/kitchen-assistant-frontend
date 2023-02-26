@@ -239,7 +239,9 @@ const EditRecipe = (props) => {
                                                         <p class='edit-recipe-image-label'>Recipe image</p>
                                                         <input type="file" name="image" id="post-image" onChange={hangleImageFile}></input>
                                                         </label>
+
                                                         <div class="all-ingredients">
+                                                        <label>Ingredients</label>
                                                             {recipeData ? displayIngredients(ingredients) : null}
 
                                                         </div>

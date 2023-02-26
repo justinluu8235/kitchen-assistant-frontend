@@ -108,7 +108,7 @@ form, .pantry-item{
     padding-left:10px;
 }
 
-textarea, label,input{
+textarea{
     margin:15px;
     margin-left:10px;
 }
@@ -119,13 +119,6 @@ textarea, label,input{
    
 }
 
-
-
-#addRecipeStepButton,#addIngredientButton{
-  margin-top:20px;
-  position:relative;
-  right:40px;
-}
 
 .new-recipe-image-label{
   margin-top:10px;

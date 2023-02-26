@@ -191,7 +191,7 @@ const NewRecipe = (props) => {
 
                                         <div class="list-item">
                                             <p class="pantry-item">
-                                                <span class="title is-6">
+                                                <span class="is-6">
                                                     <form onSubmit={handleSubmit}>
                                                         <label for="recipeName"><p>Recipe Name</p></label>
                                                         <input type="text" name="recipeName" value={recipeName} onChange={handleNameChange} required />
@@ -205,7 +205,7 @@ const NewRecipe = (props) => {
                                                         <br />
                                                         <br />
                                                         <div class="all-ingredients" id="all-ingredients">
-
+                                                            <label><p>Ingredients:</p></label>
                                                             {displayIngredients(ingredients)}
                                                         </div>
                                                         <label for="button"></label>

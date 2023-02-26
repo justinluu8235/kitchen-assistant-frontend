@@ -218,7 +218,7 @@ const EditRecipe = (props) => {
 
             <div class="section">
                 <div id="app" class="row columns is-multiline">
-                    <div v-for="card in cardData" key="card.id" class="column is-4" id="column" >
+                    <div v-for="card in cardData" key="card.id" class="column is-4 edit-recipe" >
                         <div class="card large" id="card-large">
                             <div class="card-content">
                                 <div class="media">
@@ -239,7 +239,9 @@ const EditRecipe = (props) => {
                                                         <p class='edit-recipe-image-label'>Recipe image</p>
                                                         <input type="file" name="image" id="post-image" onChange={hangleImageFile}></input>
                                                         </label>
+
                                                         <div class="all-ingredients">
+                                                        <label>Ingredients</label>
                                                             {recipeData ? displayIngredients(ingredients) : null}
 
                                                         </div>

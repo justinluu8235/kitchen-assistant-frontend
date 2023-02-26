@@ -1,22 +1,46 @@
 import React from 'react';
+import { createStyles, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    ingredientRow: {
+       display: 'flex',
+       flexDirection: 'row',
+       flexWrap: 'wrap',
+       border: '1px solid black',
+       borderRadius: '5px',
+       marginTop: '10px',
+       marginBottom: '5px',
+    },
+    ingredientNameInput: {
+
+      maxWidth: '200px',
+      "&::placeholder": {
+        color: "gray"
+      },
+    },
+    ingredientQuantityInput: {
+      maxWidth: '100px',
+      "&::placeholder": {
+        color: "gray"
+      },
+    },
+  }),
+);
 
 
 const IngredientInput = (props) => {
-
+    const classes = useStyles()
     const { name, quantity, unit, index, handleIngredientChange } = props
 
 
     return (
-        <div class="new-ingredient">
-            <label for="ingredientName"><p>Ingredient Name</p></label>
-            <input type="text" name="ingredient_name" value={name} onChange={(e) => handleIngredientChange(index, e)} />
+        <div className={classes.ingredientRow}>
+            <input className={classes.ingredientNameInput} type="text" name="ingredient_name" placeholder="Name" value={name} onChange={(e) => handleIngredientChange(index, e)} />
             <br />
-            <label for="ingredientQuantity"><p>Ingredient Quantity</p></label>
-            <input type="number" value={quantity} name="ingredient_quantity" onChange={(e) => handleIngredientChange(index, e)} />
+            <input className={classes.ingredientQuantityInput} type="number" placeholder="Quantity" value={quantity} name="ingredient_quantity" onChange={(e) => handleIngredientChange(index, e)} />
             
             <br />
-            <label for="quantityUnit"><p>Measurement Unit</p></label>
-            {/* <input type="text" value={unit} name="quantity_unit" onChange={(e) => handleIngredientChange(index, e)} /> */}
             <select class="dropdown-new-recipe" name="quantity_unit" id="cars" onChange={(e) => handleIngredientChange(index, e)}>
                 <option value="grams">grams</option>
                 <option value="kilograms">kilograms</option>

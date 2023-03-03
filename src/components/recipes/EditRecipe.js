@@ -4,8 +4,12 @@ import EditInstructionInput from './EditInstructionInput'
 import { Link, Navigate} from 'react-router-dom';
 import axios from 'axios'
 import './EditRecipe.css'
+import { useIsRecipeLoading } from './hooks';
+import Loading from '../shared/loading'
+import store from '../../store';
 
 const EditRecipe = (props) => {
+    const isLoading = useIsRecipeLoading()
     const { handleLogout, user } = props;
     const { id, name, email, exp } = user;
     const [recipeData, setRecipeData] = useState()
@@ -162,6 +166,7 @@ const EditRecipe = (props) => {
         console.log('new recipe data', newRecipeData);
 
         let csrftoken = getCookie('csrftoken');
+        store.dispatch({type: 'recipes/isLoading'})
         fetch(`${REACT_APP_SERVER_URL}/recipes/edit/${recipeID}`, {
             method: 'POST',
             headers: {
@@ -184,7 +189,10 @@ const EditRecipe = (props) => {
                 console.log('return data after image', data)
 
                 setNewRecipeId(data['recipe']['id'])
+                store.dispatch({type: 'recipes/doneLoading'})
+
                 setRedirect(true);
+
             });
 
             }
@@ -192,12 +200,17 @@ const EditRecipe = (props) => {
                 console.log('return data', data)
 
                 setNewRecipeId(data['recipe']['id'])
+                store.dispatch({type: 'recipes/doneLoading'})
+
                 setRedirect(true);
+
             }
         })
         .catch(error => {
             console.log('===> Error editing recipe', error);
             alert('Error editing recipe');
+            store.dispatch({type: 'recipes/doneLoading'})
+
         });
     }
 
@@ -215,11 +228,12 @@ const EditRecipe = (props) => {
     if (redirect) return (<Navigate to={`/recipes/${newRecipeId}`} />);
     return (
         <div class="container">
-
             <div class="section">
                 <div id="app" class="row columns is-multiline">
+
                     <div v-for="card in cardData" key="card.id" class="column is-4 edit-recipe" >
                         <div class="card large" id="card-large">
+
                             <div class="card-content">
                                 <div class="media">
                                     <div class="media-content">
@@ -253,11 +267,17 @@ const EditRecipe = (props) => {
                                                         <div class="all-recipe-steps">
                                                             {recipeData ? displayInstructions(instructions) : null}
                                                         </div>
+
                                                         <label for="button"></label>
                                                         <input  class="add-button edit-recipe"  type="button" name="button" value="Add another Step" id="addRecipeStepButton" onClick={handleAddInstructionClick}/>
-
                                                         <br /><br /><br />
-                                                        <input type="submit" />
+                                                        {isLoading ? (
+                                                             <Loading/>
+                                                        ) : (
+                                                            <input type="submit" />
+                                                        )}
+                                                       
+                                                        
                                                     </form>
                                                     <form action="/recipes/<%=recipe.id%>/?_method=DELETE" method="POST">
                                                         <input type="submit" value="DELETE RECIPE" />

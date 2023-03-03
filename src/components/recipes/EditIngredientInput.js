@@ -38,7 +38,7 @@ const EditIngredientInput = (props) => {
 
     return (
         <div className={classes.ingredientRow}>
-            <input type="text" className={classes.ingredientNameInput} value={name} onChange={(e) => handleIngredientChange(index,e)} />
+            <input type="text" className={classes.ingredientNameInput} name="ingredient_name" value={name} onChange={(e) => handleIngredientChange(index,e)} />
             <input type="number" className={classes.ingredientQuantityInput} value={quantity} name="ingredient_quantity" onChange={(e) => handleIngredientChange(index,e)} />
             <select name="quantity_unit" className={classes.ingredientUnitDropdown} value={unit} onChange={(e) => handleIngredientChange(index, e)}>
                 <option value="grams">grams</option>

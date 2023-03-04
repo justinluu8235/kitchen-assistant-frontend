@@ -128,8 +128,6 @@ const EditRecipe = (props) => {
     }
 
     const displayInstructions = (instructions) => {
-        // console.log('in instructions display', instructions);
-        console.log(instructions)
         let display = instructions.map((instruction, idx) => {
             return <EditInstructionInput key={idx} index={idx} step_number={instruction['step_number']}
                 instruction={instruction['instructions']} handleInstructionChange={handleInstructionChange} 
@@ -264,6 +262,7 @@ const EditRecipe = (props) => {
 
 
                                                         <div class="all-recipe-steps">
+                                                        <label>Ingredients</label>
                                                             {recipeData ? displayInstructions(instructions) : null}
                                                         </div>
 

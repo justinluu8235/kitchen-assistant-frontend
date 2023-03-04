@@ -58,8 +58,8 @@ const ShowRecipe = (props) => {
             return (
                 <div>
                     <br />
-                    <p class="instructions recipe">Step Number:{instruction['step_number']} </p>
-                    <p class="instructions recipe">{instruction['instructions']}</p>
+                    <span class="instructions recipe">{instruction['step_number']}. </span>
+                    <span class="instructions recipe">{instruction['instructions']}</span>
                     <br />
                 </div>
 

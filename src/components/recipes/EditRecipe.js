@@ -244,24 +244,23 @@ const EditRecipe = (props) => {
                                                     <form method="POST" onSubmit={handleSubmit} action="/recipes/<%=recipe.id%>/?_method=PUT">
 
                                                         <label for="recipeName">Recipe Name</label>
-                                                        <input type="text" name="recipeName" value={recipeName} onChange={handleNameChange} />
+                                                        <input type="text" name="recipeName" disabled={isLoading} value={recipeName} onChange={handleNameChange} />
                                                         <br />
                                                         <label for="categoryName">Recipe Category</label>
-                                                        <input type="text" name="categoryName" value={recipeCategory} onChange={handleCategoryChange} />
+                                                        <input type="text" name="categoryName" disabled={isLoading} value={recipeCategory} onChange={handleCategoryChange} />
                                                         <br />
                                                         <label for="image"  >
                                                         <p class='edit-recipe-image-label'>Recipe image</p>
-                                                        <input type="file" name="image" id="post-image" onChange={hangleImageFile}></input>
+                                                        <input type="file" name="image" id="post-image" disabled={isLoading} onChange={hangleImageFile}></input>
                                                         </label>
 
                                                         <div class="all-ingredients">
                                                         <label>Ingredients</label>
                                                             {recipeData ? displayIngredients(ingredients) : null}
-
                                                         </div>
 
                                                         <label for="button"></label>
-                                                        <input class="add-button edit-recipe" type="button" name="button" value="Add another Ingredient" id="addIngredientButton" onClick={handleAddIngredientClick} />
+                                                        <input class="add-button edit-recipe" type="button" name="button" disabled={isLoading} value="Add another Ingredient" id="addIngredientButton" onClick={handleAddIngredientClick} />
 
 
                                                         <div class="all-recipe-steps">
@@ -269,7 +268,7 @@ const EditRecipe = (props) => {
                                                         </div>
 
                                                         <label for="button"></label>
-                                                        <input  class="add-button edit-recipe"  type="button" name="button" value="Add another Step" id="addRecipeStepButton" onClick={handleAddInstructionClick}/>
+                                                        <input  class="add-button edit-recipe"  type="button" name="button" disabled={isLoading} value="Add another Step" id="addRecipeStepButton" onClick={handleAddInstructionClick}/>
                                                         <br /><br /><br />
                                                         {isLoading ? (
                                                              <Loading/>
@@ -280,7 +279,7 @@ const EditRecipe = (props) => {
                                                         
                                                     </form>
                                                     <form action="/recipes/<%=recipe.id%>/?_method=DELETE" method="POST">
-                                                        <input type="submit" value="DELETE RECIPE" />
+                                                        <input type="submit" disabled={isLoading} value="DELETE RECIPE" />
                                                     </form>
                                                 </span>
                                             </p>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@material-ui/core';
+import { useIsRecipeLoading } from './hooks';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -34,13 +35,14 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 const EditIngredientInput = (props) => {
     const classes = useStyles()
+    const isLoading = useIsRecipeLoading()
     const { name, quantity, unit, index, handleIngredientChange, handleDeleteIngredient} = props
 
     return (
         <div className={classes.ingredientRow}>
-            <input type="text" className={classes.ingredientNameInput} name="ingredient_name" value={name} onChange={(e) => handleIngredientChange(index,e)} />
-            <input type="number" className={classes.ingredientQuantityInput} value={quantity} name="ingredient_quantity" onChange={(e) => handleIngredientChange(index,e)} />
-            <select name="quantity_unit" className={classes.ingredientUnitDropdown} value={unit} onChange={(e) => handleIngredientChange(index, e)}>
+            <input type="text" className={classes.ingredientNameInput} name="ingredient_name" disabled={isLoading} value={name} onChange={(e) => handleIngredientChange(index,e)} />
+            <input type="number" className={classes.ingredientQuantityInput} disabled={isLoading} value={quantity} name="ingredient_quantity" onChange={(e) => handleIngredientChange(index,e)} />
+            <select name="quantity_unit" className={classes.ingredientUnitDropdown} disabled={isLoading} value={unit} onChange={(e) => handleIngredientChange(index, e)}>
                 <option value="grams">grams</option>
                 <option value="kilograms">kilograms</option>
                 <option value="pound">pound</option>
@@ -57,7 +59,7 @@ const EditIngredientInput = (props) => {
             </select>
             <br />
             <label for="button"></label>
-            <input type="button" name="button" value="Delete Ingredient" id="deleteIngredientButton" onClick={(e) => handleDeleteIngredient(index, e)}/>
+            <input type="button" name="button" value="Delete Ingredient" id="deleteIngredientButton" disabled={isLoading} onClick={(e) => handleDeleteIngredient(index, e)}/>
             <br />
         </div>
     )

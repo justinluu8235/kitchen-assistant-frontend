@@ -21,8 +21,14 @@ body {
   height:100%
 }
 
+
 @media screen and (min-width: 769px){
-  overflow-x: clip
+  overflow-x: clip;
+
+}
+
+.media-content {
+  overflow-x: clip; 
 }
 
 input {
@@ -33,3 +39,9 @@ input {
 span {
   font-weight: 700;
 }
+
+img {
+  object-fit: cover;
+}
+
+

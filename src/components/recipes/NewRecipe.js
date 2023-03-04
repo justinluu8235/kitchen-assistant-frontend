@@ -184,10 +184,10 @@ const NewRecipe = (props) => {
 
     if (redirect) return (<Navigate to={`/recipes/${newRecipeID}`} />);
     return (
-        <div class="container">
+        <div class="container new-recipe">
 
             <div class="section">
-                <div id="app" class="row columns is-multiline">
+                <div  class="row columns is-multiline new-recipe">
                     <div v-for="card in cardData" key="card.id" class="column is-4 new-recipe" >
                         <div class="card large" id="card-large">
                             <div class="card-content">

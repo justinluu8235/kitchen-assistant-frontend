@@ -82,7 +82,7 @@ form, .pantry-item{
 
 .media-content{
     min-height:550px;
-    width: 800px;
+    width: 100%;
     flex-direction: column;
     align-items:flex-start;
 }
@@ -131,13 +131,13 @@ textarea{
 }
 
 @media screen and (max-width:900px){
-  .column.new-recipe{
+  .column.new-recipe, .container.new-recipe{
     width: 100%;
   }
 }
 
 @media screen and (min-width:900px){
-  .column.new-recipe{
+  .column.new-recipe, .container.new-recipe{
     width: 700px;
   }
 }

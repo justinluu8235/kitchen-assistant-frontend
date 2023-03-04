@@ -4,7 +4,10 @@ import IngredientInput from './IngredientInput';
 import InstructionInput from './InstructionInput';
 import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
-// import cloudinary  from '../../utils/cloudinary'
+import { useIsRecipeLoading } from './hooks';
+import store from '../../store';
+import Loading from '../shared/loading'
+
 
 const { REACT_APP_SERVER_URL } = process.env;
 
@@ -12,6 +15,7 @@ const { REACT_APP_SERVER_URL } = process.env;
 
 
 const NewRecipe = (props) => {
+    const isLoading = useIsRecipeLoading()
     const [recipeName, setRecipeName] = useState('');
     const [recipeCategory, setRecipeCategory] = useState('');
     const [ingredients, setIngredients] = useState([{
@@ -131,6 +135,7 @@ const NewRecipe = (props) => {
         }
         
         formdata.append("ingredients_list", ingredients);
+        store.dispatch({type: 'recipes/isLoading'})
         axios.post(URL, formdata, config)
             .then((res) => {
                 let newRecipeData = {
@@ -154,12 +159,14 @@ const NewRecipe = (props) => {
                     .then(response => response.json())
                     .then((data) => {
                         setNewRecipeID(data['recipe']['id'])
+                        store.dispatch({type: 'recipes/doneLoading'})
                         setRedirect(true);
                     })
             })
 
             .catch(error => {
                 console.log('===> Error creating recipe', error);
+                store.dispatch({type: 'recipes/doneLoading'})
                 alert('Error creating recipe');
             });
     }
@@ -194,13 +201,13 @@ const NewRecipe = (props) => {
                                                 <span class="is-6">
                                                     <form onSubmit={handleSubmit}>
                                                         <label for="recipeName"><p>Recipe Name</p></label>
-                                                        <input type="text" name="recipeName" value={recipeName} onChange={handleNameChange} required />
+                                                        <input type="text" name="recipeName" disabled={isLoading} value={recipeName} onChange={handleNameChange} required />
                                                         <br />
                                                         <label for="categoryName"><p>Recipe Category</p></label>
-                                                        <input type="text" name="categoryName" value={recipeCategory} onChange={handleCategoryChange} required />
+                                                        <input type="text" name="categoryName" disabled={isLoading} value={recipeCategory} onChange={handleCategoryChange} required />
                                                         <label for="image"  >
                                                         <p class='new-recipe-image-label'>Recipe image</p>
-                                                        <input type="file" name="image" id="post-image" onChange={hangleImageFile}></input>
+                                                        <input type="file" name="image" id="post-image" disabled={isLoading} onChange={hangleImageFile}></input>
                                                         </label>
                                                         <br />
                                                         <br />
@@ -209,7 +216,7 @@ const NewRecipe = (props) => {
                                                             {displayIngredients(ingredients)}
                                                         </div>
                                                         <label for="button"></label>
-                                                        <input type="button" name="button" onClick={handleAddIngredientClick} value="Add another Ingredient" id="addIngredientButton" />
+                                                        <input type="button" name="button" disabled={isLoading} onClick={handleAddIngredientClick} value="Add another Ingredient" id="addIngredientButton" />
 
 
                                                         <div class="all-recipe-steps">
@@ -217,13 +224,17 @@ const NewRecipe = (props) => {
                                                             {displayInstructions(instructions)}
                                                         </div>
                                                         <label for="button"></label>
-                                                        <input type="button" name="button" onClick={handleAddInstructionClick} value="Add another Step" id="addRecipeStepButton" />
+                                                        <input type="button" name="button" disabled={isLoading} onClick={handleAddInstructionClick} value="Add another Step" id="addRecipeStepButton" />
 
 
                                                         <br />
                                                         <br />
                                                         <br />
-                                                        <input type="submit" />
+                                                        {isLoading ? (
+                                                             <Loading/>
+                                                        ) : (
+                                                            <input type="submit" />
+                                                        )}
                                                     </form>
                                                 </span>
                                             </p>

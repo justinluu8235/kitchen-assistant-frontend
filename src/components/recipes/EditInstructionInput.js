@@ -5,9 +5,23 @@ import { useIsRecipeLoading } from './hooks';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    instructionContainer:{
+      display: 'flex', 
+      flexDirection: 'row', 
+      border: '1px solid black', 
+      borderRadius: '5px',
+      marginTop: '10px', 
+      marginBottom: '5px', 
+      padding: '10px', 
+    },
     instructionTextArea: {
       maxWidth: '90%',
     },
+    deleteInstructionButton: {
+      maxHeight: '24px', 
+      border: '1px solid black', 
+      padding: '2px',
+    }
   }),
 );
 
@@ -18,8 +32,8 @@ const EditIngredientInput = (props) => {
     console.log('instruction', instruction)
 
     return (
-        <div class="new-recipe-step">
-            <label for="instructions" class="instructions">Instructions</label>
+        <div className={classes.instructionContainer}>
+            <label for="instructions" class="instructions">{index+1}. </label>
 
             <textarea className={classes.instructionTextArea} name="instructions"
              cols="50" rows="5" value={instruction} 
@@ -28,7 +42,7 @@ const EditIngredientInput = (props) => {
              ></textarea>
 
             <label for="button"></label>
-            <input type="button" name="button" disabled={isLoading} value="Delete Step" id="deleteRecipeStepButton" onClick={(e) => handleDeleteInstruction(index, e)}/>
+            <input type="button" className={classes.deleteInstructionButton} disabled={isLoading} value="Delete Step" id="deleteRecipeStepButton" onClick={(e) => handleDeleteInstruction(index, e)}/>
             <br />
         </div>
     )

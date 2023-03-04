@@ -220,7 +220,7 @@ const NewRecipe = (props) => {
 
 
                                                         <div class="all-recipe-steps">
-
+                                                            <label><p>Instructions:</p></label>
                                                             {displayInstructions(instructions)}
                                                         </div>
                                                         <label for="button"></label>

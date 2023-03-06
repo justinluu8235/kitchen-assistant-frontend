@@ -277,9 +277,7 @@ const EditRecipe = (props) => {
                                                        
                                                         
                                                     </form>
-                                                    <form action="/recipes/<%=recipe.id%>/?_method=DELETE" method="POST">
-                                                        <input type="submit" disabled={isLoading} value="DELETE RECIPE" />
-                                                    </form>
+                                       
                                                 </span>
                                             </p>
 

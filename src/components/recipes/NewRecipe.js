@@ -18,7 +18,7 @@ const NewRecipe = (props) => {
     {
       ingredient_name: "",
       ingredient_quantity: "",
-      quantity_unit: "",
+      quantity_unit: "grams",
     },
   ]);
   const [instructions, setInstructions] = useState([
@@ -48,7 +48,7 @@ const NewRecipe = (props) => {
         {
           ingredient_name: "",
           ingredient_quantity: "",
-          quantity_unit: "",
+          quantity_unit: "grams",
         },
       ])
     );

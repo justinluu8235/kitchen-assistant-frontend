@@ -56,14 +56,13 @@ const RecipeIndexUnit = (props) => {
             {/* <% for( let i = 0; i < allRecipes.length; i++ ) { %> 
               <% let recipe = allRecipes[i].toJSON() %> */}
             <div class="card large recipe-index-card">
-                {image ? 
                 <div class="card-image" class="recipe-image">
                 <figure class="image is-16by9">
-                    <img src={image ? image : ""}  />
+                    
+                    <img src={image ? image : "/img/kitchen-icon.png"}  />
                 </figure>
             </div>
-                : null
-                }
+                
                 
  
                 <div class="card-content ">

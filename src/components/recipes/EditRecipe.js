@@ -20,7 +20,7 @@ const EditRecipe = (props) => {
       id: 0,
       ingredient_name: "",
       ingredient_quantity: "",
-      quantity_unit: "",
+      quantity_unit: "grams",
       recipe: 0,
     },
   ]);
@@ -78,7 +78,7 @@ const EditRecipe = (props) => {
           id: 0,
           ingredient_name: "",
           ingredient_quantity: "",
-          quantity_unit: "",
+          quantity_unit: "grams",
           recipe: 0,
         },
       ])
@@ -91,7 +91,6 @@ const EditRecipe = (props) => {
     setIngredients(temp);
   };
   const handleDeleteIngredient = (i, e) => {
-    console.log("index", i);
     let temp = ingredients.slice();
     temp.splice(i, 1);
     setIngredients(temp);

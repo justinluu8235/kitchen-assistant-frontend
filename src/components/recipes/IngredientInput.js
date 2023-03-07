@@ -52,16 +52,16 @@ const IngredientInput = (props) => {
                 <option value="grams">grams</option>
                 <option value="kilograms">kilograms</option>
                 <option value="pound">pound</option>
-                <option value="ouce">ouce</option>
-                <option value="pound">teaspoon</option>
-                <option value="ouce">tablespoon</option>
-                <option value="pound">cup</option>
-                <option value="ouce">liter</option>
-                <option value="pound">fluid_oz</option>
-                <option value="ouce">ml</option>
-                <option value="ouce">gallon</option>
-                <option value="ouce">serving</option>
-                <option value="ouce">unit</option>
+                <option value="ounce">ounce</option>
+                <option value="teaspoon">teaspoon</option>
+                <option value="tablespoon">tablespoon</option>
+                <option value="cup">cup</option>
+                <option value="liter">liter</option>
+                <option value="fluid_oz">fluid_oz</option>
+                <option value="ml">ml</option>
+                <option value="gallon">gallon</option>
+                <option value="serving">serving</option>
+                <option value="unit">unit</option>
             </select>
             <br />
         </div>

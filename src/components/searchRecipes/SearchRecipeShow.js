@@ -119,7 +119,6 @@ const SearchRecipeShow = (props) => {
         })
         .then(response => response.json())
         .then((data) => {
-            console.log('return data', data)
             setNewRecipeID(data['recipe']['id'])
             setRedirect(true);
         })

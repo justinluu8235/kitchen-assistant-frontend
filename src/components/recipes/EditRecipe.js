@@ -61,6 +61,7 @@ const EditRecipe = (props) => {
         setIngredients(data["ingredients"]);
         setInstructions(data["instructions"]);
       });
+
   }, [props]);
 
   const handleNameChange = (event) => {

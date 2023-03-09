@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import "./NewRecipe.css";
 import IngredientInput from "./IngredientInput";
 import InstructionInput from "./InstructionInput";
@@ -30,6 +30,7 @@ const NewRecipe = (props) => {
   const [redirect, setRedirect] = useState(false);
   const [newRecipeID, setNewRecipeID] = useState();
   const [imageFile, setImageFile] = useState();
+  const [categories, setCategories] = useState();
   const { handleLogout, user } = props;
   const { id, name, email, exp } = user;
   // make a condition that compares exp and current time
@@ -41,6 +42,19 @@ const NewRecipe = (props) => {
     alert("Session has ended. Please login to continue.");
     window.location.href = "/login";
   }
+
+  useEffect(() => {
+    fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const recipeCategoryObjList = data["recipe_categories"];
+        const categoryNameList = recipeCategoryObjList.map(
+          (category) => category["category_name"]
+        );
+        setCategories(categoryNameList);
+      });
+  }, [props]);
+  console.log("categories", categories);
 
   const handleAddIngredientClick = () => {
     setIngredients(
@@ -119,6 +133,9 @@ const NewRecipe = (props) => {
   const handleCategoryChange = (e) => {
     setRecipeCategory(e.target.value);
   };
+  const handleCategorySelect = (e) => {
+    console.log('cat select', e.target.value)
+  }
 
   const getCookie = (name) => {
     var cookieValue = null;
@@ -155,17 +172,18 @@ const NewRecipe = (props) => {
     }
 
     store.dispatch({ type: "recipes/isLoading" });
-    axios.post(URL, formdata, config)
-    .then((res) => {
+    axios
+      .post(URL, formdata, config)
+      .then((res) => {
         setNewRecipeID(res.data["recipe"]["id"]);
         store.dispatch({ type: "recipes/doneLoading" });
         setRedirect(true);
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         console.log("===> Error creating recipe", error);
         store.dispatch({ type: "recipes/doneLoading" });
         alert("Error creating recipe");
-    });
+      });
   };
 
   const hangleImageFile = (e) => {
@@ -216,6 +234,17 @@ const NewRecipe = (props) => {
                             <label for="categoryName">
                               <p>Recipe Category</p>
                             </label>
+                            <select
+                              // value={selectedOption}
+                              onChange={handleCategorySelect}
+                            >
+                              <option value="">Select an category</option>
+                              {categories && categories.map((option) => (
+                                <option key={option} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
                             <input
                               type="text"
                               name="categoryName"

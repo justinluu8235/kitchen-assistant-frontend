@@ -10,6 +10,7 @@ const ShowRecipe = (props) => {
     const { id, name, email, exp } = user;
     const [recipeData, setRecipeData] = useState()
     const [redirect, setRedirect] = useState(false)
+    const [recipeCategories, setRecipeCategories] = useState()
     // make a condition that compares exp and current time
     const expirationTime = new Date(exp * 1000);
     let currentTime = Date.now();
@@ -22,15 +23,15 @@ const ShowRecipe = (props) => {
 
     let temp = window.location.pathname.split('/')
     let recipeID = temp[2];
-    console.log('recipe id', recipeID);
+    console.log('recipe data', recipeData);
 
     useEffect(() => {
 
         fetch(`${REACT_APP_SERVER_URL}/recipes/view/${recipeID}`)
             .then(response => response.json())
             .then((data) => {
-                console.log('return data', data);
                 setRecipeData(data)
+                setRecipeCategories(JSON.stringify(data['recipe_categories']))
             });
 
     }, [props])
@@ -122,7 +123,9 @@ const ShowRecipe = (props) => {
                         <img id="search-recipe-image" src={recipeData['recipe']['image']} alt="" />
                         : null
                         }
-                        <h1 class="title" style={{ color: "#EBF2FA" }}>{recipeData ? recipeData['recipe']['recipe_name'] : null}</h1><br />
+                        <h1 class="title" style={{ color: "#EBF2FA" }}>{recipeData && recipeData['recipe']['recipe_name']}</h1><br />
+                        <h1 style={{ color: "#EBF2FA" }}>{recipeData && (recipeCategories)}</h1><br />
+
                         <div>
                         <form action={`/recipes/edit/${recipeID}`} method="GET">
                             <input type="submit" value="Edit Recipe" />

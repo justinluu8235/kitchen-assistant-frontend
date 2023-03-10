@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import "./NewRecipe.css";
 import IngredientInput from "./IngredientInput";
 import InstructionInput from "./InstructionInput";
@@ -7,13 +7,14 @@ import axios from "axios";
 import { useIsRecipeLoading } from "./hooks";
 import store from "../../store";
 import Loading from "../shared/loading";
+import RecipeCategories from "./categories";
+import CustomButton from "../shared/Button";
 
 const { REACT_APP_SERVER_URL } = process.env;
 
 const NewRecipe = (props) => {
   const isLoading = useIsRecipeLoading();
   const [recipeName, setRecipeName] = useState("");
-  const [recipeCategory, setRecipeCategory] = useState("");
   const [ingredients, setIngredients] = useState([
     {
       ingredient_name: "",
@@ -30,6 +31,9 @@ const NewRecipe = (props) => {
   const [redirect, setRedirect] = useState(false);
   const [newRecipeID, setNewRecipeID] = useState();
   const [imageFile, setImageFile] = useState();
+  const [availableCategories, setAvailableCategories] = useState();
+  const [categories, setCategories] = useState([]);
+
   const { handleLogout, user } = props;
   const { id, name, email, exp } = user;
   // make a condition that compares exp and current time
@@ -41,6 +45,20 @@ const NewRecipe = (props) => {
     alert("Session has ended. Please login to continue.");
     window.location.href = "/login";
   }
+
+  useEffect(() => {
+    if (id) {
+      fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          const recipeCategoryObjList = data["recipe_categories"];
+          const categoryNameList = recipeCategoryObjList.map(
+            (category) => category["category_name"]
+          );
+          setAvailableCategories(categoryNameList);
+        });
+    }
+  }, [id]);
 
   const handleAddIngredientClick = () => {
     setIngredients(
@@ -67,8 +85,6 @@ const NewRecipe = (props) => {
   };
 
   const handleChangeIngredients = (i, e) => {
-    console.log(e.target.name);
-    console.log("ingredient", e.target.value);
     let temp = ingredients.slice();
     temp[i][e.target.name] = e.target.value;
     setIngredients(temp);
@@ -116,9 +132,6 @@ const NewRecipe = (props) => {
   const handleNameChange = (e) => {
     setRecipeName(e.target.value);
   };
-  const handleCategoryChange = (e) => {
-    setRecipeCategory(e.target.value);
-  };
 
   const getCookie = (name) => {
     var cookieValue = null;
@@ -136,6 +149,29 @@ const NewRecipe = (props) => {
     return cookieValue;
   };
 
+  const handleCategorySelect = (e) => {
+    const selectedCategory = e.target.value;
+    if (selectedCategory && !categories.includes(selectedCategory)) {
+      setCategories([...categories, selectedCategory]);
+    }
+  };
+
+  const handleAddCategory = (categoryInput) => {
+    const trimmedCategoryInput = categoryInput.trim();
+    if (trimmedCategoryInput && !categories.includes(trimmedCategoryInput)) {
+      setCategories([...categories, trimmedCategoryInput]);
+    }
+  };
+  const handleDeleteCategory = (category) => {
+    console.log("deleting category", category);
+    const categoryList = [...categories]
+    let index = categoryList.indexOf(category);
+    if (index > -1) {
+      categoryList.splice(index, 1);
+    }
+    setCategories(categoryList)
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -148,24 +184,25 @@ const NewRecipe = (props) => {
     formdata.append("recipe_category", 1);
     formdata.append("instructions_list", JSON.stringify(instructions));
     formdata.append("ingredients_list", JSON.stringify(ingredients));
-    formdata.append("recipe_category_name", recipeCategory);
+    formdata.append("recipe_categories", JSON.stringify(categories));
 
     if (imageFile) {
       formdata.append("image", imageFile["image"][0]);
     }
 
     store.dispatch({ type: "recipes/isLoading" });
-    axios.post(URL, formdata, config)
-    .then((res) => {
+    axios
+      .post(URL, formdata, config)
+      .then((res) => {
         setNewRecipeID(res.data["recipe"]["id"]);
         store.dispatch({ type: "recipes/doneLoading" });
         setRedirect(true);
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         console.log("===> Error creating recipe", error);
         store.dispatch({ type: "recipes/doneLoading" });
         alert("Error creating recipe");
-    });
+      });
   };
 
   const hangleImageFile = (e) => {
@@ -216,14 +253,14 @@ const NewRecipe = (props) => {
                             <label for="categoryName">
                               <p>Recipe Category</p>
                             </label>
-                            <input
-                              type="text"
-                              name="categoryName"
-                              disabled={isLoading}
-                              value={recipeCategory}
-                              onChange={handleCategoryChange}
-                              required
+                            <RecipeCategories
+                              categories={categories}
+                              availableCategories={availableCategories}
+                              handleCategorySelect={handleCategorySelect}
+                              handleAddCategory={handleAddCategory}
+                              handleDeleteCategory={handleDeleteCategory}
                             />
+
                             <label for="image">
                               <p class="new-recipe-image-label">Recipe image</p>
                               <input
@@ -243,14 +280,20 @@ const NewRecipe = (props) => {
                               {displayIngredients(ingredients)}
                             </div>
                             <label for="button"></label>
-                            <input
+                            <CustomButton
+                              text={"Add another Ingredient"}
+                              disabled={isLoading}
+                              onClick={handleAddIngredientClick}
+                            />
+
+                            {/* <input
                               type="button"
                               name="button"
                               disabled={isLoading}
                               onClick={handleAddIngredientClick}
                               value="Add another Ingredient"
                               id="addIngredientButton"
-                            />
+                            /> */}
 
                             <div class="all-recipe-steps">
                               <label>
@@ -259,19 +302,28 @@ const NewRecipe = (props) => {
                               {displayInstructions(instructions)}
                             </div>
                             <label for="button"></label>
-                            <input
+                            <CustomButton
+                              text={"Add another step"}
+                              onClick={handleAddInstructionClick}
+                              disabled={isLoading}
+                            />
+                            {/* <input
                               type="button"
                               name="button"
                               disabled={isLoading}
                               onClick={handleAddInstructionClick}
                               value="Add another Step"
                               id="addRecipeStepButton"
-                            />
+                            /> */}
 
                             <br />
                             <br />
                             <br />
-                            {isLoading ? <Loading /> : <input type="submit" />}
+                            {isLoading ? (
+                              <Loading />
+                            ) : (
+                              <CustomButton disabled={isLoading} text={"Save"} type={"submit"} />
+                            )}
                           </form>
                         </span>
                       </p>

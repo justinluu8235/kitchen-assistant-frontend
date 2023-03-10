@@ -7,6 +7,7 @@ import "./EditRecipe.css";
 import { useIsRecipeLoading } from "./hooks";
 import Loading from "../shared/loading";
 import store from "../../store";
+import RecipeCategories from './categories'
 
 const EditRecipe = (props) => {
   const isLoading = useIsRecipeLoading();
@@ -33,9 +34,10 @@ const EditRecipe = (props) => {
       recipe: 0,
     },
   ]);
-  const [recipeCategory, setRecipeCategory] = useState("");
   const [newRecipeId, setNewRecipeId] = useState();
   const [redirect, setRedirect] = useState(false);
+  const [availableCategories, setAvailableCategories] = useState();
+  const [categories, setCategories] = useState([]);
   const { REACT_APP_SERVER_URL } = process.env;
   const expirationTime = new Date(exp * 1000);
   let currentTime = Date.now();
@@ -57,10 +59,28 @@ const EditRecipe = (props) => {
         console.log("return data", data);
         setRecipeData(data);
         setRecipeName(data["recipe"]["recipe_name"]);
-        setRecipeCategory(data["recipe_category"]["category_name"]);
         setIngredients(data["ingredients"]);
         setInstructions(data["instructions"]);
+        const initialCategoryObjs = data["recipe_categories"]
+        const initialCategories = initialCategoryObjs.map((categoryObj) => {
+          return categoryObj["category_name"]
+        })
+
+        setCategories(initialCategories)
+
       });
+
+      if (id) {
+        fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`)
+          .then((response) => response.json())
+          .then((data) => {
+            const recipeCategoryObjList = data["recipe_categories"];
+            const categoryNameList = recipeCategoryObjList.map(
+              (category) => category["category_name"]
+            );
+            setAvailableCategories(categoryNameList);
+          });
+      }
 
   }, [props]);
 
@@ -68,9 +88,6 @@ const EditRecipe = (props) => {
     setRecipeName(event.target.value);
   };
 
-  const handleCategoryChange = (event) => {
-    setRecipeCategory(event.target.value);
-  };
 
   const handleAddIngredientClick = () => {
     setIngredients(
@@ -185,7 +202,7 @@ const EditRecipe = (props) => {
     formdata.append("image", imageFile ? imageFile["image"][0] : '');
     formdata.append("id", recipeID);
     formdata.append("recipe_name", recipeName)
-    formdata.append("recipe_category", recipeCategory)
+    formdata.append("recipe_categories", JSON.stringify(categories))
     formdata.append("instructions_list", JSON.stringify(instructions))
     formdata.append("ingredients_list", JSON.stringify(ingredients))
     formdata.append("user_id", id)
@@ -208,6 +225,29 @@ const EditRecipe = (props) => {
     setImageFile({
       image: e.target.files,
     });
+  };
+
+  const handleCategorySelect = (e) => {
+    const selectedCategory = e.target.value;
+    if (selectedCategory && !categories.includes(selectedCategory)) {
+      setCategories([...categories, selectedCategory]);
+    }
+  };
+
+  const handleAddCategory = (categoryInput) => {
+    const trimmedCategoryInput = categoryInput.trim();
+    if (trimmedCategoryInput && !categories.includes(trimmedCategoryInput)) {
+      setCategories([...categories, trimmedCategoryInput]);
+    }
+  };
+  const handleDeleteCategory = (category) => {
+    console.log("deleting category", category);
+    const categoryList = [...categories]
+    let index = categoryList.indexOf(category);
+    if (index > -1) {
+      categoryList.splice(index, 1);
+    }
+    setCategories(categoryList)
   };
 
   if (redirect) return <Navigate to={`/recipes/${newRecipeId}`} />;
@@ -248,12 +288,13 @@ const EditRecipe = (props) => {
                             />
                             <br />
                             <label for="categoryName">Recipe Category</label>
-                            <input
-                              type="text"
-                              name="categoryName"
-                              disabled={isLoading}
-                              value={recipeCategory}
-                              onChange={handleCategoryChange}
+                            <br />
+                            <RecipeCategories
+                              categories={categories}
+                              availableCategories={availableCategories}
+                              handleCategorySelect={handleCategorySelect}
+                              handleAddCategory={handleAddCategory}
+                              handleDeleteCategory={handleDeleteCategory}
                             />
                             <br />
                             <label for="image">

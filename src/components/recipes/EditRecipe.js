@@ -8,6 +8,7 @@ import { useIsRecipeLoading } from "./hooks";
 import Loading from "../shared/loading";
 import store from "../../store";
 import RecipeCategories from './categories'
+import CustomButton from '../shared/Button'
 
 const EditRecipe = (props) => {
   const isLoading = useIsRecipeLoading();
@@ -105,6 +106,7 @@ const EditRecipe = (props) => {
 
   const handleChangeIngredients = (i, e) => {
     let temp = ingredients.slice();
+    console.log('e', e)
     temp[i][e.target.name] = e.target.value;
     setIngredients(temp);
   };
@@ -317,16 +319,8 @@ const EditRecipe = (props) => {
                                 : null}
                             </div>
 
-                            <label for="button"></label>
-                            <input
-                              class="add-button edit-recipe"
-                              type="button"
-                              name="button"
-                              disabled={isLoading}
-                              value="Add another Ingredient"
-                              id="addIngredientButton"
-                              onClick={handleAddIngredientClick}
-                            />
+                            <CustomButton  text="Add another ingredient" disabled={isLoading} onClick={handleAddIngredientClick}></CustomButton>
+
 
                             <div class="all-recipe-steps">
                               <label>Ingredients</label>
@@ -335,20 +329,12 @@ const EditRecipe = (props) => {
                                 : null}
                             </div>
 
-                            <label for="button"></label>
-                            <input
-                              class="add-button edit-recipe"
-                              type="button"
-                              name="button"
-                              disabled={isLoading}
-                              value="Add another Step"
-                              id="addRecipeStepButton"
-                              onClick={handleAddInstructionClick}
-                            />
+                            <CustomButton text="Add another step" disabled={isLoading} onClick={handleAddInstructionClick}></CustomButton>
+       
                             <br />
                             <br />
                             <br />
-                            {isLoading ? <Loading /> : <input type="submit" />}
+                            {isLoading ? <Loading /> :  <CustomButton disabled={isLoading} text={"Save"} type={"submit"} />}
                           </form>
                         </span>
                       </p>

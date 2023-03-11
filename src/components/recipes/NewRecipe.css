@@ -123,12 +123,6 @@ textarea{
   margin-top:10px;
 }
 
-.dropdown-new-recipe{
-  width: 100px;
-  margin-left:10px;
-  margin-top:15px;
-  margin-bottom:20px;
-}
 
 @media screen and (max-width:900px){
   .column.new-recipe, .container.new-recipe{

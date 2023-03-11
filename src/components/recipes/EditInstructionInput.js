@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@material-ui/core';
 import { useIsRecipeLoading } from './hooks';
+import CustomButton from '../shared/Button'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -8,6 +9,7 @@ const useStyles = makeStyles((theme: Theme) =>
     instructionContainer:{
       display: 'flex', 
       flexDirection: 'row', 
+      flexWrap: 'wrap',
       border: '1px solid black', 
       borderRadius: '5px',
       marginTop: '10px', 
@@ -33,7 +35,6 @@ const EditIngredientInput = (props) => {
 
     return (
         <div className={classes.instructionContainer}>
-            <label for="instructions" class="instructions">{index+1}. </label>
 
             <textarea className={classes.instructionTextArea} name="instructions"
              cols="50" rows="5" value={instruction} 
@@ -42,7 +43,7 @@ const EditIngredientInput = (props) => {
              ></textarea>
 
             <label for="button"></label>
-            <input type="button" className={classes.deleteInstructionButton} disabled={isLoading} value="Delete Step" id="deleteRecipeStepButton" onClick={(e) => handleDeleteInstruction(index, e)}/>
+            <CustomButton id="deleteRecipeStepButton" className={classes.deleteInstructionButton} disabled={isLoading} text="Delete Step" onClick={(e) => handleDeleteInstruction(index, e)}></CustomButton>
             <br />
         </div>
     )

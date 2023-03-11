@@ -8,16 +8,23 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     myButton: {
         fontSize: ".75rem",
-        border: "1px solid black"
+        border: "1px solid black",
+        maxHeight: '25px', 
+    },
+    defaultMargin: {
+      margin: '10px',
     },
   }),
 );
 
-const CustomButton = ({text, onClick, type, disabled }) => {
+const CustomButton = ({text, onClick, type, disabled, className, useDefaultMargin=true}) => {
     
     const classes = useStyles()
+    let allClasses = className ? [classes.myButton, className] : [classes.myButton]
+    useDefaultMargin && allClasses.push(classes.defaultMargin)
+
     return (
-        <Button className={classes.myButton} disabled={disabled} type={type} variant="contained" size="small" onClick={onClick}>{text}</Button>
+        <Button className={allClasses.join(' ')} disabled={disabled} type={type} variant="contained" size="small" onClick={onClick}>{text}</Button>
     )
 }
 

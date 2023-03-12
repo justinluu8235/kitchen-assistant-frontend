@@ -91,12 +91,6 @@
   min-height:0;
 }
 
-.column.recipe-index{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 .title.recipe-index{
   font-size: 50px;
 }

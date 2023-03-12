@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     categorySelect: {
       maxHeight: "30px",
+      backgroundColor: "#EBF2FA",
+      borderRadius:"5px",
     }
   })
 );
@@ -38,6 +40,8 @@ const RecipeCategories = ({
   handleAddCategory,
   handleCategorySelect,
   handleDeleteCategory,
+  onlyShowDropdown=false,
+  selectPlaceholderText="Select a category"
 }) => {
   const classes = useStyles();
   const isLoading = useIsRecipeLoading();
@@ -72,19 +76,21 @@ const RecipeCategories = ({
         onChange={handleCategorySelect}
         disabled={isLoading}
         value="start"
-        variant="filled"
+        variant="outlined"
         className={classes.categorySelect}
         >
-          <MenuItem value="start">Select a category</MenuItem>
+          <MenuItem value="start">{selectPlaceholderText}</MenuItem>
         {availableCategories &&
           availableCategories.map((option) => (
             <MenuItem value={option}>{option}</MenuItem>
           ))}      
       </Select>
  
-      <label> OR </label>
-      {allowNewCategory ? (
+      {!onlyShowDropdown && (
+        
+        allowNewCategory ? (
         <>
+          <label> OR </label>
           <input
             type="text"
             name="categoryName"
@@ -106,14 +112,18 @@ const RecipeCategories = ({
           />
         </>
       ) : (
-        <CustomButton
+        <>
+          <label> OR </label>
+          <CustomButton
           text="Add new category"
           onClick={() => {
             setAllowNewCategory(true);
           }}
         ></CustomButton>
+        </>
+
       
-      )}
+      ))}
       </div>
     </div>
   );

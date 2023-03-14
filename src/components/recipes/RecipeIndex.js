@@ -100,7 +100,7 @@ const RecipeIndex = (props) => {
         const categoryList = recipe['categories'].map(recipe => recipe['category_name'])
         const recipeHasFilteredCategories = filterCategories.every(cat => categoryList.includes(cat))
         if(recipe["recipe_name"].toLowerCase().includes(recipeSearchInput.toLowerCase())){
-            // Filter by categories 
+            // Filter by categories -
             if(recipeHasFilteredCategories){
                 return true
             }

@@ -166,7 +166,6 @@ const handleSubmit = (e) => {
         formdata.append("user", id);
         formdata.append("recipe_category", 1);
         if(imageFile){
-            console.log('image file', imageFile[0])
             formdata.append("image", imageFile['image'][0]);
         }
         

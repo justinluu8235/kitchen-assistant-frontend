@@ -41,7 +41,6 @@ function App() {
 
     if (!localStorage.getItem('jwtToken')) {
       setIsAuthenticated(false);
-      // console.log('====> Authenticated is now FALSE');
     } else {
       token = jwt_decode(localStorage.getItem('jwtToken'));
       setAuthToken(localStorage.getItem('jwtToken'));
@@ -51,7 +50,6 @@ function App() {
   }, []);
 
   const nowCurrentUser = (userData) => {
-    // console.log('===> nowCurrentUser is here.');
     setCurrentUser(userData);
     setIsAuthenticated(true);
   }

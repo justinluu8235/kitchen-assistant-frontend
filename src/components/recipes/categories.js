@@ -7,6 +7,9 @@ import {Select, MenuItem } from "@material-ui/core"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    chipRow:{
+      marginTop: "10px",
+    },
     categoryInputRow: {
       display: "flex", 
       flexDirection: "row", 
@@ -56,7 +59,7 @@ const RecipeCategories = ({
   };
 
   return (
-    <div >
+    <div  className={classes.chipRow}>
       {categories &&
         categories.map((category) => {
           return (

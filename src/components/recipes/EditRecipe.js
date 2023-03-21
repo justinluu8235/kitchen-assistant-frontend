@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     recipeNameInput: {
       backgroundColor: "#e0e0e0", 
-      marginLeft:"15px",
     },
   })
 );
@@ -281,6 +280,7 @@ const EditRecipe = (props) => {
                             action="/recipes/<%=recipe.id%>/?_method=PUT"
                           >
                             <label for="recipeName">Recipe Name</label>
+                            <br/>
                             <TextField 
                             className={classes.recipeNameInput}
                             variant="outlined"

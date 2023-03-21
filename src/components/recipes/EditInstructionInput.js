@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
     instructionInput: {
       backgroundColor: "#e0e0e0", 
       flex: 2,
+      minWidth: "200px",
     },
     deleteInstructionButton: {
       maxHeight: "24px",

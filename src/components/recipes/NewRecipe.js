@@ -9,10 +9,20 @@ import store from "../../store";
 import Loading from "../shared/loading";
 import RecipeCategories from "./categories";
 import CustomButton from "../shared/Button";
+import { createStyles, makeStyles, TextField } from "@material-ui/core";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    recipeNameInput: {
+      backgroundColor: "#e0e0e0",
+    },
+  })
+);
 
 const { REACT_APP_SERVER_URL } = process.env;
 
 const NewRecipe = (props) => {
+  const classes = useStyles();
   const isLoading = useIsRecipeLoading();
   const [recipeName, setRecipeName] = useState("");
   const [ingredients, setIngredients] = useState([
@@ -164,12 +174,12 @@ const NewRecipe = (props) => {
   };
   const handleDeleteCategory = (category) => {
     console.log("deleting category", category);
-    const categoryList = [...categories]
+    const categoryList = [...categories];
     let index = categoryList.indexOf(category);
     if (index > -1) {
       categoryList.splice(index, 1);
     }
-    setCategories(categoryList)
+    setCategories(categoryList);
   };
 
   const handleSubmit = (e) => {
@@ -241,14 +251,16 @@ const NewRecipe = (props) => {
                             <label for="recipeName">
                               <p>Recipe Name</p>
                             </label>
-                            <input
-                              type="text"
-                              name="recipeName"
-                              disabled={isLoading}
-                              value={recipeName}
+
+                            <TextField
+                              className={classes.recipeNameInput}
+                              variant="outlined"
                               onChange={handleNameChange}
-                              required
-                            />
+                              value={recipeName}
+                              disabled={isLoading}
+                              multiline
+                              size="small"
+                            ></TextField>
                             <br />
                             <label for="categoryName">
                               <p>Recipe Category</p>
@@ -271,8 +283,6 @@ const NewRecipe = (props) => {
                                 onChange={hangleImageFile}
                               ></input>
                             </label>
-                            <br />
-                            <br />
                             <div class="all-ingredients" id="all-ingredients">
                               <label>
                                 <p>Ingredients:</p>
@@ -322,7 +332,11 @@ const NewRecipe = (props) => {
                             {isLoading ? (
                               <Loading />
                             ) : (
-                              <CustomButton disabled={isLoading} text={"Save"} type={"submit"} />
+                              <CustomButton
+                                disabled={isLoading}
+                                text={"Save"}
+                                type={"submit"}
+                              />
                             )}
                           </form>
                         </span>

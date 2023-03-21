@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles, makeStyles } from "@material-ui/core";
+import { createStyles, makeStyles, TextField } from "@material-ui/core";
 import { useIsRecipeLoading } from "./hooks";
 import CustomButton from "../shared/Button";
 import {Select, MenuItem } from "@material-ui/core"
@@ -17,18 +17,18 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: "5px",
       alignItems: "center",
       padding:'5px',
+      gap: "10px"
     },
     ingredientNameInput: {
-      maxWidth: "200px",
-      "&::placeholder": {
-        color: "gray",
-      },
+      backgroundColor: "#e0e0e0", 
+      flex:2,
+      minWidth: "150px",
+      
     },
     ingredientQuantityInput: {
-      maxWidth: "100px",
-      "&::placeholder": {
-        color: "gray",
-      },
+      backgroundColor: "#e0e0e0", 
+      flex: 1, 
+      minWidth: "60px",
     },
     ingredientUnitDropdown: {
       height: "30px",
@@ -48,28 +48,32 @@ const EditIngredientInput = (props) => {
   } = props;
   return (
     <div className={classes.ingredientRow}>
-      <input
-        type="text"
+      <TextField
         className={classes.ingredientNameInput}
+        variant="outlined"
         name="ingredient_name"
-        disabled={isLoading}
-        value={name}
         onChange={(e) => handleIngredientChange(index, e)}
-      />
-      <input
-        type="number"
-        className={classes.ingredientQuantityInput}
+        value={name}
         disabled={isLoading}
-        value={quantity}
+        size="small"
+      ></TextField>
+
+            <TextField
+        className={classes.ingredientQuantityInput}
+        variant="outlined"
         name="ingredient_quantity"
         onChange={(e) => handleIngredientChange(index, e)}
-      />
+        value={quantity}
+        disabled={isLoading}
+        size="small"
+        type="number"
+      ></TextField>
       <Select
         name="quantity_unit"
         onChange={(e) => handleIngredientChange(index, e)}
         disabled={isLoading}
         value={unit}
-        variant="filled"
+        variant="outlined"
         className={classes.ingredientUnitDropdown}
       >
         <MenuItem value="grams">grams</MenuItem>

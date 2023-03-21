@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     searchInput: {
       backgroundColor: "#EBF2FA",
       width: "250px",
+      borderRadius:"5px",
     },
   })
 );

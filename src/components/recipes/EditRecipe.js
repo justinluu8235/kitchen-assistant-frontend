@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import EditIngredientInput from "./EditIngredientInput";
 import EditInstructionInput from "./EditInstructionInput";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import axios from "axios";
 import "./EditRecipe.css";
 import { useIsRecipeLoading } from "./hooks";
@@ -9,8 +9,22 @@ import Loading from "../shared/loading";
 import store from "../../store";
 import RecipeCategories from './categories'
 import CustomButton from '../shared/Button'
+import { TextField } from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
+
+
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    recipeNameInput: {
+      backgroundColor: "#e0e0e0", 
+    },
+  })
+);
+
 
 const EditRecipe = (props) => {
+  const classes = useStyles()
   const isLoading = useIsRecipeLoading();
   const { handleLogout, user } = props;
   const { id, name, email, exp } = user;
@@ -41,6 +55,7 @@ const EditRecipe = (props) => {
   const [categories, setCategories] = useState([]);
   const { REACT_APP_SERVER_URL } = process.env;
   const expirationTime = new Date(exp * 1000);
+
   let currentTime = Date.now();
   if (currentTime >= expirationTime) {
     handleLogout();
@@ -51,7 +66,6 @@ const EditRecipe = (props) => {
 
   let temp = window.location.pathname.split("/");
   let recipeID = temp[3];
-  console.log("recipe id", recipeID);
 
   useEffect(() => {
     fetch(`${REACT_APP_SERVER_URL}/recipes/view/${recipeID}`)
@@ -178,21 +192,6 @@ const EditRecipe = (props) => {
     return display;
   };
 
-  const getCookie = (name) => {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-      var cookies = document.cookie.split(";");
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim();
-        // Does this cookie string begin with the name we want?
-        if (cookie.substring(0, name.length + 1) === name + "=") {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -281,13 +280,17 @@ const EditRecipe = (props) => {
                             action="/recipes/<%=recipe.id%>/?_method=PUT"
                           >
                             <label for="recipeName">Recipe Name</label>
-                            <input
-                              type="text"
-                              name="recipeName"
-                              disabled={isLoading}
-                              value={recipeName}
-                              onChange={handleNameChange}
-                            />
+                            <br/>
+                            <TextField 
+                            className={classes.recipeNameInput}
+                            variant="outlined"
+                            onChange={handleNameChange}
+                            value={recipeName}
+                            disabled={isLoading}
+                            multiline 
+                            size="small"
+                            >
+                            </TextField>
                             <br />
                             <label for="categoryName">Recipe Category</label>
                             <br />
@@ -323,7 +326,7 @@ const EditRecipe = (props) => {
 
 
                             <div class="all-recipe-steps">
-                              <label>Ingredients</label>
+                              <label>Instructions</label>
                               {recipeData
                                 ? displayInstructions(instructions)
                                 : null}

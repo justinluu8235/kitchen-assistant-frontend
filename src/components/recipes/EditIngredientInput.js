@@ -69,7 +69,7 @@ const EditIngredientInput = (props) => {
         onChange={(e) => handleIngredientChange(index, e)}
         disabled={isLoading}
         value={unit}
-        variant="filled"
+        variant="outlined"
         className={classes.ingredientUnitDropdown}
       >
         <MenuItem value="grams">grams</MenuItem>

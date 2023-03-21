@@ -1,53 +1,67 @@
-import React from 'react';
-import { createStyles, makeStyles } from '@material-ui/core';
-import { useIsRecipeLoading } from './hooks';
-import CustomButton from '../shared/Button'
-
+import React from "react";
+import { createStyles, makeStyles, TextField} from "@material-ui/core";
+import { useIsRecipeLoading } from "./hooks";
+import CustomButton from "../shared/Button";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    instructionContainer:{
-      display: 'flex', 
-      flexDirection: 'row', 
-      flexWrap: 'wrap',
-      border: '1px solid black', 
-      borderRadius: '5px',
-      marginTop: '10px', 
-      marginBottom: '5px', 
-      padding: '10px', 
+    instructionContainer: {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      border: "1px solid black",
+      borderRadius: "5px",
+      marginTop: "10px",
+      marginBottom: "5px",
+      padding: "10px",
     },
-    instructionTextArea: {
-      maxWidth: '90%',
+    instructionInput: {
+      backgroundColor: "#e0e0e0", 
+      flex: 2,
     },
     deleteInstructionButton: {
-      maxHeight: '24px', 
-      border: '1px solid black', 
-      padding: '2px',
-    }
-  }),
+      maxHeight: "24px",
+      border: "1px solid black",
+      padding: "2px",
+    },
+  })
 );
 
 const EditIngredientInput = (props) => {
-    const isLoading = useIsRecipeLoading()
-    const classes = useStyles();
-    const { step_number, instruction, index, handleInstructionChange, handleDeleteInstruction } = props
-    console.log('instruction', instruction)
+  const isLoading = useIsRecipeLoading();
+  const classes = useStyles();
+  const {
+    step_number,
+    instruction,
+    index,
+    handleInstructionChange,
+    handleDeleteInstruction,
+  } = props;
+  console.log("instruction", instruction);
 
-    return (
-        <div className={classes.instructionContainer}>
+  return (
+    <div className={classes.instructionContainer}>
+      <TextField
+        className={classes.instructionInput}
+        variant="outlined"
+        onChange={(e) => handleInstructionChange(index, e)}
+        value={instruction}
+        disabled={isLoading}
+        multiline
+        size="small"
+      ></TextField>
 
-            <textarea className={classes.instructionTextArea} name="instructions"
-             cols="50" rows="5" value={instruction} 
-             onChange={(e) => handleInstructionChange(index, e)}
-             disabled={isLoading}
-             ></textarea>
+      <label for="button"></label>
+      <CustomButton
+        id="deleteRecipeStepButton"
+        className={classes.deleteInstructionButton}
+        disabled={isLoading}
+        text="Delete Step"
+        onClick={(e) => handleDeleteInstruction(index, e)}
+      ></CustomButton>
+      <br />
+    </div>
+  );
+};
 
-            <label for="button"></label>
-            <CustomButton id="deleteRecipeStepButton" className={classes.deleteInstructionButton} disabled={isLoading} text="Delete Step" onClick={(e) => handleDeleteInstruction(index, e)}></CustomButton>
-            <br />
-        </div>
-    )
-
-}
-
-export default EditIngredientInput
+export default EditIngredientInput;

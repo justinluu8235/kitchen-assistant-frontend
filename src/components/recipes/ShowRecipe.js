@@ -1,8 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { Chip } from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
 import "./ShowRecipe.css";
 const { REACT_APP_SERVER_URL } = process.env;
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    
+        categoryChipsContainer: {
+            display: 'flex', 
+            flexDirection: 'row', 
+            flexWrap: 'wrap',
+            gap: '10px',
+        }
+    
+  })
+);
 
 const ShowRecipe = (props) => {
   const { handleLogout, user } = props;
@@ -10,6 +24,7 @@ const ShowRecipe = (props) => {
   const [recipeData, setRecipeData] = useState();
   const [redirect, setRedirect] = useState(false);
   const [recipeCategories, setRecipeCategories] = useState();
+  const classes = useStyles()
   // make a condition that compares exp and current time
   const expirationTime = new Date(exp * 1000);
   let currentTime = Date.now();
@@ -122,7 +137,7 @@ const ShowRecipe = (props) => {
           <br />
           <br />
           {recipeCategories && (
-            <div>
+            <div className={classes.categoryChipsContainer}>
               <span style={{ color: "#EBF2FA" }}>Categories: </span>
               {recipeCategories.map((category) => {
                 return <Chip size="small" label={category} />;

@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles, makeStyles } from "@material-ui/core";
+import { createStyles, makeStyles, TextField } from "@material-ui/core";
 import { useIsRecipeLoading } from "./hooks";
 import {Select, MenuItem } from "@material-ui/core"
 
@@ -15,18 +15,18 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "10px",
       marginBottom: "5px",
       padding: '5px',
+      gap: "10px",
+      alignItems: 'center',
     },
     ingredientNameInput: {
-      maxWidth: "200px",
-      "&::placeholder": {
-        color: "gray",
-      },
+      backgroundColor: "#e0e0e0", 
+      flex:2,
+      minWidth: "150px",
     },
     ingredientQuantityInput: {
-      maxWidth: "100px",
-      "&::placeholder": {
-        color: "gray",
-      },
+      backgroundColor: "#e0e0e0", 
+      flex:1,
+      minWidth: "60px",
     },
     ingredientUnitSelect: {
       maxHeight: '30px',
@@ -42,25 +42,28 @@ const IngredientInput = (props) => {
 
   return (
     <div className={classes.ingredientRow}>
-      <input
+      <TextField
         className={classes.ingredientNameInput}
-        type="text"
+        variant="outlined"
         name="ingredient_name"
+        onChange={(e) => handleIngredientChange(index, e)}
+        value={name}
         disabled={isLoading}
         placeholder="Name"
-        value={name}
-        onChange={(e) => handleIngredientChange(index, e)}
-      />
-      <br />
-      <input
+        size="small"
+      ></TextField>
+
+                  <TextField
         className={classes.ingredientQuantityInput}
-        type="number"
-        disabled={isLoading}
-        placeholder="Quantity"
-        value={quantity}
+        variant="outlined"
         name="ingredient_quantity"
         onChange={(e) => handleIngredientChange(index, e)}
-      />
+        value={quantity}
+        placeholder="Quantity"
+        type="number"
+        disabled={isLoading}
+        size="small"
+      ></TextField>
 
       <br />
       <Select
@@ -68,7 +71,7 @@ const IngredientInput = (props) => {
         onChange={(e) => handleIngredientChange(index, e)}
         disabled={isLoading}
         value={unit}
-        variant="filled"
+        variant="outlined"
         className={classes.ingredientUnitSelect}
       >
         <MenuItem value="grams">grams</MenuItem>

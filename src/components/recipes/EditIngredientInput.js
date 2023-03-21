@@ -66,6 +66,7 @@ const EditIngredientInput = (props) => {
         value={quantity}
         disabled={isLoading}
         size="small"
+        type="number"
       ></TextField>
       <Select
         name="quantity_unit"

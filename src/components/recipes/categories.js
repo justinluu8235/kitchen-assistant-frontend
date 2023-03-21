@@ -73,7 +73,6 @@ const RecipeCategories = ({
             />
           );
         })}
-      <br />
       <div className={classes.categoryInputRow}>
       <Select         
         onChange={handleCategorySelect}

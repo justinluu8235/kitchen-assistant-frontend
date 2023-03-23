@@ -228,6 +228,8 @@ const EditRecipe = (props) => {
       });
     } else {
       setImageSizeExceeded(true);
+      setImageFile(null)
+
     }
   };
 
@@ -315,7 +317,7 @@ const EditRecipe = (props) => {
                               {imageSizeExceeded && (
                                 <>
                                   <span style={{ color: "red" }}>
-                                    Image can not exceed 5MB
+                                    Image exceeds 5MB - not attached.
                                   </span>
                                 </>
                               )}

@@ -7,24 +7,21 @@ import "./EditRecipe.css";
 import { useIsRecipeLoading } from "./hooks";
 import Loading from "../shared/loading";
 import store from "../../store";
-import RecipeCategories from './categories'
-import CustomButton from '../shared/Button'
+import RecipeCategories from "./categories";
+import CustomButton from "../shared/Button";
 import { TextField } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core";
-
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     recipeNameInput: {
-      backgroundColor: "#e0e0e0", 
+      backgroundColor: "#e0e0e0",
     },
   })
 );
 
-
 const EditRecipe = (props) => {
-  const classes = useStyles()
+  const classes = useStyles();
   const isLoading = useIsRecipeLoading();
   const { handleLogout, user } = props;
   const { id, name, email, exp } = user;
@@ -53,6 +50,7 @@ const EditRecipe = (props) => {
   const [redirect, setRedirect] = useState(false);
   const [availableCategories, setAvailableCategories] = useState();
   const [categories, setCategories] = useState([]);
+  const [imageSizeExceeded, setImageSizeExceeded] = useState(false);
   const { REACT_APP_SERVER_URL } = process.env;
   const expirationTime = new Date(exp * 1000);
 
@@ -76,33 +74,30 @@ const EditRecipe = (props) => {
         setRecipeName(data["recipe"]["recipe_name"]);
         setIngredients(data["ingredients"]);
         setInstructions(data["instructions"]);
-        const initialCategoryObjs = data["recipe_categories"]
+        const initialCategoryObjs = data["recipe_categories"];
         const initialCategories = initialCategoryObjs.map((categoryObj) => {
-          return categoryObj["category_name"]
-        })
+          return categoryObj["category_name"];
+        });
 
-        setCategories(initialCategories)
-
+        setCategories(initialCategories);
       });
 
-      if (id) {
-        fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`)
-          .then((response) => response.json())
-          .then((data) => {
-            const recipeCategoryObjList = data["recipe_categories"];
-            const categoryNameList = recipeCategoryObjList.map(
-              (category) => category["category_name"]
-            );
-            setAvailableCategories(categoryNameList);
-          });
-      }
-
+    if (id) {
+      fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          const recipeCategoryObjList = data["recipe_categories"];
+          const categoryNameList = recipeCategoryObjList.map(
+            (category) => category["category_name"]
+          );
+          setAvailableCategories(categoryNameList);
+        });
+    }
   }, [props]);
 
   const handleNameChange = (event) => {
     setRecipeName(event.target.value);
   };
-
 
   const handleAddIngredientClick = () => {
     setIngredients(
@@ -120,7 +115,7 @@ const EditRecipe = (props) => {
 
   const handleChangeIngredients = (i, e) => {
     let temp = ingredients.slice();
-    console.log('e', e)
+    console.log("e", e);
     temp[i][e.target.name] = e.target.value;
     setIngredients(temp);
   };
@@ -130,6 +125,7 @@ const EditRecipe = (props) => {
     setIngredients(temp);
   };
   const displayIngredients = (ingredients) => {
+    console.log("ingredient", ingredients);
     let display = ingredients.map((ingredient, idx) => {
       return (
         <EditIngredientInput
@@ -192,7 +188,6 @@ const EditRecipe = (props) => {
     return display;
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -200,32 +195,42 @@ const EditRecipe = (props) => {
 
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     let formdata = new FormData();
-    formdata.append("image", imageFile ? imageFile["image"][0] : '');
+    formdata.append("image", imageFile ? imageFile["image"][0] : "");
     formdata.append("id", recipeID);
-    formdata.append("recipe_name", recipeName)
-    formdata.append("recipe_categories", JSON.stringify(categories))
-    formdata.append("instructions_list", JSON.stringify(instructions))
-    formdata.append("ingredients_list", JSON.stringify(ingredients))
-    formdata.append("user_id", id)
-    const URL = `${REACT_APP_SERVER_URL}/recipes/edit/${recipeID}`
-    axios.post(URL, formdata, config)
-    .then((response) => {
-        console.log('response', response)
+    formdata.append("recipe_name", recipeName);
+    formdata.append("recipe_categories", JSON.stringify(categories));
+    formdata.append("instructions_list", JSON.stringify(instructions));
+    formdata.append("ingredients_list", JSON.stringify(ingredients));
+    formdata.append("user_id", id);
+    const URL = `${REACT_APP_SERVER_URL}/recipes/edit/${recipeID}`;
+    axios
+      .post(URL, formdata, config)
+      .then((response) => {
+        console.log("response", response);
         setNewRecipeId(response.data["recipe"]["id"]);
         store.dispatch({ type: "recipes/doneLoading" });
         setRedirect(true);
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         console.log("===> Error editing recipe", error);
         alert("Error editing recipe");
         store.dispatch({ type: "recipes/doneLoading" });
-    })  
+      });
   };
 
   const hangleImageFile = (e) => {
-    setImageFile({
-      image: e.target.files,
-    });
+    const fileSize = e.target.files[0]["size"];
+    // max 5MB
+    if (fileSize < 5000001) {
+      setImageSizeExceeded(false);
+      setImageFile({
+        image: e.target.files,
+      });
+    } else {
+      setImageSizeExceeded(true);
+      setImageFile(null)
+
+    }
   };
 
   const handleCategorySelect = (e) => {
@@ -243,12 +248,12 @@ const EditRecipe = (props) => {
   };
   const handleDeleteCategory = (category) => {
     console.log("deleting category", category);
-    const categoryList = [...categories]
+    const categoryList = [...categories];
     let index = categoryList.indexOf(category);
     if (index > -1) {
       categoryList.splice(index, 1);
     }
-    setCategories(categoryList)
+    setCategories(categoryList);
   };
 
   if (redirect) return <Navigate to={`/recipes/${newRecipeId}`} />;
@@ -280,17 +285,16 @@ const EditRecipe = (props) => {
                             action="/recipes/<%=recipe.id%>/?_method=PUT"
                           >
                             <label for="recipeName">Recipe Name</label>
-                            <br/>
-                            <TextField 
-                            className={classes.recipeNameInput}
-                            variant="outlined"
-                            onChange={handleNameChange}
-                            value={recipeName}
-                            disabled={isLoading}
-                            multiline 
-                            size="small"
-                            >
-                            </TextField>
+                            <br />
+                            <TextField
+                              className={classes.recipeNameInput}
+                              variant="outlined"
+                              onChange={handleNameChange}
+                              value={recipeName}
+                              disabled={isLoading}
+                              multiline
+                              size="small"
+                            ></TextField>
                             <br />
                             <label for="categoryName">Recipe Category</label>
                             <br />
@@ -302,18 +306,22 @@ const EditRecipe = (props) => {
                               handleDeleteCategory={handleDeleteCategory}
                             />
                             <br />
-                            <label for="image">
-                              <p class="edit-recipe-image-label">
-                                Recipe image
-                              </p>
+                            <div style={{marginBottom: '10px'}}>
+                              <p>Recipe image</p>
                               <input
                                 type="file"
-                                name="image"
-                                id="post-image"
                                 disabled={isLoading}
                                 onChange={hangleImageFile}
+                                accept="image/*,.pdf"
                               ></input>
-                            </label>
+                              {imageSizeExceeded && (
+                                <>
+                                  <span style={{ color: "red" }}>
+                                    Image exceeds 5MB - not attached.
+                                  </span>
+                                </>
+                              )}
+                            </div>
 
                             <div class="all-ingredients">
                               <label>Ingredients</label>
@@ -322,8 +330,11 @@ const EditRecipe = (props) => {
                                 : null}
                             </div>
 
-                            <CustomButton  text="Add another ingredient" disabled={isLoading} onClick={handleAddIngredientClick}></CustomButton>
-
+                            <CustomButton
+                              text="Add another ingredient"
+                              disabled={isLoading}
+                              onClick={handleAddIngredientClick}
+                            ></CustomButton>
 
                             <div class="all-recipe-steps">
                               <label>Instructions</label>
@@ -332,12 +343,24 @@ const EditRecipe = (props) => {
                                 : null}
                             </div>
 
-                            <CustomButton text="Add another step" disabled={isLoading} onClick={handleAddInstructionClick}></CustomButton>
-       
+                            <CustomButton
+                              text="Add another step"
+                              disabled={isLoading}
+                              onClick={handleAddInstructionClick}
+                            ></CustomButton>
+
                             <br />
                             <br />
                             <br />
-                            {isLoading ? <Loading /> :  <CustomButton disabled={isLoading} text={"Save"} type={"submit"} />}
+                            {isLoading ? (
+                              <Loading />
+                            ) : (
+                              <CustomButton
+                                disabled={isLoading}
+                                text={"Save"}
+                                type={"submit"}
+                              />
+                            )}
                           </form>
                         </span>
                       </p>

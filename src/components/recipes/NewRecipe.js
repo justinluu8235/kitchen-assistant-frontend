@@ -43,7 +43,7 @@ const NewRecipe = (props) => {
   const [imageFile, setImageFile] = useState();
   const [availableCategories, setAvailableCategories] = useState();
   const [categories, setCategories] = useState([]);
-
+  const [imageSizeExceeded, setImageSizeExceeded] = useState(false)
   const { handleLogout, user } = props;
   const { id, name, email, exp } = user;
   // make a condition that compares exp and current time
@@ -143,22 +143,6 @@ const NewRecipe = (props) => {
     setRecipeName(e.target.value);
   };
 
-  const getCookie = (name) => {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-      var cookies = document.cookie.split(";");
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim();
-        // Does this cookie string begin with the name we want?
-        if (cookie.substring(0, name.length + 1) === name + "=") {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
-  };
-
   const handleCategorySelect = (e) => {
     const selectedCategory = e.target.value;
     if (selectedCategory && !categories.includes(selectedCategory)) {
@@ -216,11 +200,17 @@ const NewRecipe = (props) => {
   };
 
   const hangleImageFile = (e) => {
-    setImageFile({
-      image: e.target.files,
-    });
-    console.log(e.target.files);
-    console.log(imageFile);
+    const fileSize = e.target.files && e.target.files[0]["size"]
+    // max 5MB
+    if (fileSize < 5000001) {
+      setImageSizeExceeded(false);
+      setImageFile({
+        image: e.target.files,
+      });
+    } else {
+      setImageSizeExceeded(true);
+      setImageFile(null)
+    }
   };
 
   if (redirect) return <Navigate to={`/recipes/${newRecipeID}`} />;
@@ -272,17 +262,24 @@ const NewRecipe = (props) => {
                               handleAddCategory={handleAddCategory}
                               handleDeleteCategory={handleDeleteCategory}
                             />
-
-                            <label for="image">
-                              <p class="new-recipe-image-label">Recipe image</p>
+                                                        <div style={{marginBottom: '10px'}}>
+                              <p>Recipe image</p>
                               <input
                                 type="file"
-                                name="image"
-                                id="post-image"
                                 disabled={isLoading}
                                 onChange={hangleImageFile}
+                                accept="image/*,.pdf"
                               ></input>
-                            </label>
+                              {imageSizeExceeded && (
+                                <>
+                                  <span style={{ color: "red" }}>
+                                  Image exceeds 5MB - not attached.
+                                  </span>
+                                </>
+                              )}
+                            </div>
+
+                           
                             <div class="all-ingredients" id="all-ingredients">
                               <label>
                                 <p>Ingredients:</p>
@@ -296,15 +293,6 @@ const NewRecipe = (props) => {
                               onClick={handleAddIngredientClick}
                             />
 
-                            {/* <input
-                              type="button"
-                              name="button"
-                              disabled={isLoading}
-                              onClick={handleAddIngredientClick}
-                              value="Add another Ingredient"
-                              id="addIngredientButton"
-                            /> */}
-
                             <div class="all-recipe-steps">
                               <label>
                                 <p>Instructions:</p>
@@ -317,14 +305,6 @@ const NewRecipe = (props) => {
                               onClick={handleAddInstructionClick}
                               disabled={isLoading}
                             />
-                            {/* <input
-                              type="button"
-                              name="button"
-                              disabled={isLoading}
-                              onClick={handleAddInstructionClick}
-                              value="Add another Step"
-                              id="addRecipeStepButton"
-                            /> */}
 
                             <br />
                             <br />

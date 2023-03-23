@@ -143,22 +143,6 @@ const NewRecipe = (props) => {
     setRecipeName(e.target.value);
   };
 
-  const getCookie = (name) => {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-      var cookies = document.cookie.split(";");
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim();
-        // Does this cookie string begin with the name we want?
-        if (cookie.substring(0, name.length + 1) === name + "=") {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
-  };
-
   const handleCategorySelect = (e) => {
     const selectedCategory = e.target.value;
     if (selectedCategory && !categories.includes(selectedCategory)) {
@@ -281,6 +265,7 @@ const NewRecipe = (props) => {
                                 id="post-image"
                                 disabled={isLoading}
                                 onChange={hangleImageFile}
+                                accept="image/*,.pdf"
                               ></input>
                             </label>
                             <div class="all-ingredients" id="all-ingredients">

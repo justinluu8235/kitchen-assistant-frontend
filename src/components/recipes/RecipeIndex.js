@@ -38,7 +38,6 @@ const RecipeIndex = (props) => {
   const { id, username, email, exp } = user;
   const { REACT_APP_SERVER_URL } = process.env;
   const [recipes, setRecipes] = useState();
-  const [redirect, setRedirect] = useState(false);
   const [recipeSearchInput, setRecipeSearchInput] = useState("");
   const [availableCategories, setAvailableCategories] = useState([]);
   const [filterCategories, setFilterCategories] = useState([]);
@@ -50,7 +49,7 @@ const RecipeIndex = (props) => {
 
     alert("Session has ended. Please login to continue.");
     window.location.href = "/login";
-    setRedirect(true);
+    console.log('user', user)
   }
 
   useEffect(() => {
@@ -190,7 +189,6 @@ const RecipeIndex = (props) => {
 
   const userData = user ? (
     <div class="container">
-      {redirect ? <Navigate to="/login" /> : null}
       <div class="section">
         <div id="add-recipe">
           <a href="/recipes/new">Add a Recipe</a>

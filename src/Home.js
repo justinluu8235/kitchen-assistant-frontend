@@ -9,13 +9,13 @@ const Home = (props) => {
             <div class="section">
                 <div class="columns home-title-container">
                     <div class="column has-text-centered home-title-row">
-                        <div class="home-title-row-item">
+                        <div class="home-title-row-item im">
                         <img class="kitch-icon-left" src="/img/kitchen-icon.png" alt="" />
                         </div>
                         <div class="home-title-row-item"> 
                         <h1 class="title home-title" style={{color: "#EBF2FA"}}>Welcome to the Kitchen!</h1>
                         </div>
-                        <div class="home-title-row-item">
+                        <div class="home-title-row-item im">
                         <img class="kitch-icon-right" src="/img/kitchen-icon.png" alt="" />
                         </div>
                     </div>

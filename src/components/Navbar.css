@@ -1,38 +1,4 @@
-.nav-container{
 
-    display: flex;
-    flex-direction: row;
-    flex-wrap:wrap;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.navbar-directory{
-    display: flex;
-    flex-direction: row;
-    flex-wrap:wrap;
-}
-.nav-username{
-    display: flex;
-    flex-direction:row;
-    align-items: center;
-}
-.nav-text{
-    color: ghostwhite;
-    font-weight: 400;
-}
-
-
-.nav-auth-container{
-    width: 125px;
-    display:flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-
-    
-    
-}
 
 .app-title{
     font-size: 1.5rem;

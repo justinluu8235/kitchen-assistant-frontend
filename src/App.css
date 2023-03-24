@@ -2,6 +2,13 @@ html {
   position: relative;
   min-height: 100%;
 }
+:root {
+  --bg: #427AA1;
+  --background: #EBF2FA;
+  --textColor: #363636;
+  --card-bg: #041221;
+}
+
 body {
   background-color: #427AA1; 
   font-family: BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;

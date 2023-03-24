@@ -148,8 +148,11 @@
   align-items: center;
 }
 .home-title-row-item{
-  flex-basis:350px;
+  flex-basis:100%;
   height: fit-content;
+}
+.home-title-row-item.im{
+  flex-basis:50%;
 }
 .title.home-title{
   font-size: 30px;

@@ -28,7 +28,12 @@ const UserFriend = (props) => {
 
     useEffect(() => {
         if (user) {
-            fetch(`${REACT_APP_SERVER_URL}/userFriends/${id}`)
+            const token = localStorage.getItem("jwtToken")
+            fetch(`${REACT_APP_SERVER_URL}/userFriends/${id}`, {
+                headers: {
+                    "Authorization": token,
+                }
+            })
                 .then(response => response.json())
                 .then((data) => {
                     console.log('return data', data);
@@ -66,14 +71,14 @@ const UserFriend = (props) => {
             'search_username': searchVal,
             'user_id': id
         }
-        console.log('search friend', searchFriend);
-
+        const token = localStorage.getItem("jwtToken")
         let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/userFriends/search`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                'Authorization': token, 
             },
             body: JSON.stringify(searchFriend)
         })
@@ -101,14 +106,14 @@ const UserFriend = (props) => {
             'requester_id': requester_id,
             'receiver_name': receiver_name
         }
-        console.log('search friend', acceptFriend);
-
+        const token = localStorage.getItem("jwtToken")
         let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/userFriends/accept`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                'Authorization': token, 
             },
             body: JSON.stringify(acceptFriend)
         })
@@ -173,13 +178,14 @@ const UserFriend = (props) => {
             user_id: id,
         }
         console.log('user info', userInfo);
-
+        const token = localStorage.getItem("jwtToken")
         let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/userFriends/delete`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                'Authorization': token, 
             },
             body: JSON.stringify(userInfo)
         })
@@ -203,14 +209,14 @@ const UserFriend = (props) => {
             'friend_username': userQueried,
             'user_id': id
         }
-        console.log('search friend', addFriend);
-
+        const token = localStorage.getItem("jwtToken")
         let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/userFriends/add`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                'Authorization': token, 
             },
             body: JSON.stringify(addFriend)
         })

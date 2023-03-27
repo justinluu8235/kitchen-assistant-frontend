@@ -24,7 +24,12 @@ const ShoppingList = (props) => {
 
     useEffect(() => {
         if (user) {
-            fetch(`${REACT_APP_SERVER_URL}/shoppinglist/${id}`)
+            const token = localStorage.getItem("jwtToken")
+            fetch(`${REACT_APP_SERVER_URL}/shoppinglist/${id}`, {
+                headers:{
+                    'Authorization': token, 
+                }
+            })
                 .then(response => response.json())
                 .then((data) => {
                     console.log('return data', data);
@@ -66,13 +71,14 @@ const ShoppingList = (props) => {
 
     const handleDeleteSubmit = (e, shoppingItemId, index) =>{
         e.preventDefault();
-
+        const token = localStorage.getItem("jwtToken")
         let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/shoppinglist/delete/${shoppingItemId}`, {
             method: 'DELETE',
             headers: {
                 'Content-type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                'Authorization': token, 
             },
         })
         .then((data) => {
@@ -104,7 +110,6 @@ const ShoppingList = (props) => {
 
 
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
         let newShoppingItem = {
@@ -113,14 +118,14 @@ const ShoppingList = (props) => {
             quantity_unit: currentUnit,
             user_id: id,
         }
-        console.log('new shopping item', newShoppingItem);
-
+        const token = localStorage.getItem("jwtToken")
         let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/shoppinglist/new`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                'Authorization': token, 
             },
             body: JSON.stringify(newShoppingItem)
         })

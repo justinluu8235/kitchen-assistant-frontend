@@ -69,7 +69,11 @@ const RecipeIndex = (props) => {
           setRecipes(data);
         });
 
-      fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`)
+      fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`, {
+        headers: {
+          'Authorization': token, 
+        }
+      })
         .then((response) => response.json())
         .then((data) => {
           const recipeCategoryObjList = data["recipe_categories"];
@@ -153,14 +157,14 @@ const RecipeIndex = (props) => {
       recipe_id: recipeId,
       requester_username: username,
     };
-    console.log("new menu data", newMenuData);
-
+    const token = localStorage.getItem("jwtToken")
     let csrftoken = getCookie("csrftoken");
     fetch(`${REACT_APP_SERVER_URL}/menu/new`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
         "X-CSRFToken": csrftoken,
+        'Authorization': token, 
       },
       body: JSON.stringify(newMenuData),
     })

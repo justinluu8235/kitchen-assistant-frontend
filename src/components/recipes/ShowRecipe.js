@@ -39,7 +39,12 @@ const ShowRecipe = (props) => {
   let recipeID = temp[2];
 
   useEffect(() => {
-    fetch(`${REACT_APP_SERVER_URL}/recipes/view/${recipeID}`)
+    const token = localStorage.getItem("jwtToken")
+    fetch(`${REACT_APP_SERVER_URL}/recipes/view/${recipeID}`, {
+      headers: {
+        'Authorization': token,
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         setRecipeData(data);
@@ -100,13 +105,14 @@ const ShowRecipe = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const token = localStorage.getItem("jwtToken")
     let csrftoken = getCookie("csrftoken");
     fetch(`${REACT_APP_SERVER_URL}/recipes/delete/${recipeID}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
         "X-CSRFToken": csrftoken,
+        'Authorization': token, 
       },
     })
       .then((data) => {

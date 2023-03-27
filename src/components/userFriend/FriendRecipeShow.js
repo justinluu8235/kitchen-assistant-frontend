@@ -28,8 +28,12 @@ const FriendRecipeShow = (props) => {
     console.log('recipe id', recipeID);
 
     useEffect(() => {
-
-        fetch(`${REACT_APP_SERVER_URL}/recipes/view/${recipeID}`)
+        const token = localStorage.getItem("jwtToken")
+        fetch(`${REACT_APP_SERVER_URL}/recipes/view/${recipeID}`, {
+            headers: {
+                'Authorization': token, 
+            }
+        })
             .then(response => response.json())
             .then((data) => {
                 console.log('return data', data);
@@ -99,14 +103,14 @@ const FriendRecipeShow = (props) => {
             ingredients_list: recipeData['ingredients'], 
             user_id: id,
         }
-        console.log('new recipe data', newRecipeData);
-
+        const token = localStorage.getItem("jwtToken")
         let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/recipes/searchRecipes/new`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                'Authorization': token, 
             },
             body: JSON.stringify(newRecipeData)
         })

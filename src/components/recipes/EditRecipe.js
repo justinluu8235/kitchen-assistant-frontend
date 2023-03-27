@@ -66,7 +66,12 @@ const EditRecipe = (props) => {
   let recipeID = temp[3];
 
   useEffect(() => {
-    fetch(`${REACT_APP_SERVER_URL}/recipes/view/${recipeID}`)
+    const token = localStorage.getItem("jwtToken")
+    fetch(`${REACT_APP_SERVER_URL}/recipes/view/${recipeID}`, {
+      headers: {
+        'Authorization': token, 
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log("return data", data);
@@ -83,7 +88,12 @@ const EditRecipe = (props) => {
       });
 
     if (id) {
-      fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`)
+      const token = localStorage.getItem("jwtToken")
+      fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`, {
+        headers: {
+          'Authorization': token,
+        }
+      })
         .then((response) => response.json())
         .then((data) => {
           const recipeCategoryObjList = data["recipe_categories"];
@@ -192,8 +202,8 @@ const EditRecipe = (props) => {
     e.preventDefault();
 
     store.dispatch({ type: "recipes/isLoading" });
-
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
+    const token = localStorage.getItem("jwtToken")
+    const config = { headers: { "Content-Type": "multipart/form-data", "Authorization": token }};
     let formdata = new FormData();
     formdata.append("image", imageFile ? imageFile["image"][0] : "");
     formdata.append("id", recipeID);

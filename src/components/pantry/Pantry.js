@@ -23,7 +23,12 @@ const Pantry = (props) => {
     useEffect(() => {
 
         if (user) {
-            fetch(`${REACT_APP_SERVER_URL}/shoppinglist/pantry/${id}`)
+            const token = localStorage.getItem("jwtToken")
+            fetch(`${REACT_APP_SERVER_URL}/shoppinglist/pantry/${id}`,{
+                headers: {
+                    "Authorization": token,
+                }
+            })
                 .then(response => response.json())
                 .then((data) => {
                     console.log('return data', data);
@@ -65,14 +70,14 @@ const Pantry = (props) => {
             category_name: currentCategory,
             user_id: id,
         }
-        console.log('new pantry item', newPantryItem);
-
+        const token = localStorage.getItem("jwtToken")
         let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/shoppinglist/newPantryItem`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                "Authorization": token,
             },
             body: JSON.stringify(newPantryItem)
         })

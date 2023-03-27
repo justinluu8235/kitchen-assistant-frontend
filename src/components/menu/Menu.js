@@ -21,9 +21,13 @@ const Menu = (props) => {
     }
 
     useEffect(() => {
-
+        const token = localStorage.getItem("jwtToken")
         if(user){
-        fetch(`${REACT_APP_SERVER_URL}/menu/${id}`)
+        fetch(`${REACT_APP_SERVER_URL}/menu/${id}`,{
+            headers: {
+              'Authorization': `${token}`, // Include the JWT token in the request headers
+            }
+          })
             .then(response => response.json())
             .then((data) => {
                 console.log('return data', data);

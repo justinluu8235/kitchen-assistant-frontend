@@ -10,12 +10,17 @@ import store from "../../store";
 import RecipeCategories from "./categories";
 import CustomButton from "../shared/Button";
 import { TextField } from "@material-ui/core";
-import { createStyles, makeStyles } from "@material-ui/core";
+import { createStyles, makeStyles, IconButton } from "@material-ui/core";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     recipeNameInput: {
       backgroundColor: "#e0e0e0",
+    },
+    insertMiddleIngredientbutton: {
+      padding: 0,
+      right: "10px",
     },
   })
 );
@@ -66,11 +71,11 @@ const EditRecipe = (props) => {
   let recipeID = temp[3];
 
   useEffect(() => {
-    const token = localStorage.getItem("jwtToken")
+    const token = localStorage.getItem("jwtToken");
     fetch(`${REACT_APP_SERVER_URL}/recipes/view/${recipeID}`, {
       headers: {
-        'Authorization': token, 
-      }
+        Authorization: token,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -88,11 +93,11 @@ const EditRecipe = (props) => {
       });
 
     if (id) {
-      const token = localStorage.getItem("jwtToken")
+      const token = localStorage.getItem("jwtToken");
       fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`, {
         headers: {
-          'Authorization': token,
-        }
+          Authorization: token,
+        },
       })
         .then((response) => response.json())
         .then((data) => {
@@ -160,14 +165,37 @@ const EditRecipe = (props) => {
     setInstructions(
       instructions.concat([
         {
-          id: 0,
+          id: -1,
           step_number: lastStep + 1,
           instructions: "",
           image: null,
-          recipe: 0,
+          recipe: -1,
         },
       ])
     );
+  };
+  const handleAddMiddleInstructions = (idx) => {
+    // idx = index of input before the one we want to add.
+    const newInstructions = [...instructions];
+    
+    // Increment the step numbers of all instructions after the index by 1
+    for (let i = idx + 1; i < newInstructions.length; i++) {
+      newInstructions[i].step_number += 1;
+    }
+    const newInstruction = {
+      id: -1,
+      step_number: instructions[idx].step_number + 1,
+      instructions: '',
+      image: null,
+      recipe: -1
+    };
+
+    newInstructions.splice(idx + 1, 0, newInstruction);
+
+    // Update the state with the new array of instructions
+    setInstructions(newInstructions);
+
+
   };
 
   const handleDeleteInstruction = (i, e) => {
@@ -184,15 +212,26 @@ const EditRecipe = (props) => {
 
   const displayInstructions = (instructions) => {
     let display = instructions.map((instruction, idx) => {
+      const isLastInstruction = idx + 1 === instructions.length;
       return (
-        <EditInstructionInput
-          key={idx}
-          index={idx}
-          step_number={instruction["step_number"]}
-          instruction={instruction["instructions"]}
-          handleInstructionChange={handleInstructionChange}
-          handleDeleteInstruction={handleDeleteInstruction}
-        />
+        <>
+          <EditInstructionInput
+            key={idx}
+            index={idx}
+            step_number={instruction["step_number"]}
+            instruction={instruction["instructions"]}
+            handleInstructionChange={handleInstructionChange}
+            handleDeleteInstruction={handleDeleteInstruction}
+          />
+          {
+            !isLastInstruction && (
+              <IconButton className={classes.insertMiddleIngredientbutton} onClick={() => handleAddMiddleInstructions(idx)}>
+              <ArrowCircleRightIcon />
+            </IconButton>
+            )
+          }
+
+        </>
       );
     });
     return display;
@@ -202,8 +241,10 @@ const EditRecipe = (props) => {
     e.preventDefault();
 
     store.dispatch({ type: "recipes/isLoading" });
-    const token = localStorage.getItem("jwtToken")
-    const config = { headers: { "Content-Type": "multipart/form-data", "Authorization": token }};
+    const token = localStorage.getItem("jwtToken");
+    const config = {
+      headers: { "Content-Type": "multipart/form-data", Authorization: token },
+    };
     let formdata = new FormData();
     formdata.append("image", imageFile ? imageFile["image"][0] : "");
     formdata.append("id", recipeID);
@@ -238,8 +279,7 @@ const EditRecipe = (props) => {
       });
     } else {
       setImageSizeExceeded(true);
-      setImageFile(null)
-
+      setImageFile(null);
     }
   };
 
@@ -316,7 +356,7 @@ const EditRecipe = (props) => {
                               handleDeleteCategory={handleDeleteCategory}
                             />
                             <br />
-                            <div style={{marginBottom: '10px'}}>
+                            <div style={{ marginBottom: "10px" }}>
                               <p>Recipe image</p>
                               <input
                                 type="file"

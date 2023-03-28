@@ -58,7 +58,12 @@ const NewRecipe = (props) => {
 
   useEffect(() => {
     if (id) {
-      fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`)
+      const token = localStorage.getItem("jwtToken")
+      fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`, {
+        headers: {
+          'Authorization': token
+        }
+      })
         .then((response) => response.json())
         .then((data) => {
           const recipeCategoryObjList = data["recipe_categories"];
@@ -168,8 +173,8 @@ const NewRecipe = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
+    const token = localStorage.getItem("jwtToken")
+    const config = { headers: { "Content-Type": "multipart/form-data", "Authorization": token } };
     const URL = `${REACT_APP_SERVER_URL}/recipes/new`;
 
     let formdata = new FormData();

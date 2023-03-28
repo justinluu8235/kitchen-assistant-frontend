@@ -35,13 +35,14 @@ const PantryCategory = (props) => {
     const handleStockSubmit = (e, pantryId, index) => {
 
         e.preventDefault();
-
+        const token = localStorage.getItem("jwtToken")
         let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/shoppinglist/pantry/edit/${pantryId}`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                'Authorization': token, 
             },
         })
         .then((data) => {
@@ -60,13 +61,14 @@ const PantryCategory = (props) => {
 
     const handleDeleteSubmit = (e, pantryId, index) =>{
         e.preventDefault();
-
+        const token = localStorage.getItem("jwtToken")
         let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/shoppinglist/pantry/delete/${pantryId}`, {
             method: 'DELETE',
             headers: {
                 'Content-type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                'Authorization': token, 
             },
         })
         .then((data) => {

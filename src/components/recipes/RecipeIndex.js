@@ -7,7 +7,7 @@ import { createStyles, makeStyles } from "@material-ui/core";
 import IconButton from "@mui/material/IconButton";
 import ClearIcon from "@mui/icons-material/Clear";
 import RecipeCategories from "./categories";
-import { ElasticInference } from "aws-sdk";
+import getCookie from '../shared/getCookie';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,6 +41,7 @@ const RecipeIndex = (props) => {
   const [recipeSearchInput, setRecipeSearchInput] = useState("");
   const [availableCategories, setAvailableCategories] = useState([]);
   const [filterCategories, setFilterCategories] = useState([]);
+ 
 
   const expirationTime = new Date(exp * 1000);
   let currentTime = Date.now();
@@ -52,16 +53,27 @@ const RecipeIndex = (props) => {
     console.log('user', user)
   }
 
+
+
   useEffect(() => {
+    const token = localStorage.getItem("jwtToken")
     if (user) {
-      fetch(`${REACT_APP_SERVER_URL}/recipes/${id}`)
+      fetch(`${REACT_APP_SERVER_URL}/recipes/${id}`, {
+        headers: {
+          'Authorization': `${token}`, // Include the JWT token in the request headers
+        }
+      })
         .then((response) => response.json())
         .then((data) => {
           console.log("return data", data);
           setRecipes(data);
         });
 
-      fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`)
+      fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`, {
+        headers: {
+          'Authorization': token, 
+        }
+      })
         .then((response) => response.json())
         .then((data) => {
           const recipeCategoryObjList = data["recipe_categories"];
@@ -135,21 +147,6 @@ const RecipeIndex = (props) => {
     setRecipes(temp);
   };
 
-  const getCookie = (name) => {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-      var cookies = document.cookie.split(";");
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim();
-        // Does this cookie string begin with the name we want?
-        if (cookie.substring(0, name.length + 1) === name + "=") {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
-  };
 
   const handleMenuSubmit = (e, recipeId, index) => {
     e.preventDefault();
@@ -160,14 +157,14 @@ const RecipeIndex = (props) => {
       recipe_id: recipeId,
       requester_username: username,
     };
-    console.log("new menu data", newMenuData);
-
+    const token = localStorage.getItem("jwtToken")
     let csrftoken = getCookie("csrftoken");
     fetch(`${REACT_APP_SERVER_URL}/menu/new`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
         "X-CSRFToken": csrftoken,
+        'Authorization': token, 
       },
       body: JSON.stringify(newMenuData),
     })

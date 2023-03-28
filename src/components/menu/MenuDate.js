@@ -41,13 +41,14 @@ const MenuDate = (props) => {
     }
     const handleDeleteSubmit = (e, menuId, index) =>{
         e.preventDefault();
-
+        const token = localStorage.getItem("jwtToken")
         let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/menu/delete/${menuId}`, {
             method: 'DELETE',
             headers: {
                 'Content-type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                'Authorization': token,  // Include the JWT token in the request headers
             },
         })
         .then((data) => {

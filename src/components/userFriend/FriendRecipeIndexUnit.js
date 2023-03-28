@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 
 const FriendRecipeIndexUnit = (props) => {
     const {recipeName, recipe_id, image, user_id,  index, handleDateChange,  date, handleMenuSubmit} = props
-    const {REACT_APP_SERVER_URL} = process.env
 
  
     return (

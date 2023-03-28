@@ -26,16 +26,26 @@ const FriendRecipeIndex = (props) => {
     console.log('friend id', friendId);
 
     useEffect(() => {
+        const token = localStorage.getItem("jwtToken")
+
 
         if(user){
-        fetch(`${REACT_APP_SERVER_URL}/recipes/${friendId}`)
+        fetch(`${REACT_APP_SERVER_URL}/recipes/${friendId}`, {
+            headers: {
+                'Authorization': token, 
+            }
+        })
             .then(response => response.json())
             .then((data) => {
                 console.log('return data', data);
                 setRecipes(data)
             });
         }
-        fetch(`${REACT_APP_SERVER_URL}/name/${friendId}`)
+        fetch(`${REACT_APP_SERVER_URL}/name/${friendId}`, {
+            headers: {
+                'Authorization': token, 
+            }
+        })
         .then(response => response.json())
         .then((data) => {
             console.log('return data', data);
@@ -90,14 +100,14 @@ const FriendRecipeIndex = (props) => {
           recipe_id: recipeId,
           requester_username: username, 
       }
-      console.log('new menu data', newMenuData);
-
+      const token = localStorage.getItem("jwtToken")
         let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/menu/new`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                'Authorization': token, 
             },
             body: JSON.stringify(newMenuData)
         })

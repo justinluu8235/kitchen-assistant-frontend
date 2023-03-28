@@ -30,7 +30,6 @@ const SearchRecipeShow = (props) => {
     console.log(apiRecipID)
 
     useEffect(() => {
-
         fetch(`${REACT_APP_SERVER_URL}/recipes/searchRecipes/${apiRecipID}`)
             .then(response => response.json())
             .then((data) => {
@@ -109,10 +108,12 @@ const SearchRecipeShow = (props) => {
 
         let csrftoken = getCookie('csrftoken');
         console.log(csrftoken)
+        const token = localStorage.getItem("jwtToken")
         fetch(`${REACT_APP_SERVER_URL}/recipes/searchRecipes/new`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
+                'Authorization': token, 
                 // 'X-CSRFToken': csrftoken,
             },
             body: JSON.stringify(newRecipeData)

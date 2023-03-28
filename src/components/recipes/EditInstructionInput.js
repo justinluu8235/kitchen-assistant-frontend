@@ -38,7 +38,6 @@ const EditIngredientInput = (props) => {
     handleInstructionChange,
     handleDeleteInstruction,
   } = props;
-  console.log("instruction", instruction);
 
   return (
     <div className={classes.instructionContainer}>

@@ -28,13 +28,14 @@ const RecipeIndexUnit = (props) => {
             recipe_id: recipeId
         }
         console.log('recipe info', recipeInfo);
-
+        const token = localStorage.getItem("jwtToken")
         let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/shoppinglist/generate`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                'Authorization': token, 
             },
             body: JSON.stringify(recipeInfo)
         })

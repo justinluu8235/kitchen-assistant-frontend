@@ -7,7 +7,7 @@ import { createStyles, makeStyles } from "@material-ui/core";
 import IconButton from "@mui/material/IconButton";
 import ClearIcon from "@mui/icons-material/Clear";
 import RecipeCategories from "./categories";
-import getCookie from '../shared/getCookie';
+import {getCookie} from '../shared/getCookie';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

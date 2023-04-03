@@ -142,6 +142,7 @@ const RecipeIndex = (props) => {
   };
 
   const handleDateChange = (e, index) => {
+    console.log('e target val', e.target.value)
     let temp = recipes.slice();
     temp[index]["date"] = e.target.value;
     setRecipes(temp);

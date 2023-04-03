@@ -1,5 +1,7 @@
-import React from "react";
-import { createStyles, makeStyles } from "@material-ui/core";
+import React, {useState} from "react";
+import { createStyles, makeStyles, TextField, ButtonGroup, Button} from "@material-ui/core";
+import CustomButton from '../shared/Button'
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: "all 0.3s ease-in-out",
       opacity: 0,
       pointerEvents: "none",
-      zIndex: 999, // Add this line
+      zIndex: 999, 
     },
     open: {
       opacity: 1,
@@ -34,6 +36,11 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: "90%",
       maxHeight: "90%",
       overflow: "auto",
+      display: "flex", 
+      flexDirection: "column", 
+      alignItems: "center",
+      gap:"10px",
+
     },
     "@media screen and (min-width: 768px)": {
       popupContent: {
@@ -43,9 +50,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const AddToMenuPopup = ({ title, onClose, isOpen=true}) => {
+const AddToMenuPopup = ({ title, onClose, index, recipe_id, handleDateChange, handleMenuSubmit, isOpen=true}) => {
     const classes = useStyles()
-  
+    const [meal, setMeal] = useState("breakfast")
+
 
   return (
     <div
@@ -57,8 +65,20 @@ const AddToMenuPopup = ({ title, onClose, isOpen=true}) => {
         onClick={(e) => e.stopPropagation()}
       >
         <h2>{title}</h2>
-        <button onClick={onClose}>Close</button>
-        
+        <TextField size="small" type="date" variant="outlined" onChange={(e) => handleDateChange(e, index)}/>
+        <ButtonGroup size="large" variant="outlined" aria-label="outlined button group">
+          <Button variant={meal === "breakfast" ? "contained" : "outlined"} onClick={() => {setMeal("breakfast")}}>Breakfast</Button>
+          <Button variant={meal === "lunch" ? "contained" : "outlined"} onClick={() => {setMeal("lunch")}}>Lunch</Button>
+          <Button variant={meal === "dinner" ? "contained" : "outlined"} onClick={() => {setMeal("dinner")}}>Dinner</Button>
+        </ButtonGroup>
+
+        <div>
+        <CustomButton text="Add" onClick={(e) => handleMenuSubmit(e,recipe_id, index)}></CustomButton>
+        <CustomButton text="Close" onClick={onClose}></CustomButton>
+
+
+        </div>
+
       </div>
     </div>
   );

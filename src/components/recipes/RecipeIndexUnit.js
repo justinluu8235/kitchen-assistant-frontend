@@ -87,17 +87,10 @@ const RecipeIndexUnit = (props) => {
                             </div>
                             <div>
                                 <br />
-                                <span class="title is-6">
-                                    <form onSubmit={(e) => handleMenuSubmit(e,recipe_id, index)}>
-                                        
-                                        <input class="recipe-index-card-button" type="date" name="dateSelected" value={date} onChange={(e) => handleDateChange(e, index)}/>
-                                        <input type="submit" value="Request" />
-                                    </form> </span> 
                                     <CustomButton text="Add to Menu" onClick={() => {setShowAddMenuModule(true)}}>
-
                                     </CustomButton>
                                     {showAddMenuModule && (
-                                        <AddToMenuPopup  children={null} onClose={() => {setShowAddMenuModule(false)}}>
+                                        <AddToMenuPopup  title={"Add Recipe to Menu"} recipe_id={recipe_id} handleMenuSubmit={handleMenuSubmit} handleDateChange={handleDateChange} index={index} onClose={() => {setShowAddMenuModule(false)}}>
                                         </AddToMenuPopup>
                                     )
                                     }

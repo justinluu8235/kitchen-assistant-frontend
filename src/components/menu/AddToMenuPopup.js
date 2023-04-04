@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const AddToMenuPopup = ({ title, onClose, index, recipe_id, handleDateChange, handleMenuSubmit, isOpen=true}) => {
     const classes = useStyles()
     const [meal, setMeal] = useState("breakfast")
+    const [note, setNote] = useState("")
 
 
   return (
@@ -71,9 +72,13 @@ const AddToMenuPopup = ({ title, onClose, index, recipe_id, handleDateChange, ha
           <Button variant={meal === "lunch" ? "contained" : "outlined"} onClick={() => {setMeal("lunch")}}>Lunch</Button>
           <Button variant={meal === "dinner" ? "contained" : "outlined"} onClick={() => {setMeal("dinner")}}>Dinner</Button>
         </ButtonGroup>
+        <TextField size="small" variant="outlined" label="Note" helperText="Optional" onChange={(e) => {setNote(e.target.value)}}>{note}</TextField>
 
         <div>
-        <CustomButton text="Add" onClick={(e) => handleMenuSubmit(e,recipe_id, index)}></CustomButton>
+        <CustomButton text="Add" onClick={(e) => {
+          handleMenuSubmit(e,recipe_id, index, meal, note);
+          onClose()
+        }}></CustomButton>
         <CustomButton text="Close" onClick={onClose}></CustomButton>
 
 

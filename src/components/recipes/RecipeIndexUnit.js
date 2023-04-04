@@ -23,7 +23,6 @@ const RecipeIndexUnit = (props) => {
         }
         return cookieValue;
     }
-    console.log('show popup?', showAddMenuModule)
 
     const generateShoppingList = (e,user_id, recipeId) => {
         e.preventDefault();

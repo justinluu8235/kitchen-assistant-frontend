@@ -25,6 +25,7 @@ const Menu = (props) => {
         if(user){
         fetch(`${REACT_APP_SERVER_URL}/menu/index/${id}`,{
             headers: {
+                'Content-type': 'application/json',
               'Authorization': `${token}`, // Include the JWT token in the request headers
             }
           })

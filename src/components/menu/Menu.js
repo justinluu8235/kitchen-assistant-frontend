@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import MenuDate from './MenuDate';
 import './Menu.css'
+import MenuWeek from './MenuWeek'
 
 const Menu = (props) => {
 
@@ -23,7 +23,7 @@ const Menu = (props) => {
     useEffect(() => {
         const token = localStorage.getItem("jwtToken")
         if(user){
-        fetch(`${REACT_APP_SERVER_URL}/menu/${id}`,{
+        fetch(`${REACT_APP_SERVER_URL}/menu/index/${id}`,{
             headers: {
               'Authorization': `${token}`, // Include the JWT token in the request headers
             }
@@ -38,20 +38,43 @@ const Menu = (props) => {
     }, [props])
 
 
-    const displayMenu = (menuData) => {
-        let keyArr = Object.keys(menuData)
-            console.log('menu data', menuData)
-            keyArr.sort()
-            console.log('keys', keyArr)
 
-            let display = keyArr.map((date, idx) => {           
-                let menuArr = menuData[date]
-                let dayOfWeek = new Date(date).getDay()
-                dayOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][dayOfWeek]
-           
-                return <MenuDate key={idx} dayOfWeek={dayOfWeek} menuArr={menuArr} date={date} user_id={id} username={username}/>
-            })
-            return display;
+    const displayMenu = (menuData) => {
+        const weekStartsArr = Object.keys(menuData)
+        weekStartsArr.sort()
+        console.log('week starts', weekStartsArr)
+
+        const menu = weekStartsArr.map((date, idx) => {
+            return <MenuWeek key={idx} weekStart={date} 
+            weekEnd={menuData[date]["week_end_date"]} 
+            menuWeekObj={menuData[date]} 
+            handleDeleteSubmit={handleDeleteSubmit}
+            ></MenuWeek>
+        })
+
+
+        return menu
+    }
+
+    const handleDeleteSubmit = (e, menuId, index) =>{
+        e.preventDefault();
+        const token = localStorage.getItem("jwtToken")
+        fetch(`${REACT_APP_SERVER_URL}/menu/delete/${menuId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': token,  // Include the JWT token in the request headers
+            },
+        })
+        .then(response => response.json())
+        .then((data) => {
+            console.log('return data', data)
+            setMenuData(data)
+        })
+        .catch(error => {
+            console.log('===> Error deleting menu item', error);
+            alert('Error deleting menu item');
+        });
 
     }
 

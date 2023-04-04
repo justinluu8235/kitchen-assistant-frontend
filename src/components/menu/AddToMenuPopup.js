@@ -70,7 +70,7 @@ const AddToMenuPopup = ({ title, onClose, index, recipe_id, handleDateChange, ha
         onClick={(e) => e.stopPropagation()}
       >
         <h2>{title}</h2>
-        <TextField size="small" type="date" variant="outlined" onChange={(e) => handleDateChange(e, index)}/>
+        <TextField className={classes.menuInput} size="small" type="date" variant="outlined" onChange={(e) => handleDateChange(e, index)}/>
         <ButtonGroup size="large" variant="outlined" aria-label="outlined button group">
           <Button variant={meal === "breakfast" ? "contained" : "outlined"} onClick={() => {setMeal("breakfast")}}>Breakfast</Button>
           <Button variant={meal === "lunch" ? "contained" : "outlined"} onClick={() => {setMeal("lunch")}}>Lunch</Button>

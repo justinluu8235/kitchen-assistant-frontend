@@ -5,6 +5,9 @@ import CustomButton from '../shared/Button'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    menuInput: {
+      minWidth: "150px",
+    },
     popup: {
       position: "fixed",
       top: 0,

@@ -10,18 +10,24 @@ const useStyles = makeStyles((theme: Theme) =>
       flexWrap: "wrap",
       gap: "10px",
     },
+    dayText: {
+        fontSize:"20px", 
+        color: "#f18973",
+        fontWeight: 300,
+    }
   })
 );
 
-const MenuDay = ({ day, recipes }) => {
+const MenuDay = ({ day, menuItems, handleDeleteSubmit}) => {
   const classes = useStyles();
   return (
     <>
-      <p>{day}</p>
+      <p className={classes.dayText}>{day}</p>
 
       <div className={classes.menuDayContainer}>
-        {recipes.map((recipe) => {
-          return <MenuCard recipe={recipe}></MenuCard>;
+        {menuItems.map((menuItem) => {
+          return <MenuCard handleDeleteSubmit={handleDeleteSubmit} 
+          menuItem={menuItem}></MenuCard>;
         })}
       </div>
     </>

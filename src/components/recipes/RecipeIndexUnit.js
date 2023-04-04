@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import RecipeIndex from './RecipeIndex';
 import './RecipeIndexUnit.css'
+import CustomButton from '../shared/Button'
+import AddToMenuPopup from '../menu/AddToMenuPopup'
 
 const RecipeIndexUnit = (props) => {
     const {recipeName, recipe_id, image, user_id,  index, handleDateChange,  date, handleMenuSubmit} = props
+    const [showAddMenuModule, setShowAddMenuModule] = useState(false)
     const {REACT_APP_SERVER_URL} = process.env
     const getCookie = (name) => {
         var cookieValue = null;
@@ -83,12 +86,14 @@ const RecipeIndexUnit = (props) => {
                             </div>
                             <div>
                                 <br />
-                                <span class="title is-6">
-                                    <form onSubmit={(e) => handleMenuSubmit(e,recipe_id, index)}>
-                                        
-                                        <input class="recipe-index-card-button" type="date" name="dateSelected" value={date} onChange={(e) => handleDateChange(e, index)}/>
-                                        <input type="submit" value="Request" />
-                                    </form> </span> 
+                                    <CustomButton text="Add to Menu" onClick={() => {setShowAddMenuModule(true)}}>
+                                    </CustomButton>
+                                    {showAddMenuModule && (
+                                        <AddToMenuPopup  title={"Add Recipe to Menu"} recipe_id={recipe_id} handleMenuSubmit={handleMenuSubmit} handleDateChange={handleDateChange} index={index} onClose={() => {setShowAddMenuModule(false)}}>
+                                        </AddToMenuPopup>
+                                    )
+                                    }
+                                
                                     
                             </div>
                         </div>

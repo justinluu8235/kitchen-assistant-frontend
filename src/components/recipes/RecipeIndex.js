@@ -7,7 +7,7 @@ import { createStyles, makeStyles } from "@material-ui/core";
 import IconButton from "@mui/material/IconButton";
 import ClearIcon from "@mui/icons-material/Clear";
 import RecipeCategories from "./categories";
-import getCookie from '../shared/getCookie';
+import {getCookie} from '../shared/getCookie';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -142,13 +142,14 @@ const RecipeIndex = (props) => {
   };
 
   const handleDateChange = (e, index) => {
+    console.log('e target val', e.target.value)
     let temp = recipes.slice();
     temp[index]["date"] = e.target.value;
     setRecipes(temp);
   };
 
 
-  const handleMenuSubmit = (e, recipeId, index) => {
+  const handleMenuSubmit = (e, recipeId, index, meal, note) => {
     e.preventDefault();
     console.log("recipe", recipes[index]);
     let newMenuData = {
@@ -156,6 +157,8 @@ const RecipeIndex = (props) => {
       cook_date: recipes[index]["date"],
       recipe_id: recipeId,
       requester_username: username,
+      meal_name: meal, 
+      note: note,
     };
     const token = localStorage.getItem("jwtToken")
     let csrftoken = getCookie("csrftoken");
@@ -174,9 +177,6 @@ const RecipeIndex = (props) => {
         alert(
           `${data["recipe"]["recipe_name"]} added to the menu to cook on ${data["menu_item"]["cook_date"]}`
         );
-        // let temp = recipes.slice()
-        // temp[index]['date'] = ''
-        // setRecipes(temp);
       })
       .catch((error) => {
         console.log("===> Error creating menu item", error);

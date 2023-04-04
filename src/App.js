@@ -27,6 +27,9 @@ import UserFriend from './components/userFriend/UserFriend';
 import FriendRecipeIndex from './components/userFriend/FriendRecipeIndex';
 import FriendRecipeShow from './components/userFriend/FriendRecipeShow';
 
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+
 
 
 
@@ -72,6 +75,7 @@ function App() {
   }
 
   return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <div className="App">
       <Navbar user={currentUser} handleLogout={handleLogout} isAuth={isAuthenticated} />
       <BrowserRouter>
@@ -101,6 +105,7 @@ function App() {
       </BrowserRouter>
       {/* <Footer /> */}
     </div>
+    </LocalizationProvider>
   );
 }
 

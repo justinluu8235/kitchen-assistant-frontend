@@ -9,22 +9,27 @@ const useStyles = makeStyles((theme: Theme) =>
     myButton: {
         fontSize: ".75rem",
         border: "1px solid black",
-        maxHeight: '25px', 
+        
+        width: "fit-content", 
     },
     defaultMargin: {
       margin: '10px',
     },
+    defaultMaxHeight:{
+      maxHeight: '25px', 
+    }
   }),
 );
 
-const CustomButton = ({text, onClick, type, disabled, className, useDefaultMargin=true}) => {
+const CustomButton = ({text, onClick, type, disabled, className, useDefaultMargin=true, useDefaultMaxHeight=true, size="small"}) => {
     
     const classes = useStyles()
     let allClasses = className ? [classes.myButton, className] : [classes.myButton]
     useDefaultMargin && allClasses.push(classes.defaultMargin)
+    useDefaultMaxHeight && allClasses.push(classes.defaultMaxHeight)
 
     return (
-        <Button className={allClasses.join(' ')} disabled={disabled} type={type} variant="contained" size="small" onClick={onClick}>{text}</Button>
+        <Button className={allClasses.join(' ')} disabled={disabled} type={type} variant="contained" size={size} onClick={onClick}>{text}</Button>
     )
 }
 

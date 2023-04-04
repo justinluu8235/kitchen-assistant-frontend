@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     menuInput: {
       minWidth: "150px",
+      minHeight: "2.5rem",
     },
     popup: {
       position: "fixed",

@@ -9,7 +9,6 @@ const Menu = (props) => {
     const [menuData, setMenuData] = useState() 
 
 
-
     const { REACT_APP_SERVER_URL } = process.env;
     const expirationTime = new Date(exp * 1000);
     let currentTime = Date.now();
@@ -50,6 +49,7 @@ const Menu = (props) => {
             weekEnd={menuData[date]["week_end_date"]} 
             menuWeekObj={menuData[date]} 
             handleDeleteSubmit={handleDeleteSubmit}
+            username={username}
             ></MenuWeek>
         })
 

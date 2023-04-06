@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const MenuDay = ({ day, menuItems, handleDeleteSubmit}) => {
+const MenuDay = ({ day, menuItems, handleDeleteSubmit, username}) => {
   const classes = useStyles();
   return (
     <>
@@ -27,6 +27,7 @@ const MenuDay = ({ day, menuItems, handleDeleteSubmit}) => {
       <div className={classes.menuDayContainer}>
         {menuItems.map((menuItem) => {
           return <MenuCard handleDeleteSubmit={handleDeleteSubmit} 
+          username={username}
           menuItem={menuItem}></MenuCard>;
         })}
       </div>

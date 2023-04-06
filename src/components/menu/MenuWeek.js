@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   }))
 
-const MenuWeek = ({ weekStart, weekEnd, menuWeekObj, handleDeleteSubmit}) => {
+const MenuWeek = ({ weekStart, weekEnd, menuWeekObj, handleDeleteSubmit, username}) => {
     const classes = useStyles()
     const weekTitle = `Week of ${weekStart} - ${weekEnd}`
     const daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]    
@@ -30,6 +30,7 @@ const MenuWeek = ({ weekStart, weekEnd, menuWeekObj, handleDeleteSubmit}) => {
                             day={day} 
                             menuItems={menuWeekObj[day]}
                             handleDeleteSubmit={handleDeleteSubmit}
+                            username={username}
                             ></MenuDay>)
                     }
                   })  

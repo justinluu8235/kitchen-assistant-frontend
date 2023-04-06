@@ -17,15 +17,8 @@
     flex-direction: column;
     justify-content: flex-start;
     height: 100%
-
   }
 
-  .input-container-friend-recipe{
-      display:flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      margin-left: -10px;
-  }
 .title.friend-recipe-index{
     padding-top:0;
 }

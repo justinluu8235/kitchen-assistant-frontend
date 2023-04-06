@@ -5,6 +5,10 @@ import CustomButton from '../shared/Button'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    cardContainer: {
+        width: "160px",
+        overflowX: "clip"
+    },
     imageContainer: {
         position:"relative",
         height: "200px", 
@@ -41,10 +45,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-const MenuCard = ({menuItem, handleDeleteSubmit}) => {
+const MenuCard = ({menuItem, handleDeleteSubmit, username}) => {
     const classes = useStyles({"meal": menuItem["meal_name"]})
     const [modalOpen, setModalOpen] = useState(false)    
     const {REACT_APP_SERVER_URL} = process.env
+    const friendRequestedUsername = username === menuItem["requester_username"] ? null : menuItem["requester_username"]
+    console.log('my username', username)
+    console.log('requester username', menuItem["requester_username"])
+    console.log('friendRequestedUsername', friendRequestedUsername)
 
 
     const generateShoppingList = (e,user_id, recipeId) => {
@@ -53,7 +61,6 @@ const MenuCard = ({menuItem, handleDeleteSubmit}) => {
             user_id: user_id,
             recipe_id: recipeId
         }
-        console.log('recipe info', recipeInfo);
 
         const token = localStorage.getItem("jwtToken")
         fetch(`${REACT_APP_SERVER_URL}/shoppinglist/generate`, {
@@ -66,7 +73,6 @@ const MenuCard = ({menuItem, handleDeleteSubmit}) => {
         })
             .then(response => response.json())
             .then((data) => {
-                console.log('return data', data)
                 alert(`ingredients for ${menuItem["recipe_name"]} has been added to your shopping list`)
             })
             .catch(error => {
@@ -76,9 +82,10 @@ const MenuCard = ({menuItem, handleDeleteSubmit}) => {
 
     }
 
-    console.log('menu card recipes', menuItem)
     return (
         <div>
+            <div className={classes.cardContainer}>
+                
             <div className={classes.imageContainer} onClick={() => setModalOpen(true)} >
                 <img src={menuItem["image"]} />
                 <div className={classes.banner}>
@@ -87,6 +94,10 @@ const MenuCard = ({menuItem, handleDeleteSubmit}) => {
                 <div className={classes.recipeNameContainer}>{menuItem["recipe_name"]}</div>
             </div>
             {!!menuItem["note"] && <p style={{color:"white"}}>{menuItem["note"]}</p>}
+            {friendRequestedUsername && <p style={{color:"red"}}>Requested by: {friendRequestedUsername}</p>}
+            </div>
+
+
             <Modal open={modalOpen} onClose={() => {setModalOpen(false)}}>
                 <div className={classes.modalContainer}>
                 <CustomButton text="Remove from menu" onClick={(e) => {

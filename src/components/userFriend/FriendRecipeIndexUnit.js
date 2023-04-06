@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
+import CustomButton from '../shared/Button'
+import AddToMenuPopup from '../menu/AddToMenuPopup';
 
 
 const FriendRecipeIndexUnit = (props) => {
     const {recipeName, recipe_id, image, user_id,  index, handleDateChange,  date, handleMenuSubmit} = props
+    const [showAddMenuModule, setShowAddMenuModule] = useState(false)
 
  
     return (
@@ -29,14 +32,14 @@ const FriendRecipeIndexUnit = (props) => {
                                     <a href={`/userFriends/recipes/show/${recipe_id}`}>View Recipe</a> </span> </div>
                             <br /><br />
                             
-                            <div class='input-container-friend-recipe'>
-                                <br />
-                               
-                                    <form onSubmit={(e) => handleMenuSubmit(e,recipe_id, index)}>
-                                        
-                                        <input type="date" name="dateSelected" value={date} onChange={(e) => handleDateChange(e, index)}/>
-                                        <input type="submit" value="Request" />
-                                    </form></div>
+        
+                                    <CustomButton text="Request to friend's Menu" onClick={() => {setShowAddMenuModule(true)}}>
+                                    </CustomButton>
+                                    {showAddMenuModule && (
+                                        <AddToMenuPopup  title={"Add Recipe to Menu"} recipe_id={recipe_id} handleMenuSubmit={handleMenuSubmit} handleDateChange={handleDateChange} index={index} onClose={() => {setShowAddMenuModule(false)}}>
+                                        </AddToMenuPopup>
+                                    )
+                                    }
                         </div>
                     </div>
                     <div class="content">

@@ -7,27 +7,27 @@ import { createStyles, makeStyles } from "@material-ui/core";
 import IconButton from "@mui/material/IconButton";
 import ClearIcon from "@mui/icons-material/Clear";
 import RecipeCategories from "./categories";
-import {getCookie} from '../shared/getCookie';
+import { getCookie } from "../shared/getCookie";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     searchAndFilterContainer: {
       display: "flex",
       flexDirection: "row",
-      alignItems: 'center', 
-      gap: '15px',
-      flexWrap: 'wrap',
-      justifyContent:"center"
+      alignItems: "center",
+      gap: "15px",
+      flexWrap: "wrap",
+      justifyContent: "center",
     },
-    recipeHeaderContainder:{
-        display: "flex", 
-        flexDirection: "column",
-        alignItems:"center", 
+    recipeHeaderContainder: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
     },
     searchInput: {
       backgroundColor: "#EBF2FA",
       width: "250px",
-      borderRadius:"5px",
+      borderRadius: "5px",
     },
   })
 );
@@ -41,7 +41,6 @@ const RecipeIndex = (props) => {
   const [recipeSearchInput, setRecipeSearchInput] = useState("");
   const [availableCategories, setAvailableCategories] = useState([]);
   const [filterCategories, setFilterCategories] = useState([]);
- 
 
   const expirationTime = new Date(exp * 1000);
   let currentTime = Date.now();
@@ -50,18 +49,16 @@ const RecipeIndex = (props) => {
 
     alert("Session has ended. Please login to continue.");
     window.location.href = "/login";
-    console.log('user', user)
+    console.log("user", user);
   }
 
-
-
   useEffect(() => {
-    const token = localStorage.getItem("jwtToken")
+    const token = localStorage.getItem("jwtToken");
     if (user) {
       fetch(`${REACT_APP_SERVER_URL}/recipes/${id}`, {
         headers: {
-          'Authorization': `${token}`, // Include the JWT token in the request headers
-        }
+          Authorization: `${token}`, // Include the JWT token in the request headers
+        },
       })
         .then((response) => response.json())
         .then((data) => {
@@ -71,8 +68,8 @@ const RecipeIndex = (props) => {
 
       fetch(`${REACT_APP_SERVER_URL}/recipes/categories/${id}`, {
         headers: {
-          'Authorization': token, 
-        }
+          Authorization: token,
+        },
       })
         .then((response) => response.json())
         .then((data) => {
@@ -86,7 +83,7 @@ const RecipeIndex = (props) => {
   }, [props]);
 
   const displayRecipes = () => {
-    const filteredRecipes = filterRecipes(recipes)
+    const filteredRecipes = filterRecipes(recipes);
 
     let display = filteredRecipes.map((recipe, idx) => {
       return (
@@ -107,23 +104,29 @@ const RecipeIndex = (props) => {
   };
 
   const filterRecipes = (recipes) => {
-    // Filter by name 
+    // Filter by name
     const filteredRecipesByName = recipes.filter((recipe) => {
-        const categoryList = recipe['categories'].map(recipe => recipe['category_name'])
-        const recipeHasFilteredCategories = filterCategories.every(cat => categoryList.includes(cat))
-        if(recipe["recipe_name"].toLowerCase().includes(recipeSearchInput.toLowerCase())){
-            // Filter by categories -
-            if(recipeHasFilteredCategories){
-                return true
-            }
-            
-        }        
-    })
+      const categoryList = recipe["categories"].map(
+        (recipe) => recipe["category_name"]
+      );
+      const recipeHasFilteredCategories = filterCategories.every((cat) =>
+        categoryList.includes(cat)
+      );
+      if (
+        recipe["recipe_name"]
+          .toLowerCase()
+          .includes(recipeSearchInput.toLowerCase())
+      ) {
+        // Filter by categories -
+        if (recipeHasFilteredCategories) {
+          return true;
+        }
+      }
+    });
 
-    return filteredRecipesByName
-  }
+    return filteredRecipesByName;
+  };
 
-  
   const handleDeleteCategory = (category) => {
     console.log("deleting category", category);
     const categoryList = [...filterCategories];
@@ -142,12 +145,11 @@ const RecipeIndex = (props) => {
   };
 
   const handleDateChange = (e, index) => {
-    console.log('e target val', e.target.value)
+    console.log("e target val", e.target.value);
     let temp = recipes.slice();
     temp[index]["date"] = e.target.value;
     setRecipes(temp);
   };
-
 
   const handleMenuSubmit = (e, recipeId, index, meal, note) => {
     e.preventDefault();
@@ -157,17 +159,17 @@ const RecipeIndex = (props) => {
       cook_date: recipes[index]["date"],
       recipe_id: recipeId,
       requester_username: username,
-      meal_name: meal, 
+      meal_name: meal,
       note: note,
     };
-    const token = localStorage.getItem("jwtToken")
+    const token = localStorage.getItem("jwtToken");
     let csrftoken = getCookie("csrftoken");
     fetch(`${REACT_APP_SERVER_URL}/menu/new`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
         "X-CSRFToken": csrftoken,
-        'Authorization': token, 
+        Authorization: token,
       },
       body: JSON.stringify(newMenuData),
     })
@@ -191,44 +193,44 @@ const RecipeIndex = (props) => {
           <a href="/recipes/new">Add a Recipe</a>
         </div>
         <div class="columns">
-          <div class="column has-text-centered" className={classes.recipeHeaderContainder}>
+          <div
+            class="column has-text-centered"
+            className={classes.recipeHeaderContainder}
+          >
             <h1 class="title recipe-index" style={{ color: "#EBF2FA" }}>
               My Recipes
             </h1>
             <br />
             <div className={classes.searchAndFilterContainer}>
+              <TextField
+                variant="outlined"
+                className={classes.searchInput}
+                onChange={(e) => setRecipeSearchInput(e.target.value)}
+                value={recipeSearchInput}
+                placeholder="Search for recipe name"
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      onClick={() => setRecipeSearchInput("")}
+                      aria-label="toggle password visibility"
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                  ),
+                }}
+              ></TextField>
 
-          <TextField
-            variant="outlined"
-            className={classes.searchInput}
-            onChange={(e) => setRecipeSearchInput(e.target.value)}
-            value={recipeSearchInput}
-            placeholder="Search for recipe name"
-            InputProps={{
-              endAdornment: (
-                <IconButton
-                  onClick={() => setRecipeSearchInput("")}
-                  aria-label="toggle password visibility"
-                >
-                  <ClearIcon />
-                </IconButton>
-              ),
-            }}
-          ></TextField>
-
-<RecipeCategories
-            categories={filterCategories}
-            availableCategories={availableCategories}
-            handleCategorySelect={handleCategorySelect}
-            handleDeleteCategory={handleDeleteCategory}
-            onlyShowDropdown={true}
-            selectPlaceholderText={"Filter by a category"}
-          />
-        </div>
+              <RecipeCategories
+                categories={filterCategories}
+                availableCategories={availableCategories}
+                handleCategorySelect={handleCategorySelect}
+                handleDeleteCategory={handleDeleteCategory}
+                onlyShowDropdown={true}
+                selectPlaceholderText={"Filter by a category"}
+              />
+            </div>
           </div>
-          
         </div>
-        
 
         <div id="app" class="row columns is-multiline">
           {recipes ? displayRecipes() : null}

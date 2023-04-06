@@ -33,7 +33,7 @@ const FriendRecipeIndexUnit = (props) => {
                             <br /><br />
                             
         
-                                    <CustomButton text="Add to Menu" onClick={() => {setShowAddMenuModule(true)}}>
+                                    <CustomButton text="Request to friend's Menu" onClick={() => {setShowAddMenuModule(true)}}>
                                     </CustomButton>
                                     {showAddMenuModule && (
                                         <AddToMenuPopup  title={"Add Recipe to Menu"} recipe_id={recipe_id} handleMenuSubmit={handleMenuSubmit} handleDateChange={handleDateChange} index={index} onClose={() => {setShowAddMenuModule(false)}}>

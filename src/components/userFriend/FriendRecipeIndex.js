@@ -48,7 +48,6 @@ const FriendRecipeIndex = (props) => {
         })
         .then(response => response.json())
         .then((data) => {
-            console.log('return data', data);
             setFriendName(data)
         });
 
@@ -75,23 +74,8 @@ const FriendRecipeIndex = (props) => {
           setRecipes(temp);
     }
 
-    const getCookie = (name) => {
-      var cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-          var cookies = document.cookie.split(';');
-          for (var i = 0; i < cookies.length; i++) {
-              var cookie = cookies[i].trim();
-              // Does this cookie string begin with the name we want?
-              if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                  break;
-              }
-          }
-      }
-      return cookieValue;
-  }
 
-    const handleMenuSubmit = (e, recipeId, index) => {
+    const handleMenuSubmit = (e, recipeId, index, meal, note) => {
         e.preventDefault();
         console.log("recipe", recipes[index])
         let newMenuData = {
@@ -99,14 +83,14 @@ const FriendRecipeIndex = (props) => {
           cook_date: recipes[index]['date'],
           recipe_id: recipeId,
           requester_username: username, 
+          meal_name: meal, 
+          note: note,
       }
       const token = localStorage.getItem("jwtToken")
-        let csrftoken = getCookie('csrftoken');
         fetch(`${REACT_APP_SERVER_URL}/menu/new`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
-                'X-CSRFToken': csrftoken,
                 'Authorization': token, 
             },
             body: JSON.stringify(newMenuData)

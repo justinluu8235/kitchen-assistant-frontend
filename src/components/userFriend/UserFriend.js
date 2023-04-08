@@ -177,7 +177,7 @@ const UserFriend = (props) => {
             return (
                 <div key={idx} className={classes.friendReceiveRow}>
                     <p>- {requestRecieved['username']}</p>
-                    <CustomButton text="Accept Request" onClick={(e) => handleAcceptRequest(e, requestRecieved['user'], requestRecieved['friend_name'], idx)}></CustomButton>
+                    <CustomButton text="Accept" onClick={(e) => handleAcceptRequest(e, requestRecieved['user'], requestRecieved['friend_name'], idx)}></CustomButton>
 
                 </div>
             )

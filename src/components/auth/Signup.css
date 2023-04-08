@@ -21,7 +21,6 @@
   }
   
   .register {
-    margin-top: 10rem;
     background: white;
     border-radius: 10px;
   }
@@ -68,10 +67,6 @@
     color: var(--textLight);
   }
   
-  input {
-    font-size: 1rem;
-  }
-  
   input:focus {
     border-color: var(--brandColor) !important;
     box-shadow: 0 0 0 1px var(--brandColor) !important;
@@ -102,7 +97,6 @@
   }
   .column.signup{
     padding-top:0;
-    width: 500px;
     border-right:none;
   }
       }

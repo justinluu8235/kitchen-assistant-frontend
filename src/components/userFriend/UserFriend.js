@@ -1,6 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import FriendRow from './FriendRow';
+import { createStyles, makeStyles, TextField } from "@material-ui/core";
 import './UserFriend.css'
+import CustomButton from '../shared/Button'
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    friendListContainer: {
+      display: "flex",
+      flexDirection: "column",
+      flexWrap: "wrap",
+      gap: "10px",
+    },
+    friendPageTitle: {
+        fontSize: "1.5rem",
+        fontWeight: 600,
+    },
+    searchContainer: {
+        display: "flex", 
+        flexDirection: "column", 
+        alignItems: "center", 
+        width: "auto", 
+        backgroundColor: "var(--background)",
+        padding: "15px",
+        borderRadius: "10px",
+    }, 
+    friendReceiveRow: {
+        display: "flex", 
+        flexDirection: "row", 
+        flexWrap: "wrap", 
+        alignItems: "center",
+    },
+  })
+);
 
 
 const UserFriend = (props) => {
@@ -15,6 +47,7 @@ const UserFriend = (props) => {
     const [friendRequestsReceived, setFriendRequestsReceived] = useState()
     const [friendRequestsSent, setFriendRequestsSent] = useState()
     const [friendList, setFriendList] = useState([])
+    const classes = useStyles()
 
     // make a condition that compares exp and current time
     const expirationTime = new Date(exp * 1000);
@@ -142,14 +175,10 @@ const UserFriend = (props) => {
     const displayRequestsReceived = (friendRequestsReceived) => {
         let display = friendRequestsReceived.map((requestRecieved, idx) => {
             return (
-                <div key={idx} >
-                    <form onSubmit={(e) => handleAcceptRequest(e, requestRecieved['user'], requestRecieved['friend_name'], idx)}>
-                        <div class='userfriend-receive-row'>
-                        <p>- {requestRecieved['username']}</p>
-                        <input type="submit" value="Accept Request"></input>
-                        </div>
-                    </form>
-                    <br />
+                <div key={idx} className={classes.friendReceiveRow}>
+                    <p>- {requestRecieved['username']}</p>
+                    <CustomButton text="Accept Request" onClick={(e) => handleAcceptRequest(e, requestRecieved['user'], requestRecieved['friend_name'], idx)}></CustomButton>
+
                 </div>
             )
         })
@@ -239,62 +268,52 @@ const UserFriend = (props) => {
 
     return (
         <div class="container">
+
+            <div class="section">
             <div class='title-input-wrapper userfriend'>
 
-                <div class="columns">
-                    <div class="column has-text-centered">
-                        <h1 class="title" style={{ color: "#EBF2FA" }}>My Friends</h1><br />
-                    </div>
-                </div>
-                <div class="add-pantry-item userfriend">
-                    <div class='search-container-userfriend'>
-                        <form onSubmit={handleSubmit}>
-
-                            <input type="text" name="query" class="search-bar "
-                                placeholder="search for friends by username"
-                                value={searchVal} onChange={handleChange} />
-
-                            <input type="submit" class="search-submit" />
-
-                        </form>
-                    </div>
-                    <div>
-                        {currentlyFriends ? `${userQueried} is already your friend` :
-                            requestPending ? `A friend request has already been sent to ${userQueried}` :
-                                userQueried ?
-                                    <div class='friend-found-container'>
-                                        <p>User {userQueried} Found! </p>
-                                        <form onSubmit={handleSendFriendRequest}>
-                                            <input type="submit" value="Add Friend" />
-                                        </form>
-                                    </div>
-                                    : null
-                        }
+<div class="columns">
+    <div class="column has-text-centered">
+        <h1 class="title" style={{ color: "#EBF2FA" }}>My Friends</h1><br />
+    </div>
+</div>
+<div className={classes.searchContainer}>
+    <div  class='search-container-userfriend'>
+        <TextField variant="outlined" size="small" onChange={handleChange} placeholder="find friend (email)"></TextField>
+        <CustomButton text="Search" onClick={handleSubmit}></CustomButton>
+    </div>
+        {currentlyFriends ? `${userQueried} is already your friend` :
+            requestPending ? `A friend request has already been sent to ${userQueried}` :
+                userQueried ?
+                    <div class='friend-found-container'>
+                        <p>User {userQueried} Found! </p>
+                        <CustomButton text="Add Friend" onClick={handleSendFriendRequest}></CustomButton>
 
                     </div>
+                    : null
+        }
 
-                </div>
-            </div>
-            <div class="section">
+
+</div>
+</div>
                 <div id="app" class="row columns is-multiline">
                     <div v-for="card in cardData" key="card.id" class="column is-4 userfriend"  >
                         <div class="card large" id="card-large">
                             <div class="card-content">
                                 <div class="media userfriend">
                                     <div>
-                                        <p class="title is-4 no-padding" style={{ color: "#0d6efd" }}>
+                                        <p className={classes.friendPageTitle} style={{ color: "#0d6efd" }}>
 
                                             Friend Requests Received: </p>
                                       
                                         {friendRequestsReceived && friendRequestsReceived.length > 0 ? displayRequestsReceived(friendRequestsReceived) : <p>No friend requests received</p>}
                                     </div>
-                                    <div class="media-content">
+                                    <div className={classes.friendListContainer}>
                                         <p class="title is-4 no-padding" style={{ color: "#0d6efd" }}>
 
                                             Friend List: </p>
-                                        <ul>
+                                        
                                             {friendList && friendList.length > 0? displayFriends(friendList) : <p>Currently no friends..</p>}
-                                        </ul>
                                     </div>
                                 </div>
                                 <div class="content"></div>

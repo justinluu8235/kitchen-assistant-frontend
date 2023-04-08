@@ -15,14 +15,13 @@
     display:flex;
     flex-direction: row;
     flex-wrap:wrap;
-    align-items: center;
+    justify-content: center;
     padding-bottom: 10px;
+    align-items: center;
 }
 
 
-.search-container-userfriend{
-    margin-top:15px;
-}
+
 
 .media.userfriend{
     display:flex;
@@ -34,11 +33,6 @@
     width: 700px;
   }
 
-  .userfriend-receive-row{
-      display:flex;
-      flex-direction: row;
-    align-items: center;
-  }
 
 
 @media screen and (max-width:900px){

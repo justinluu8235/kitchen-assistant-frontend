@@ -138,7 +138,7 @@ const ShoppingList = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(!!currentItem){
+    if(!!currentItem == false){
         return
     }
     let newShoppingItem = {

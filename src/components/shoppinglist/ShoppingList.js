@@ -138,6 +138,9 @@ const ShoppingList = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(!!currentItem){
+        return
+    }
     let newShoppingItem = {
       item_name: currentItem,
       item_quantity: currentQuantity,
@@ -160,6 +163,7 @@ const ShoppingList = (props) => {
         let temp = shoppingListData.slice();
         temp.push(data["shopping_item"]);
         setShoppingListData(temp);
+        setCurrentItem("")
       })
       .catch((error) => {
         console.log("===> Error creating shopping list item", error);

@@ -6,9 +6,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     weekTitle: {
         fontSize:"20px", 
-        color: "#f18973",
+        color: "var(--background)",
         fontWeight: 700,
-    }
+    },
+
   }))
 
 const MenuWeek = ({ weekStart, weekEnd, menuWeekObj, handleDeleteSubmit, username}) => {
@@ -21,7 +22,7 @@ const MenuWeek = ({ weekStart, weekEnd, menuWeekObj, handleDeleteSubmit, usernam
     return (
         <>
             <h1 className={classes.weekTitle}>{weekTitle}</h1>
-            <div>
+            <div >
                 {
                   daysOfWeek.map((day) => {
 

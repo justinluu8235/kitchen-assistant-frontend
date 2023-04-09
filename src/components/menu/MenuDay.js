@@ -9,11 +9,12 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "row",
       flexWrap: "wrap",
       gap: "10px",
+      marginBottom: "15px"
     },
     dayText: {
         fontSize:"20px", 
         color: "#f18973",
-        fontWeight: 300,
+        fontWeight: 500,
     }
   })
 );

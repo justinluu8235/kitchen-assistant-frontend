@@ -29,7 +29,6 @@
   .card {
     overflow: hidden;
     background: #EBF2FA;
-    color: var(--bg);
   }
   
   .card.large {
@@ -66,43 +65,13 @@
   a{
     color:darkblue;
   }
-  
-form, .pantry-item{
-    display: inline;
 
-}
 
-.add-pantry-item{
-    height:120px;
-    width: 800px;
-    margin-top:25px;
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    background-color:#EBF2FA;
-    border-radius:15px;
-}
 
-.add-pantry-item.shopping-list{
-  height:200px;
-}
-/* .media-content{
-    min-height:550px;
-    width: 800px;
-    flex-direction: column;
-    align-items:flex-start;
-} */
-
-#shopping-list-column{
-    width: 700px;
-}
 
 .list-item{
     display:block;
-    /* height: 150px;
-    width: 150px;
-    background-color: yellow; */
+
     margin:10px;
 }
 
@@ -116,28 +85,5 @@ form, .pantry-item{
   margin-left:15px;
 }
 
-.title{
-  margin-top:25px;
-}
 
-.container.shopping-list{
-  display:flex;
-  flex-direction: column;
-  align-items:center;
-}
 
-.input-container.shopping-list{
-  margin-left:15px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-@media screen and (max-width:900px){
-  .add-pantry-item.shopping-list{
-    width: 450px;
-  }
-  #shopping-list-column{
-    width: 450px;
-}
-}

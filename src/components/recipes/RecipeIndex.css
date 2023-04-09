@@ -31,7 +31,6 @@
   .card {
     overflow: hidden;
     background: #EBF2FA;
-    color: var(--bg);
   }
   
   .card.large {

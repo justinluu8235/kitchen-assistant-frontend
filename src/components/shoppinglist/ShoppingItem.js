@@ -1,25 +1,29 @@
-import React from 'react';
-
+import React from "react";
+import { createStyles, makeStyles, IconButton } from "@material-ui/core";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 
 const ShoppingItem = (props) => {
-    const{ingredient_quantity, item_name, quantity_unit, handleDeleteSubmit, shoppingItemId, index} = props
+  const {
+    ingredient_quantity,
+    item_name,
+    quantity_unit,
+    handleDeleteSubmit,
+    shoppingItemId,
+    index,
+  } = props;
 
-    return (
-        <div class="list-item">
+  return (
+    <div>
+      <IconButton
+        onClick={(e) => {
+          handleDeleteSubmit(e, shoppingItemId, index);
+        }}
+      >
+        <RemoveCircleIcon />
+      </IconButton>
+      <span>{`${item_name}, ${ingredient_quantity} ${quantity_unit}`}</span>
+    </div>
+  );
+};
 
-
-            <p class="pantry-item">
-                <span class="title is-6">
-                    {`- ${item_name}, ${ingredient_quantity} ${quantity_unit}`}
-                </span>
-            </p>
-
-            <form onSubmit={(e) => {handleDeleteSubmit(e, shoppingItemId, index)}}>
-                <input type="submit" value="Remove" />
-            </form>
-        </div>
-    )
-
-}
-
-export default ShoppingItem
+export default ShoppingItem;

@@ -91,7 +91,7 @@ const MenuCard = ({menuItem, handleDeleteSubmit, username}) => {
             });
 
     }
-
+    
     return (
         <div>
             <div className={classes.cardContainer}>

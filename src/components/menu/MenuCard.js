@@ -7,12 +7,14 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     cardContainer: {
         width: "160px",
-        overflowX: "clip"
+        overflowX: "clip",
     },
     imageContainer: {
         position:"relative",
         height: "200px", 
         width: "150px", 
+        border: "1px solid gold",
+
 
     },
     banner: {
@@ -31,7 +33,8 @@ const useStyles = makeStyles((theme: Theme) =>
         bottom:0,
         left: 0,
         color: "yellow",
-        fontWeight: "800"
+        fontWeight: "800",
+        backgroundColor: "var(--bg)"
     }, 
     modalContainer: {
         position: 'absolute',
@@ -43,6 +46,11 @@ const useStyles = makeStyles((theme: Theme) =>
         boxShadow: 24,
         backgroundColor: "var(--background)",
     },
+    cardImage: {
+        paddingTop: "35px", // for banner
+        width: "99%" ,
+        height: "-webkit-fill-available",
+    }
   })
 );
 const MenuCard = ({menuItem, handleDeleteSubmit, username}) => {
@@ -87,7 +95,7 @@ const MenuCard = ({menuItem, handleDeleteSubmit, username}) => {
             <div className={classes.cardContainer}>
                 
             <div className={classes.imageContainer} onClick={() => setModalOpen(true)} >
-                <img src={menuItem["image"]} />
+                <img className={classes.cardImage} src={menuItem["image"] ? menuItem["image"] : "/img/kitchen-icon.png"} />
                 <div className={classes.banner}>
                     {menuItem["meal_name"]}
                 </div>

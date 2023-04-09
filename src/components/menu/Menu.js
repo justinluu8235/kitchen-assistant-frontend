@@ -1,9 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import './Menu.css'
 import MenuWeek from './MenuWeek'
+import { createStyles, makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    menuContainer: {
+        marginLeft: "20px",
+    },
+
+  }))
 
 const Menu = (props) => {
-
+    const classes = useStyles()
     const { handleLogout, user } = props;
     const { id, username, email, exp } = user;
     const [menuData, setMenuData] = useState() 
@@ -80,7 +89,7 @@ const Menu = (props) => {
     }
 
     return (
-        <div class="container">
+        <div className={classes.menuContainer}>
             <div class="columns">
                 <div class="column has-text-centered menu-column-text">
                     <h1 class="title" style={{ color: "#EBF2FA" }}>My Menu</h1><br />

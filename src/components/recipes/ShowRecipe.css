@@ -29,7 +29,6 @@
   .card {
     overflow: hidden;
     background: #EBF2FA;
-    color: var(--bg);
   }
   
   .card.large {
@@ -67,10 +66,6 @@
     color:darkblue;
   }
   
-form, .pantry-item{
-    display: inline;
-
-}
 
 .add-pantry-item{
     height:80px;
@@ -82,7 +77,6 @@ form, .pantry-item{
 
 .media-content{
     min-height:100px;
-    width: 800px;
     flex-direction: column;
     align-items:flex-start;
 }
@@ -103,9 +97,6 @@ form, .pantry-item{
     color:black;
 }
 
-.title{
-  padding-top:25px;
-}
 
 
 #search-recipe-image{

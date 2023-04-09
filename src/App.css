@@ -1,6 +1,7 @@
 html {
   position: relative;
   min-height: 100%;
+  background-color: #427AA1; 
 }
 :root {
   --bg: #427AA1;

@@ -3,7 +3,11 @@ import { Link, Navigate } from "react-router-dom";
 import { Chip } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core";
 import "./ShowRecipe.css";
+import CustomButton from "../shared/Button";
+import { useNavigate } from 'react-router-dom';
+
 const { REACT_APP_SERVER_URL } = process.env;
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,6 +29,8 @@ const ShowRecipe = (props) => {
   const [redirect, setRedirect] = useState(false);
   const [recipeCategories, setRecipeCategories] = useState();
   const classes = useStyles()
+  const navigate = useNavigate();
+
   // make a condition that compares exp and current time
   const expirationTime = new Date(exp * 1000);
   let currentTime = Date.now();
@@ -152,13 +158,9 @@ const ShowRecipe = (props) => {
           )}
 
           <div>
-            <form action={`/recipes/edit/${recipeID}`} method="GET">
-              <input type="submit" value="Edit Recipe" />
-            </form>
+            <CustomButton text="Edit Recipe" onClick={() => {navigate(`/recipes/edit/${recipeID}`);}}></CustomButton>
+            <CustomButton text="Delete Recipe" onClick={handleSubmit}></CustomButton>
 
-            <form onSubmit={handleSubmit}>
-              <input type="submit" value="Delete Recipe" />
-            </form>
           </div>
         </div>
       </div>

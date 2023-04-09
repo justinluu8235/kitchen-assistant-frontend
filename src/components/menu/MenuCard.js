@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme: Theme) =>
         left: 0,
         color: "yellow",
         fontWeight: "800",
-        backgroundColor: "var(--bg)"
+        backgroundColor: "var(--bg)",
+        width: "fit-content",
     }, 
     modalContainer: {
         position: 'absolute',

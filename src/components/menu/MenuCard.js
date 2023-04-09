@@ -50,8 +50,9 @@ const useStyles = makeStyles((theme: Theme) =>
     cardImage: {
         paddingTop: "35px", // for banner
         width: "99%" ,
-        height: "-webkit-fill-available",
-    }
+        height: "100%",
+    }, 
+
   })
 );
 const MenuCard = ({menuItem, handleDeleteSubmit, username}) => {

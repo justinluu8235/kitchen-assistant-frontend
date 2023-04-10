@@ -21,12 +21,26 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const MenuDay = ({ day, menuItems, handleDeleteSubmit, username}) => {
   const classes = useStyles();
+
+  const sortMenuItemsByMeal = (items) => {
+      const mealOrder = { "breakfast": 1, "lunch": 2, "dinner": 3 };
+      
+      items.sort((a, b) => {
+        const mealA = mealOrder[a["meal_name"]] || 4; // assign a higher value to undefined meal_names
+        const mealB = mealOrder[b["meal_name"]] || 4; // so they appear at the end
+        
+        return mealA - mealB;
+      });
+      
+      return items;
+    
+  }
   return (
     <>
       <p className={classes.dayText}>{day}</p>
 
       <div className={classes.menuDayContainer}>
-        {menuItems.map((menuItem) => {
+        {sortMenuItemsByMeal(menuItems).map((menuItem) => {
           return <MenuCard handleDeleteSubmit={handleDeleteSubmit} 
           username={username}
           menuItem={menuItem}></MenuCard>;

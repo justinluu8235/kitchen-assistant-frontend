@@ -81,7 +81,6 @@ const ShoppingList = (props) => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("return data", data);
           setShoppingListData(data["shopping_list"]);
         });
     }
@@ -115,7 +114,6 @@ const ShoppingList = (props) => {
       },
     })
       .then((data) => {
-        console.log("return data", data);
         let temp = shoppingListData.slice();
         temp.splice(index, 1);
         setShoppingListData(temp);
@@ -147,7 +145,6 @@ const ShoppingList = (props) => {
       quantity_unit: currentUnit,
       user_id: id,
     };
-    console.log("shopping item", newShoppingItem);
     const token = localStorage.getItem("jwtToken");
     fetch(`${REACT_APP_SERVER_URL}/shoppinglist/new`, {
       method: "POST",
@@ -159,7 +156,6 @@ const ShoppingList = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("creation return data", data);
         let temp = shoppingListData.slice();
         temp.push(data["shopping_item"]);
         setShoppingListData(temp);

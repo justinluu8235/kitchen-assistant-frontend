@@ -60,9 +60,6 @@ const MenuCard = ({menuItem, handleDeleteSubmit, username}) => {
     const [modalOpen, setModalOpen] = useState(false)    
     const {REACT_APP_SERVER_URL} = process.env
     const friendRequestedUsername = username === menuItem["requester_username"] ? null : menuItem["requester_username"]
-    console.log('my username', username)
-    console.log('requester username', menuItem["requester_username"])
-    console.log('friendRequestedUsername', friendRequestedUsername)
 
 
     const generateShoppingList = (e,user_id, recipeId) => {

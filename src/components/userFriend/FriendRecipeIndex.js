@@ -51,6 +51,7 @@ const FriendRecipeIndex = (props) => {
         return <FriendRecipeIndexUnit key={idx} index={idx} recipeName={recipe['recipe_name']}  
                                 recipe_id={recipe['id']} image={recipe['image']}
                                 date={recipe['date'] ? recipe['date'] : null}
+                                categories={recipe["categories"].length ? recipe["categories"] : null}
                                 user_id={id}
                                 handleDateChange={handleDateChange}
                                 handleMenuSubmit={handleMenuSubmit}

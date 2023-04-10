@@ -29,7 +29,6 @@ const SearchRecipeResult = (props) => {
                                 </div>
                                 <div class="content">
 
-
                                 </div>
                             </div>
                         </div>

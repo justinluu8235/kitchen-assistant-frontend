@@ -3,7 +3,7 @@ import RecipeIndex from './RecipeIndex';
 import './RecipeIndexUnit.css'
 
 const RecipeIndexUnit = (props) => {
-    const {recipeName, recipe_id, image, user_id,  index, handleDateChange,  date, handleMenuSubmit} = props
+    const {recipeName, recipe_id, image, user_id, index, handleDateChange, date, categories, handleMenuSubmit} = props
     const {REACT_APP_SERVER_URL} = process.env
     const getCookie = (name) => {
         var cookieValue = null;
@@ -50,6 +50,7 @@ const RecipeIndexUnit = (props) => {
 
     }
 
+
     return (
 
         <div v-for="card in cardData" key="card.id" class="column is-4 recipe-index-card">
@@ -69,6 +70,7 @@ const RecipeIndexUnit = (props) => {
                     <div class="media">
                         <div class="media-content recipe-index-card-content">
                             <p class="title is-4 no-padding recipe-index-name">{recipeName} </p>
+                            <p> {categories ? categories.map(category => category.category_name).join(' ') : null} </p>
                             <br />
                             <p>
                                 <span class="title is-6">
@@ -88,7 +90,6 @@ const RecipeIndexUnit = (props) => {
                                         <input class="recipe-index-card-button" type="date" name="dateSelected" value={date} onChange={(e) => handleDateChange(e, index)}/>
                                         <input type="submit" value="Request" />
                                     </form> </span> 
-                                    
                             </div>
                         </div>
                     </div>

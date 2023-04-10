@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./RecipeIndex.css";
 import RecipeIndexUnit from "./RecipeIndexUnit";
 import { Link, Navigate } from "react-router-dom";
-import { TextField } from "@material-ui/core";
+import { recomposeColor, TextField } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core";
 import IconButton from "@mui/material/IconButton";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -77,6 +77,8 @@ const RecipeIndex = (props) => {
     const filteredRecipes = filterRecipes(recipes)
 
     let display = filteredRecipes.map((recipe, idx) => {
+      console.log(recipe);
+      console.log("!!!!!!!!!!!")
       return (
         <RecipeIndexUnit
           key={idx}
@@ -85,9 +87,11 @@ const RecipeIndex = (props) => {
           recipe_id={recipe["id"]}
           image={recipe["image"]}
           date={recipe["date"] ? recipe["date"] : null}
+          categories={recipe["categories"].length ? recipe["categories"] : null}
           user_id={id}
           handleDateChange={handleDateChange}
           handleMenuSubmit={handleMenuSubmit}
+
         />
       );
     });

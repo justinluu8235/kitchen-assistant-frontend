@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 
 const FriendRecipeIndexUnit = (props) => {
-    const {recipeName, recipe_id, image, user_id,  index, handleDateChange,  date, handleMenuSubmit} = props
+    const {recipeName, recipe_id, image, user_id, index, handleDateChange, date, categories, handleMenuSubmit} = props
     const {REACT_APP_SERVER_URL} = process.env
 
  
@@ -24,6 +24,7 @@ const FriendRecipeIndexUnit = (props) => {
                     <div class="media">
                         <div class="media-content friend-recipe-index">
                             <p class="title is-4 no-padding friend-recipe-index">{recipeName} </p>
+                            <p> {categories ? categories.map(category => category.category_name).join(' ') : null} </p>
                             <br />
                             <div>
                                 <span class="title is-6">

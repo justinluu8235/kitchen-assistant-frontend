@@ -81,7 +81,6 @@ const ShoppingList = (props) => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('data', data)
           setShoppingListData(data["shopping_list"]);
         });
     }
@@ -115,7 +114,6 @@ const ShoppingList = (props) => {
       },
     })
       .then((data) => {
-        console.log("return data", data);
         let temp = shoppingListData.slice();
         temp.splice(index, 1);
         setShoppingListData(temp);

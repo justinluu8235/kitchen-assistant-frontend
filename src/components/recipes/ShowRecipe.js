@@ -148,7 +148,7 @@ const ShowRecipe = (props) => {
           </h1>
           <br />
           <br />
-          {recipeCategories && (
+          {recipeCategories && recipeCategories.length > 0 && (
             <div className={classes.categoryChipsContainer}>
               <span style={{ color: "#EBF2FA" }}>Categories: </span>
               {recipeCategories.map((category) => {

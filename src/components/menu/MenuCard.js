@@ -115,6 +115,7 @@ const MenuCard = ({menuItem, handleDeleteSubmit, username}) => {
                     generateShoppingList(e, menuItem["user"], menuItem["recipe"] )
                     setModalOpen(false)
                 }}></CustomButton>
+                <CustomButton text="Edit Menu Item" onClick={() => {setModalOpen(false)}}  ></CustomButton>
                 <CustomButton text={<a href={`/recipes/${menuItem["recipe"]}`}>View Recipe</a>}></CustomButton>
 
                 </div>

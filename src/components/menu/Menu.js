@@ -46,7 +46,9 @@ const Menu = (props) => {
 
     }, [props])
 
-
+    const refreshMenuData = (updatedMenuData) => {
+        setMenuData(updatedMenuData)
+    }
 
     const displayMenu = (menuData) => {
         const weekStartsArr = Object.keys(menuData)
@@ -59,6 +61,7 @@ const Menu = (props) => {
             menuWeekObj={menuData[date]} 
             handleDeleteSubmit={handleDeleteSubmit}
             username={username}
+            refreshMenuData={refreshMenuData}
             ></MenuWeek>
         })
 

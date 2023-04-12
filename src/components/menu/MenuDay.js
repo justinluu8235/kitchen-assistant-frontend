@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const MenuDay = ({ day, menuItems, handleDeleteSubmit, username}) => {
+const MenuDay = ({ day, menuItems, handleDeleteSubmit, username, refreshMenuData}) => {
   const classes = useStyles();
 
   const sortMenuItemsByMeal = (items) => {
@@ -43,7 +43,9 @@ const MenuDay = ({ day, menuItems, handleDeleteSubmit, username}) => {
         {sortMenuItemsByMeal(menuItems).map((menuItem) => {
           return <MenuCard handleDeleteSubmit={handleDeleteSubmit} 
           username={username}
-          menuItem={menuItem}></MenuCard>;
+          menuItem={menuItem}
+          refreshMenuData={refreshMenuData}
+          ></MenuCard>;
         })}
       </div>
     </>

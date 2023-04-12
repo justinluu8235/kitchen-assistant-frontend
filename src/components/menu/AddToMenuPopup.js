@@ -85,7 +85,6 @@ const AddToMenuPopup = ({ title, onClose, index, recipe_id, handleDateChange, ha
         }}></CustomButton>
         <CustomButton text="Close" onClick={onClose}></CustomButton>
 
-
         </div>
 
       </div>
